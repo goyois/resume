@@ -1,0 +1,472 @@
+:root {
+    --bg: #f7f7f1;
+    --bg-soft: #ffffff;
+    --panel: rgba(255, 255, 255, 0.82);
+    --panel-strong: rgba(255, 255, 255, 0.94);
+    --line: rgba(17, 24, 39, 0.09);
+    --text: #151821;
+    --muted: #667085;
+    --accent: #1f9d7a;
+    --accent-soft: rgba(31, 157, 122, 0.1);
+    --accent-warm: #d97706;
+    --shadow: 0 24px 60px rgba(28, 36, 52, 0.08);
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --max-width: 1240px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(217, 119, 6, 0.12), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(31, 157, 122, 0.1), transparent 22%),
+        linear-gradient(180deg, #fcfcf8 0%, #f7f7f1 48%, #f2f4ee 100%);
+    color: var(--text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-shell {
+    position: relative;
+    overflow: hidden;
+}
+
+.ambient {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.ambient-one {
+    top: 120px;
+    left: -120px;
+    width: 320px;
+    height: 320px;
+    background: rgba(217, 119, 6, 0.16);
+}
+
+.ambient-two {
+    top: 720px;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    background: rgba(31, 157, 122, 0.14);
+}
+
+.hero,
+.summary,
+.projects,
+.principles {
+    position: relative;
+    z-index: 1;
+    width: min(calc(100% - 40px), var(--max-width));
+    margin: 0 auto;
+}
+
+.hero {
+    padding: 28px 0 80px;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 72px;
+}
+
+.brand,
+.eyebrow,
+.section-label,
+.project-index,
+.metric-label,
+.star-title {
+    font-family: "Space Grotesk", sans-serif;
+}
+
+.brand {
+    font-size: 0.9rem;
+    letter-spacing: 0.22em;
+}
+
+.topbar-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.topbar-meta span {
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+    gap: 32px;
+    align-items: stretch;
+}
+
+.eyebrow,
+.section-label {
+    margin: 0 0 18px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.86rem;
+}
+
+.hero h1 {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(3rem, 8vw, 6.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+}
+
+.hero h1 span {
+    color: #256b5a;
+}
+
+.hero-description {
+    max-width: 760px;
+    margin: 26px 0 0;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.85;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 34px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.button-primary {
+    background: #111827;
+    color: #ffffff;
+}
+
+.button-secondary {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-panel,
+.summary-card,
+.project-card,
+.principle-card {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+}
+
+.hero-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+}
+
+.metric-card strong {
+    display: block;
+    margin-top: 8px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.7rem;
+    line-height: 1.15;
+}
+
+.metric-card p {
+    margin: 16px 0 0;
+    color: var(--muted);
+    line-height: 1.75;
+}
+
+.metric-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.metric-list div {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(247, 247, 241, 0.88);
+}
+
+.metric-list span {
+    color: var(--accent-warm);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.metric-list p {
+    margin: 0;
+}
+
+.summary {
+    padding: 0 0 28px;
+}
+
+.summary-card {
+    padding: 34px;
+    border-radius: var(--radius-lg);
+}
+
+.summary-card h2,
+.section-heading h2 {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.summary-card p:last-child {
+    max-width: 860px;
+    margin: 18px 0 0;
+    color: var(--muted);
+    line-height: 1.9;
+}
+
+.projects {
+    padding: 70px 0 32px;
+}
+
+.section-heading {
+    margin-bottom: 28px;
+}
+
+.project-card {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 24px;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+}
+
+.project-card + .project-card {
+    margin-top: 22px;
+}
+
+.project-index {
+    color: rgba(17, 24, 39, 0.14);
+    font-size: 4rem;
+    line-height: 1;
+}
+
+.project-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.project-header h3,
+.principle-card h3 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.project-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.project-tags span,
+.flow span {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-tags span {
+    color: #344054;
+    background: rgba(248, 250, 252, 0.9);
+    font-size: 0.92rem;
+}
+
+.project-summary {
+    margin: 16px 0 0;
+    color: #344054;
+    font-size: 1.04rem;
+    line-height: 1.85;
+}
+
+.star-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 26px;
+}
+
+.star-block {
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(248, 250, 252, 0.78);
+    border: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.star-title {
+    margin: 0 0 10px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.star-block p:last-child,
+.lesson,
+.principle-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.flow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.flow span {
+    background: var(--accent-soft);
+    color: #155e4d;
+}
+
+.lesson {
+    margin-top: 18px;
+}
+
+.principles {
+    padding: 72px 0 110px;
+}
+
+.principle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 28px;
+}
+
+.principle-card {
+    padding: 24px;
+    border-radius: 24px;
+    background: var(--panel-strong);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 1080px) {
+    .hero-grid,
+    .principle-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 820px) {
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero {
+        padding-top: 22px;
+    }
+
+    .project-card {
+        grid-template-columns: 1fr;
+        padding: 24px;
+    }
+
+    .project-index {
+        font-size: 2.8rem;
+    }
+
+    .star-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card,
+    .hero-panel {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 560px) {
+    .hero,
+    .summary,
+    .projects,
+    .principles {
+        width: min(calc(100% - 24px), var(--max-width));
+    }
+
+    .hero h1 {
+        font-size: 2.7rem;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .project-header h3,
+    .principle-card h3 {
+        font-size: 1.35rem;
+    }
+
+    .topbar-meta {
+        gap: 8px;
+    }
+}

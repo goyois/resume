@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진승우 포트폴리오</title>
+    <meta name="description" content="파일 변환 서비스 아키텍처를 중심으로 정리한 백엔드 엔지니어 포트폴리오">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/variants.css?v=20260415-flow">
+</head>
+<body class="portfolio-body brand-dark">
+<div class="portfolio-shell brand-page main-portfolio">
+    <section class="intro-hero reveal">
+        <div class="intro-copy">
+            <span class="pill-label section-pill">Introduction</span>
+            <h1>안녕하세요,<br>백엔드 엔지니어<br><span>진승우입니다.</span></h1>
+            <p class="intro-highlight">"기술을 쌓는 것보다, 병목을 없애고 구조를 설계하는 일에 더 집중합니다."</p>
+            <p class="intro-text">
+                이벤트 기반 아키텍처와 비동기 처리 구조를 통해<br>
+                실시간 처리, 데이터 정합성, 업로드 최적화 문제를 해결하고 있습니다.
+            </p>
+
+            <div class="hero-actions">
+                <a href="https://api.fileconversion.site/convert" class="button button-dark" target="_blank" rel="noreferrer">프로젝트 링크</a>
+                <a href="https://github.com/toy-boyz/File-Conversion" class="button button-ghost" target="_blank" rel="noreferrer">깃허브</a>
+            </div>
+        </div>
+
+        <div class="intro-visual">
+            <div class="portrait-frame">
+                <div class="portrait-core">
+                    <p>사진</p>
+                </div>
+            </div>
+            <span class="float-dot dot-a"></span>
+            <span class="float-dot dot-b"></span>
+            <span class="float-dot dot-c"></span>
+            <span class="float-shape"></span>
+        </div>
+    </section>
+
+    <section class="section-block reveal">
+        <div class="project-intro-head">
+            <span class="pill-label">Projects</span>
+            <h2>파일 변환 서비스</h2>
+            <p>파일 업로드부터 변환 처리, 상태 조회까지를 이벤트 기반 아키텍처로 설계한 서비스입니다.</p>
+        </div>
+        <div class="project-showcase">
+            <a class="showcase-thumb" href="https://github.com/toy-boyz/File-Conversion" target="_blank" rel="noreferrer" aria-label="File Conversion GitHub Repository">
+                <div class="thumb-image-wrap">
+                    <img src="/img.png" alt="File Conversion Project Thumbnail" class="thumb-image">
+                </div>
+            </a>
+
+            <div class="showcase-meta">
+                <span class="pill-label pill-green">Project Stack</span>
+                <h2>느려지지 않는 변환<br>흐름을 만드는 기술</h2>
+                <p>사용자는 빠르게 요청하고, 서버는 안정적으로 처리하고, 진행 상태는 즉시 보여주는 구조를 목표로 했습니다.</p>
+                <div class="showcase-keywords">
+                    <span>Event-Driven Architecture</span>
+                    <span>CDC / Outbox</span>
+                    <span>Redis / SSE</span>
+                    <span>RabbitMQ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured-projects-2" class="section-block reveal">
+        <div class="section-intro">
+            <span class="pill-label section-pill">Featured Projects</span>
+            <h2>먼저 보는 핵심 카드</h2>
+            <p>프로젝트 안에서 어떤 문제를 어떻게 해결, 대비했는지, 가장 중요한 사례만 정리하였습니다.</p>
+        </div>
+
+        <div class="featured-list">
+            <a class="scan-card" href="#detail-1">
+                <div>
+                    <span class="card-index">01</span>
+                    <h3>DB polling 없이 상태를 즉시 반영한 구조</h3>
+                    <p>Redis Pub/Sub + SSE로 실시간 상태 처리를 구현하였습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>DB polling 제거</span>
+                    <span>지연 최소화</span>
+                </div>
+            </a>
+            <a class="scan-card" href="#detail-2">
+                <div>
+                    <span class="card-index">02</span>
+                    <h3>실시간성과 안정성을 함께 확보한 통계 보정 구조</h3>
+                    <p>Redis와 DB 보정 전략으로 실시간 통계를 운영 가능하게 만들었습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>영속성 확보</span>
+                    <span>통계 데이터 복구 가능</span>
+                </div>
+            </a>
+            <a class="scan-card" href="#detail-3">
+                <div>
+                    <span class="card-index">03</span>
+                    <h3>이벤트 유실을 막기 위한 Outbox + CDC 구조</h3>
+                    <p>DB 저장과 MQ publish 사이의 이중쓰기 문제를 해결하였습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>정합성 확보</span>
+                    <span>이벤트 유실 방지</span>
+                </div>
+            </a>
+            <a class="scan-card" href="#detail-4">
+                <div>
+                    <span class="card-index">04</span>
+                    <h3>대용량 업로드에서 서버를 거치지 않게 만든 구조</h3>
+                    <p>Presigned URL 기반 직접 업로드로 병목을 대비하였습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>스트림 제거</span>
+                    <span>안정성 향상</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="detail-section" class="section-block reveal">
+        <div class="section-intro">
+            <span class="pill-label section-pill">Detail Section</span>
+            <h2>STAR Detailed View</h2>
+        </div>
+
+        <div class="detail-timeline">
+            <article id="detail-1" class="detail-row">
+                <div class="detail-sticky">
+                    <span class="card-index">01</span>
+                    <h3>실시간 변환 상황 구현</h3>
+                    <div class="tech-icon-row">
+                        <span class="tech-icon-chip"><em>Redis</em></span>
+                        <span class="tech-icon-chip"><em>SSE</em></span>
+                        <span class="tech-icon-chip"><em>Pub/Sub</em></span>
+                    </div>
+<!--                    <p class="flow-text">Worker → Redis → API → SSE → Client</p>-->
+                </div>
+                <div class="detail-content detail-star-content">
+                    <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>초기에는 DB polling 방식(주기적 SELECT)을 고려했으나, 요청이 증가할수록 DB read 부하가 급격히 증가하고 실시간성이 떨어지는 문제가 있었다.</p></div>
+                    <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>변환 진행 상태를 실시간으로 사용자에게 전달</li><li>DB 부하를 최소화하면서 낮은 지연으로 상태 동기화</li><li>Pub/Sub 방식을 구성해 다수 요청 상황에서도 확장 가능한 구조 설계</li></ul></div>
+                    <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><p class="flow-text">DB polling / 서버 메모리 / WebSocket 검토 후 Redis Pub/Sub + SSE 선택</p><ul class="star-list"><li>Worker - Redis Pub (진행 상태 발행)</li><li>API - Redis Sub (이벤트 구독)</li><li>API → SSE로 클라이언트에 push</li><li>Worker → Redis → API → SSE → Client의 구조 형성</li></ul></div>
+                    <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><div class="result-grid"><div>DB polling 제거</div><div>DB read 부하 감소</div><div>상태 전달 지연 최소화</div><div>실시간 처리 구현</div></div><p>  💡 배운 점: "실시간" 문제는 DB보다 메시지 기반 구조로 풀어야 하고, 상태 데이터는 저장보다 전파가 중요하다.</p></div>
+                </div>
+            </article>
+
+            <article id="detail-2" class="detail-row">
+                <div class="detail-sticky">
+                    <span class="card-index">02</span>
+                    <h3>Redis + DB 정합성 보정</h3>
+                    <div class="tech-icon-row">
+                        <span class="tech-icon-chip"><em>Redis</em></span>
+                        <span class="tech-icon-chip"><em>Database</em></span>
+                        <span class="tech-icon-chip"><em>Flush</em></span>
+                    </div>
+<!--                    <p class="flow-text">Redis → DB Flush → Rebuild</p>-->
+                </div>
+                <div class="detail-content detail-star-content">
+                    <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>전역 통계를 Redis 기반으로 실시간 제공했지만, 메모리 특성상 장애 발생 시 데이터 유실 가능성이 존재했다.</p></div>
+                    <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>실시간성과 데이터 안정성 동시에 확보</li><li>Redis 장애 시 fallback 구조 필요</li></ul></div>
+                    <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><p class="flow-text">Redis → 실시간 통계 저장 → 1분 주기 DB flush → 주기적 재집계</p><ul class="star-list"><li>Redis에 실시간 통계 저장</li><li>1분 주기로 DB flush</li><li>재집계로 Redis/DB overwrite</li></ul></div>
+                    <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><div class="result-grid"><div>실시간 + 영속성 확보</div><div>장애 시 데이터 복구 가능</div><div>hot row 문제 완화</div><div>안정적 통계 유지</div></div><p>  💡 배운 점: Redis는 빠르지만 영속성은 없고, 실시간 시스템에는 반드시 보정 전략이 필요하다.</p></div>
+                </div>
+            </article>
+
+            <article id="detail-3" class="detail-row">
+                <div class="detail-sticky">
+                    <span class="card-index">03</span>
+                    <h3>CDC + Outbox 이벤트 신뢰성</h3>
+                    <div class="tech-icon-row">
+                        <span class="tech-icon-chip"><em>Debezium</em></span>
+                        <span class="tech-icon-chip"><em>Outbox</em></span>
+                        <span class="tech-icon-chip"><em>RabbitMQ</em></span>
+                    </div>
+<!--                    <p class="flow-text">API → DB + Outbox → CDC → MQ → Worker</p>-->
+                </div>
+                <div class="detail-content detail-star-content">
+                    <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>파일 업로드 후 Worker에게 작업을 전달해야 했는데, API에서 DB 저장 + MQ publish를 직접 수행할 경우 이중쓰기 문제가 발생할 수 있었다. 또한 polling 방식은 불필요한 DB 조회가 발생했다.</p></div>
+                    <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>이벤트 유실 없이 정합성 보장</li><li>DB polling 없이 변경 기반 이벤트 처리</li><li>API와 MQ 간 결합도 제거</li></ul></div>
+                    <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><p class="flow-text">API → DB(history + outbox_event) → Debezium → RabbitMQ → Worker</p><ul class="star-list"><li>Outbox 패턴 + Debezium CDC 선택</li><li>동일 트랜잭션에 history + outbox_event 저장</li><li>Debezium이 outbox_event 변경 감지 후 RabbitMQ publish</li><li>Worker가 메시지 소비</li></ul></div>
+                    <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><div class="result-grid"><div>이중쓰기 문제 해결</div><div>이벤트 유실 가능성 감소</div><div>DB polling 제거</div><div>서비스 결합도 감소</div></div><p>  💡 배운 점: 분산 환경에서는 MQ 발행보다 이벤트 기록이 먼저이고, CDC는 polling을 대체하는 강력한 방식이다.</p></div>
+                </div>
+            </article>
+
+            <article id="detail-4" class="detail-row">
+                <div class="detail-sticky">
+                    <span class="card-index">04</span>
+                    <h3>S3 직접 업로드</h3>
+                    <div class="tech-icon-row">
+                        <span class="tech-icon-chip"><em>S3</em></span>
+                        <span class="tech-icon-chip"><em>Presigned URL</em></span>
+                    </div>
+<!--                    <p class="flow-text">Client → API(upload-init) → S3 → API(upload-complete)</p>-->
+                </div>
+                <div class="detail-content detail-star-content">
+                    <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>파일 업로드 시 API 서버를 통해 S3로 업로드하는 구조를 고려했으나, 대용량 파일 처리 시 서버 리소스 사용량 증가 및 병목 가능성이 존재했다.</p></div>
+                    <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>서버 부하 없이 파일 업로드 처리</li><li>업로드 경로 및 파일명은 서버가 통제</li><li>확장 가능한 구조 설계</li></ul></div>
+                    <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><p class="flow-text">Client → API(upload-init) → Presigned URL → S3 Upload → API(upload-complete)</p><ul class="star-list"><li>Presigned URL 기반 클라이언트 직접 업로드 선택</li><li>API는 Presigned URL 반환</li><li>Client가 S3 직접 업로드 후 API에 완료 통지</li></ul></div>
+                    <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><div class="result-grid"><div>API 서버 파일 스트림 제거</div><div>대용량 업로드 안정화</div><div>병목 가능성 감소</div><div>확장성 향상</div></div><p>  💡 배운 점: 서버는 파일 전달이 아니라 경로와 권한을 관리해야 하고, 대용량 처리에서는 데이터 경로 최적화가 핵심이다.</p></div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="project-overview" class="section-block reveal">
+        <div class="project-intro-meta">
+            <!--            <div class="project-summary-card">-->
+            <!--                <span class="mini-label">Project Summary</span>-->
+            <!--                <strong>대용량 업로드, 비동기 변환, 실시간 상태 반영을 하나의 흐름으로 설계</strong>-->
+            <!--                <p>사용자 요청은 빠르게 받고, 실제 작업은 비동기로 분리하고, 진행 상태는 실시간으로 전달하는 구조를 목표로 했습니다.</p>-->
+            <!--            </div>-->
+            <div class="project-tech-line">
+                <span class="tech-line-label">&lt;/&gt; Tech</span>
+                <div class="project-tech-tags">
+                    <span>Spring Boot</span>
+                    <span>MySQL</span>
+                    <span>Redis</span>
+                    <span>RabbitMQ</span>
+                    <span>Debezium(CDC)</span>
+                    <span>AWS</span>
+                    <span>Docker</span>
+                    <span>Git</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script src="/script.js"></script>
+</body>
+</html>
