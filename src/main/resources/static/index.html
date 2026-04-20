@@ -1,37 +1,64 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진승우 포트폴리오</title>
-    <meta name="description" content="파일 변환 서비스 아키텍처를 중심으로 정리한 백엔드 엔지니어 포트폴리오">
+    <title>김주원의 포트폴리오</title>
+    <meta name="description" content="파일 변환 서비스 아키텍처를 중심으로 정리한 백엔드 개발자 포트폴리오">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/variants.css?v=20260415-flow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="original-style.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body class="portfolio-body brand-dark">
+<!---->
+<div class="bg-bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+</div>
+<!---->
 <div class="portfolio-shell brand-page main-portfolio">
+
     <section class="intro-hero reveal">
         <div class="intro-copy">
             <span class="pill-label section-pill">Introduction</span>
-            <h1>안녕하세요,<br>백엔드 엔지니어<br><span>진승우입니다.</span></h1>
-            <p class="intro-highlight">"기술을 쌓는 것보다, 병목을 없애고 구조를 설계하는 일에 더 집중합니다."</p>
-            <p class="intro-text">
-                이벤트 기반 아키텍처와 비동기 처리 구조를 통해<br>
-                실시간 처리, 데이터 정합성, 업로드 최적화 문제를 해결하고 있습니다.
+            <h2>안녕하세요,<br>백엔드 엔지니어 <span class="name-highlight">김주원</span>입니다.</h2>
+            <p class="intro-highlight">"작은 흐름조차 효율적이어야 한다."</p>
+            <p class="intro-text"> 비즈니스 성장을 실현하는 시스템을 구축하는 Backend Engineer 김주원입니다.<br>
+                기술이라는 도구를 통해 사람과 비즈니스를 연결시켜, 삶의 질을 향상시키는 것을 추구합니다.
             </p>
 
-            <div class="hero-actions">
-                <a href="https://api.fileconversion.site/convert" class="button button-dark" target="_blank" rel="noreferrer">프로젝트 링크</a>
-                <a href="https://github.com/toy-boyz/File-Conversion" class="button button-ghost" target="_blank" rel="noreferrer">깃허브</a>
+            <div class="hero-stats">
+                <div class="stat-group">
+                    <div class="stat-item">
+                        <span>개발 경력</span>
+                        <strong>2년+</strong>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span>완료 프로젝트</span>
+                        <strong>2+</strong>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/goyois" class="social-icon"><img src="/images/github.png"" alt="Github"></a>
+                    <a href="https://velog.io/@goyo/posts" class="social-icon"><img src="/images/blog.png" alt="Velog"></a>
+                    <a href="bau12288@gmail.com" class="social-icon"><img src="/images/mail.png" alt="Mail"></a>
+                </div>
             </div>
         </div>
 
         <div class="intro-visual">
             <div class="portrait-frame">
                 <div class="portrait-core">
-                    <p>사진</p>
+                    <p>프로필 사진</p>
                 </div>
             </div>
             <span class="float-dot dot-a"></span>
@@ -39,34 +66,54 @@
             <span class="float-dot dot-c"></span>
             <span class="float-shape"></span>
         </div>
-    </section>
+        </section>
+
+
 
     <section class="section-block reveal">
         <div class="project-intro-head">
-            <span class="pill-label">Projects</span>
-            <h2>파일 변환 서비스</h2>
-            <p>파일 업로드부터 변환 처리, 상태 조회까지를 이벤트 기반 아키텍처로 설계한 서비스입니다.</p>
+        <span class="pill-label section-pill">
+            <i class="sparkle-icon">✨</i> Projects
+        </span>
+            <h1>파일 스튜디오(PDF 변환 서비스)</h1>
+            <p>JPG, PNG, GIF, BMP 이미지 파일을 PDF로 변환할 수 있는 기능을 제공합니다.</p>
         </div>
+
         <div class="project-showcase">
-            <a class="showcase-thumb" href="https://github.com/toy-boyz/File-Conversion" target="_blank" rel="noreferrer" aria-label="File Conversion GitHub Repository">
+            <a class="showcase-thumb" href="https://api.fileconversion.site/convert" target="_blank" rel="noreferrer">
                 <div class="thumb-image-wrap">
-                    <img src="/img.png" alt="File Conversion Project Thumbnail" class="thumb-image">
+                    <img src="/images/img.png" alt="Project Thumbnail" class="thumb-image">
                 </div>
             </a>
 
             <div class="showcase-meta">
-                <span class="pill-label pill-green">Project Stack</span>
-                <h2>느려지지 않는 변환<br>흐름을 만드는 기술</h2>
-                <p>사용자는 빠르게 요청하고, 서버는 안정적으로 처리하고, 진행 상태는 즉시 보여주는 구조를 목표로 했습니다.</p>
+                <div class="showcase-date-row">
+                    <span class="showcase-date"><i class="far fa-calendar-alt"></i> 2025.12 ~ 2026.04 (4개월)</span>
+                    <span class="showcase-team"><i class="far fa-user"></i> 2명</span>
+                </div>
+
+                <div class="impact-header-title">
+                    <i class="fas fa-trending-up"></i> 핵심 임팩트
+                </div>
+
+                <div class="impact-list">
+                    <span class="tag-impact">무거운 변환 로직 전용 서버 분리로 성능 향상</span>
+                    <span class="tag-impact">메시지큐 도입을 통한 비동기 처리 및 사용자 경험 개선</span>
+                    <span class="tag-impact">CDC를 통한 이벤트 트리거 구성</span>
+                </div>
+
                 <div class="showcase-keywords">
-                    <span>Event-Driven Architecture</span>
-                    <span>CDC / Outbox</span>
-                    <span>Redis / SSE</span>
+                    <span>Java</span>
+                    <span>Spring Boot</span>
                     <span>RabbitMQ</span>
+                    <span>Debezium</span>
+                    <span>MySQL</span>
+                    <span>Redis</span>
+                    <span>AWS</span>
+                    <span class="tag-more">+4</span>
                 </div>
             </div>
-        </div>
-    </section>
+        </div> </section>
 
     <section id="featured-projects-2" class="section-block reveal">
         <div class="section-intro">
@@ -139,7 +186,7 @@
                         <span class="tech-icon-chip"><em>SSE</em></span>
                         <span class="tech-icon-chip"><em>Pub/Sub</em></span>
                     </div>
-<!--                    <p class="flow-text">Worker → Redis → API → SSE → Client</p>-->
+                    <!--                    <p class="flow-text">Worker → Redis → API → SSE → Client</p>-->
                 </div>
                 <div class="detail-content detail-star-content">
                     <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>초기에는 DB polling 방식(주기적 SELECT)을 고려했으나, 요청이 증가할수록 DB read 부하가 급격히 증가하고 실시간성이 떨어지는 문제가 있었다.</p></div>
@@ -158,7 +205,7 @@
                         <span class="tech-icon-chip"><em>Database</em></span>
                         <span class="tech-icon-chip"><em>Flush</em></span>
                     </div>
-<!--                    <p class="flow-text">Redis → DB Flush → Rebuild</p>-->
+                    <!--                    <p class="flow-text">Redis → DB Flush → Rebuild</p>-->
                 </div>
                 <div class="detail-content detail-star-content">
                     <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>전역 통계를 Redis 기반으로 실시간 제공했지만, 메모리 특성상 장애 발생 시 데이터 유실 가능성이 존재했다.</p></div>
@@ -177,7 +224,7 @@
                         <span class="tech-icon-chip"><em>Outbox</em></span>
                         <span class="tech-icon-chip"><em>RabbitMQ</em></span>
                     </div>
-<!--                    <p class="flow-text">API → DB + Outbox → CDC → MQ → Worker</p>-->
+                    <!--                    <p class="flow-text">API → DB + Outbox → CDC → MQ → Worker</p>-->
                 </div>
                 <div class="detail-content detail-star-content">
                     <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>파일 업로드 후 Worker에게 작업을 전달해야 했는데, API에서 DB 저장 + MQ publish를 직접 수행할 경우 이중쓰기 문제가 발생할 수 있었다. 또한 polling 방식은 불필요한 DB 조회가 발생했다.</p></div>
@@ -195,7 +242,7 @@
                         <span class="tech-icon-chip"><em>S3</em></span>
                         <span class="tech-icon-chip"><em>Presigned URL</em></span>
                     </div>
-<!--                    <p class="flow-text">Client → API(upload-init) → S3 → API(upload-complete)</p>-->
+                    <!--                    <p class="flow-text">Client → API(upload-init) → S3 → API(upload-complete)</p>-->
                 </div>
                 <div class="detail-content detail-star-content">
                     <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>파일 업로드 시 API 서버를 통해 S3로 업로드하는 구조를 고려했으나, 대용량 파일 처리 시 서버 리소스 사용량 증가 및 병목 가능성이 존재했다.</p></div>
