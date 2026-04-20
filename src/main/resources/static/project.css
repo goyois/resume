@@ -103,10 +103,19 @@
 
 /* 핵심 임팩트 타이틀 */
 .project-integration .impact-header-title {
-    font-size: 1.05rem !important;
+    font-size: 1.1rem !important;
     font-weight: 700 !important;
-    color: #1e293b !important;
-    margin-bottom: 12px !important;
+    color: #1e293b !important; /* 사진 속 짙은 텍스트 색상 */
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important; /* 아이콘과 텍스트 사이 간격 */
+}
+
+/* 초록색 화살표 아이콘 스타일 */
+.project-integration .impact-header-title i {
+    color: #10b981 !important; /* 사진과 동일한 선명한 초록색 */
+    font-size: 1.2rem !important; /* 아이콘 크기 살짝 키움 */
 }
 
 /* 핵심 임팩트 녹색 뱃지 */

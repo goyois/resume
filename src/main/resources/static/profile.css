@@ -188,8 +188,8 @@ body {
 
 /* ⭐ 가장 중요한 부분: 거대한 이미지를 원 안에 맞춤 */
 .social-icon img {
-    width: 22px; /* 아이콘 내부 이미지 크기 조절 */
-    height: 22px;
+    width: 27px; /* 아이콘 내부 이미지 크기 조절 */
+    height: 27px;
 }
 
 .social-icon:hover {
