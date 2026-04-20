@@ -1,46 +1,39 @@
-/* project.css */
+/* project.css - 사진 크기 극대화 및 레이아웃 최종 최적화 */
 
-/* 1. 제목 및 설명 영역 (카드 테두리 밖, 중앙 정렬) */
+/* 1. 제목 및 설명 영역 (카드 테두리 밖) */
 .project-intro-head {
     width: 100% !important;
     max-width: var(--width, 1220px) !important;
     margin: 0 auto 40px auto !important;
-    text-align: center !important; /* 내부 텍스트 전체 중앙 정렬 */
+    text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important; /* Flex 구조에서도 중앙 정렬 보장 */
+    align-items: center !important;
 }
 
 .project-intro-head h1 {
-
     font-size: 2.2rem !important;
     font-weight: 800;
     color: #111827;
     margin: 15px 0 10px 0 !important;
     letter-spacing: -0.04em;
-    width: 100%;
 }
 
 .project-intro-head p {
     font-size: 1.05rem;
     color: #667085;
-    margin: 0 auto !important; /* 좌우 마진 auto로 중앙 고정 */
-    display: block;
+    margin: 0 auto !important;
     line-height: 1.6;
-    max-width: 800px; /* 너무 길어지면 읽기 힘드므로 최대 너비 제한 */
 }
 
-/* 2. 통합 프로젝트 카드 (하단 .scan-card와 정렬 일치 버전) */
+/* 2. 통합 프로젝트 카드 (하단 카드와 정렬 일치) */
 .project-integration {
-    /* 너비 오차를 없애기 위해 부모 너비를 100% 채우고 max-width로 제한 */
     width: 100% !important;
     max-width: var(--width, 1220px) !important;
     margin: 0 auto 80px auto !important;
     box-sizing: border-box !important;
-    display: block !important;
 
-    /* 하단 카드와 동일한 유리 효과 및 테두리 스타일 */
-    padding: 40px !important;
+    padding: 50px 40px !important;
     background: rgba(255, 255, 255, 0.88) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -49,80 +42,123 @@
     box-shadow: var(--shadow, 0 24px 80px rgba(15, 23, 42, 0.08)) !important;
 }
 
-/* 3. 내부 레이아웃 (사진-설명 가로 배치) */
+/* 3. 내부 레이아웃 */
 .project-integration .project-showcase {
     display: flex !important;
-    gap: 48px !important;
-    align-items: flex-start !important;
-    /* 내부 개별 박스 스타일 초기화 */
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
+    gap: 50px !important;
+    align-items: center !important;
 }
 
-/* 왼쪽 사진 영역 */
+/* 왼쪽 사진 영역 (박스 안에서 최대한 크게) */
 .project-integration .showcase-thumb {
-    flex: 1 !important;
+    flex: 1.2 !important;
+    display: flex !important;
+    justify-content: center !important;
     padding: 0 !important;
+    /* 테두리 및 배경 완전 제거 */
     background: transparent !important;
     border: none !important;
+    outline: none !important; /* 포커스 시 생기는 선 방지 */
 }
 
 .project-integration .thumb-image-wrap {
+    width: 100% !important;
+    max-width: 520px !important;
     border-radius: var(--radius-md, 18px) !important;
     overflow: hidden;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.1) !important;
-}
 
-.project-integration .thumb-image {
-    width: 100% !important;
-    display: block !important;
+    /* [수정] 강제로 테두리를 0으로 만들고, 그림자를 더 부드럽게 조정 */
+    border: 0 !important;
+    outline: none !important;
+    background: #fff; /* 혹시 모를 투명도 오차 방지 */
+
+    /* 그림자가 선처럼 보이지 않도록 퍼짐 정도(Blur)를 높임 */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
     transition: transform 0.3s ease;
 }
 
-.project-integration .showcase-thumb:hover .thumb-image {
+.project-integration .thumb-image {
+    width: 101% !important; /* 미세한 흰 테두리가 보일 경우 1% 더 키워 꽉 채움 */
+    margin: -1px; /* 부모 테두리와의 미세한 틈 제거 */
+    display: block !important;
+    border: none !important;
+}
+
+.project-integration .showcase-thumb:hover .thumb-image-wrap {
     transform: scale(1.03);
 }
 
-/* 오른쪽 설명 영역 */
+/* 4. 오른쪽 설명 영역 */
 .project-integration .showcase-meta {
-    flex: 1.2 !important;
+    flex: 1 !important; /* 사진보다 살짝 좁게 가져가서 사진을 강조 */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-/* 핵심 임팩트 태그 디자인 */
+/* 날짜 */
+.project-integration .showcase-date-row {
+    font-size: 0.95rem !important;
+    color: #667085 !important;
+    margin-bottom: 20px !important;
+}
+
+/* 핵심 임팩트 타이틀 */
+.project-integration .impact-header-title {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin-bottom: 12px !important;
+}
+
+/* 핵심 임팩트 녹색 뱃지 */
+.project-integration .impact-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 32px !important;
+    width: 100% !important;
+}
+
 .project-integration .tag-impact {
-    display: block;
-    padding: 10px 16px;
-    background: rgba(47, 109, 178, 0.05) !important;
-    color: #2f6db2 !important;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    border-left: 4px solid #2f6db2 !important;
+    background: #eefbf4 !important;
+    color: #14532d !important;
+    padding: 8px 16px !important;
+    border-radius: 100px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    border: 1px solid rgba(20, 83, 45, 0.05) !important;
 }
 
-/* 기술 스택 칩 스타일 */
+/* 기술 스택 영역 (하단 고정) */
+.project-integration .showcase-keywords {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0,0,0,0.03);
+}
+
 .project-integration .showcase-keywords span {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.06) !important;
-    padding: 6px 12px !important;
-    border-radius: 8px !important;
-    font-size: 0.85rem !important;
+    background: #f3f4f6 !important;
     color: #4b5563 !important;
+    padding: 6px 14px !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
 }
 
-/* 4. 모바일 대응 */
+/* 5. 모바일 대응 */
 @media (max-width: 980px) {
     .project-integration .project-showcase {
         flex-direction: column !important;
-        gap: 30px !important;
     }
-    .project-integration {
-        padding: 24px !important;
+    .project-integration .thumb-image-wrap {
+        max-width: 100% !important;
     }
 }
