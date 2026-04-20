@@ -141,7 +141,7 @@ body {
 
 /* "2년+", "2+" 수치 */
 .stat-item strong {
-    font-size: 1.8rem !important; /* 가독성을 위해 살짝 키움 */
+    font-size: 1.3rem !important; /* 가독성을 위해 살짝 키움 */
     color: #2f6db2 !important;
     font-weight: 800 !important;
     /* 숫자가 잘리지 않도록 충분한 높이 부여 */
