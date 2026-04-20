@@ -1,4 +1,4 @@
-/* project.css - 사진 크기 극대화 및 레이아웃 최종 최적화 */
+/* project.css - 사진 크기 극대화 및 레이아웃 최적화 */
 
 /* 1. 제목 및 설명 영역 (카드 테두리 밖) */
 .project-intro-head {
@@ -14,25 +14,24 @@
 .project-intro-head h1 {
     font-size: 2.2rem !important;
     font-weight: 800;
-    color: #111827;
+    color: #111827 !important;
     margin: 15px 0 10px 0 !important;
     letter-spacing: -0.04em;
 }
 
 .project-intro-head p {
     font-size: 1.05rem;
-    color: #667085;
+    color: #4b5563 !important;
     margin: 0 auto !important;
     line-height: 1.6;
 }
 
-/* 2. 통합 프로젝트 카드 (하단 카드와 정렬 일치) */
+/* 2. 통합 프로젝트 카드 */
 .project-integration {
     width: 100% !important;
     max-width: var(--width, 1220px) !important;
     margin: 0 auto 80px auto !important;
     box-sizing: border-box !important;
-
     padding: 50px 40px !important;
     background: rgba(255, 255, 255, 0.88) !important;
     backdrop-filter: blur(12px) !important;
@@ -45,52 +44,47 @@
 /* 3. 내부 레이아웃 */
 .project-integration .project-showcase {
     display: flex !important;
-    gap: 50px !important;
+    gap: 40px !important; /* 사진이 커짐에 따라 여유 있는 간격 유지 */
     align-items: center !important;
 }
 
-/* 왼쪽 사진 영역 (박스 안에서 최대한 크게) */
+/* 왼쪽 사진 영역 (박스 안에서 최대 비중 확보) */
 .project-integration .showcase-thumb {
-    flex: 1.2 !important;
+    flex: 1.4 !important; /* 1.2에서 1.4로 상향하여 사진 영역을 더 넓게 잡음 */
     display: flex !important;
     justify-content: center !important;
     padding: 0 !important;
-    /* 테두리 및 배경 완전 제거 */
     background: transparent !important;
     border: none !important;
-    outline: none !important; /* 포커스 시 생기는 선 방지 */
 }
 
 .project-integration .thumb-image-wrap {
     width: 100% !important;
-    max-width: 520px !important;
+    max-width: 580px !important; /* 520px에서 580px로 대폭 상향 */
     border-radius: var(--radius-md, 18px) !important;
     overflow: hidden;
 
-    /* [수정] 강제로 테두리를 0으로 만들고, 그림자를 더 부드럽게 조정 */
+    /* 선처럼 보이는 현상을 방지하기 위한 설정 */
     border: 0 !important;
     outline: none !important;
-    background: #fff; /* 혹시 모를 투명도 오차 방지 */
-
-    /* 그림자가 선처럼 보이지 않도록 퍼짐 정도(Blur)를 높임 */
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
     transition: transform 0.3s ease;
 }
 
 .project-integration .thumb-image {
-    width: 101% !important; /* 미세한 흰 테두리가 보일 경우 1% 더 키워 꽉 채움 */
-    margin: -1px; /* 부모 테두리와의 미세한 틈 제거 */
+    width: 101% !important; /* 미세한 틈을 메우기 위해 1% 확대 */
+    margin: -1px;
     display: block !important;
     border: none !important;
 }
 
 .project-integration .showcase-thumb:hover .thumb-image-wrap {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 /* 4. 오른쪽 설명 영역 */
 .project-integration .showcase-meta {
-    flex: 1 !important; /* 사진보다 살짝 좁게 가져가서 사진을 강조 */
+    flex: 1 !important; /* 사진(1.4) 대비 텍스트(1) 비율로 조절 */
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -103,7 +97,7 @@
 /* 날짜 */
 .project-integration .showcase-date-row {
     font-size: 0.95rem !important;
-    color: #667085 !important;
+    color: #64748b !important;
     margin-bottom: 20px !important;
 }
 
@@ -111,7 +105,7 @@
 .project-integration .impact-header-title {
     font-size: 1.05rem !important;
     font-weight: 700 !important;
-    color: #111827 !important;
+    color: #1e293b !important;
     margin-bottom: 12px !important;
 }
 
@@ -126,7 +120,7 @@
 
 .project-integration .tag-impact {
     background: #eefbf4 !important;
-    color: #14532d !important;
+    color: #166534 !important;
     padding: 8px 16px !important;
     border-radius: 100px !important;
     font-size: 0.9rem !important;
@@ -134,23 +128,23 @@
     border: 1px solid rgba(20, 83, 45, 0.05) !important;
 }
 
-/* 기술 스택 영역 (하단 고정) */
+/* 기술 스택 칩 */
 .project-integration .showcase-keywords {
     display: flex !important;
     flex-wrap: wrap !important;
     gap: 10px !important;
     width: 100% !important;
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 1px solid rgba(0,0,0,0.03);
 }
 
 .project-integration .showcase-keywords span {
-    background: #f3f4f6 !important;
-    color: #4b5563 !important;
-    padding: 6px 14px !important;
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    padding: 7px 16px !important;
     border-radius: 8px !important;
     font-size: 0.9rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
 }
 
 /* 5. 모바일 대응 */
