@@ -126,118 +126,589 @@
         </div>
 
 
-
         <div class="featured-list">
+            <!-- ================= 메인 프로젝트 아코디언 ================= -->
             <div class="accordion-item" id="acc-1">
-                <button class="accordion-header" onclick="toggleAccordion('acc-1')">
+                <!-- 메인 헤더 클릭 시 toggleAccordion 실행 후, 내부 아코디언 상태 강제 초기화 -->
+                <button class="accordion-header" onclick="toggleAccordion('acc-1'); const acc = document.getElementById('acc-1'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
                     <div class="header-main">
                         <span class="card-index">01</span>
                         <h3> MSA Architecture 로 전환 </h3>
-                        <p> 모놀리틱 -> 이벤트 기반 으로 전환하여 성능 및 사용자 경험을 증대시켰습니다.</p>
+                        <p> 모놀리틱 -> 이벤트 기반 아키텍처로 전환하여 처리 성능 및 사용자 경험을 증대시켰습니다.</p>
                     </div>
-
                     <div class="scan-results">
                         <span>Event-Driven-Architecture</span>
                         <span>Async</span>
                         <span>UX</span>
                     </div>
-
                     <i class="fas fa-chevron-down arrow-icon"></i>
                 </button>
+
+                <!-- 메인 아코디언 콘텐츠 영역 -->
                 <div class="accordion-content">
-                    <div class="inner-padding">
-                        <div class="detail-star-content">
-                            <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>초기에는 DB polling 방식(주기적 SELECT)을 고려했으나, 요청이 증가할수록 DB read 부하가 급격히 증가하고 실시간성이 떨어지는 문제가 있었다.</p></div>
-                            <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>변환 진행 상태를 실시간으로 사용자에게 전달</li><li>DB 부하를 최소화하면서 낮은 지연으로 상태 동기화</li></ul></div>
-                            <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><ul class="star-list"><li>Worker - Redis Pub (진행 상태 발행)</li><li>API - Redis Sub (이벤트 구독)</li><li>API → SSE로 클라이언트에 push</li></ul></div>
-                            <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><p>DB read 부하 감소 및 실시간 처리 구현. "실시간" 문제는 DB보다 메시지 기반 구조로 풀어야 함을 학습.</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div class="inner-padding" style="padding: 24px 16px;">
 
+                        <!-- S, T, A, R 카드 리스트 (세로 배치) -->
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
 
+                            <!-- 1. SITUATION 카드 -->
+                            <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                            <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span>
+                                            <strong style="font-size: 18px; color: #333;">상황</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">동기 처리 방식의 한계</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">동기 처리 구조로 인해 사용자의 요청에 대한 응답을 변환이 완료될 때까지 기다려야 함</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">장애 전파 위험성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변환 처리 장애가 생기는 경우 메인 서버까지 전파됨</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">트래픽 확장성 저하</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">도메인 간의 강결합으로 인해 트래픽 급증 시 확장성이 저하됨</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- 2. TASK 카드 -->
+                            <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;">
+                                            <i class="fas fa-bullseye"></i>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                            <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span>
+                                            <strong style="font-size: 18px; color: #333;">과제</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">비동기 이벤트 기반 처리 성능 향상</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">전체 프로세스를 비동기 이벤트 기반으로 전환하여 시스템의 처리 성능(TPS)을 향상시키는 것이 목표</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 모니터링 환경 조성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자에게 작업 진행 상태를 실시간으로 전달할 수 있는 모니터링 환경 구축</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- 02. Redis + DB -->
-            <div class="accordion-item" id="acc-2">
-                <button class="accordion-header" onclick="toggleAccordion('acc-2')">
-                    <div class="header-main">
-                        <span class="card-index">02</span>
-                        <h3>실시간성과 안정성을 함께 확보한 통계 보정 구조</h3>
-                        <p>Redis와 DB 보정 전략으로 실시간 통계를 운영 가능하게 만들었습니다.</p>
-                    </div>
-                    <div class="scan-results">
-                        <span>영속성 확보</span>
-                        <span>통계 데이터 복구 가능</span>
-                    </div>
-                    <i class="fas fa-chevron-down arrow-icon"></i>
-                </button>
-                <div class="accordion-content">
-                    <div class="inner-padding">
-                        <div class="detail-star-content">
-                            <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>전역 통계를 Redis 기반으로 실시간 제공했지만, 메모리 특성상 장애 발생 시 데이터 유실 가능성이 존재했다.</p></div>
-                            <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>실시간성과 데이터 안정성 동시에 확보</li><li>Redis 장애 시 fallback 구조 필요</li></ul></div>
-                            <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><ul class="star-list"><li>Redis에 실시간 통계 저장</li><li>1분 주기로 DB flush</li><li>재집계로 Redis/DB overwrite</li></ul></div>
-                            <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><p>실시간 + 영속성 확보. Redis는 빠르지만 영속성은 없고, 반드시 보정 전략이 필요함을 학습.</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <!-- 3. ACTION 카드 -->
+                            <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;">
+                                            <i class="fas fa-wrench"></i>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                            <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span>
+                                            <strong style="font-size: 18px; color: #333;">실행</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">비동기 메시지 브로커 도입</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무거운 파일 변환 작업을 RabbitMQ를 활용해 비동기로 분리하고, 수동 Ack 및 DLQ(Dead Letter Queue) 설정을 통해 처리 안정성 확보</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 상태 전달 아키텍처 구축</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Worker 서버에서 Redis Pub으로 진행 상태를 발행하고, API 서버가 이를 구독(Sub)하여 클라이언트에게 SSE(Server-Sent Events)로 실시간 푸시</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 정합성 보장</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Transactional Outbox Pattern과 Debezium(CDC)을 적용하여 데이터베이스 업데이트와 도메인 이벤트 발행 간의 원자성 확보</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- 03. Outbox + CDC -->
-            <div class="accordion-item" id="acc-3">
-                <button class="accordion-header" onclick="toggleAccordion('acc-3')">
-                    <div class="header-main">
-                        <span class="card-index">03</span>
-                        <h3>이벤트 유실을 막기 위한 Outbox + CDC 구조</h3>
-                        <p>DB 저장과 MQ publish 사이의 이중쓰기 문제를 해결하였습니다.</p>
-                    </div>
-                    <div class="scan-results">
-                        <span>정합성 확보</span>
-                        <span>이벤트 유실 방지</span>
-                    </div>
-                    <i class="fas fa-chevron-down arrow-icon"></i>
-                </button>
-                <div class="accordion-content">
-                    <div class="inner-padding">
-                        <div class="detail-star-content">
-                            <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>API에서 DB 저장 + MQ publish를 직접 수행할 경우 이중쓰기 정합성 문제가 발생할 수 있었다.</p></div>
-                            <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>이벤트 유실 없이 정합성 보장</li><li>API와 MQ 간 결합도 제거</li></ul></div>
-                            <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><ul class="star-list"><li>Outbox 패턴 + Debezium CDC 선택</li><li>동일 트랜잭션에 history + outbox_event 저장</li><li>Debezium이 변경 감지 후 MQ publish</li></ul></div>
-                            <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><p>이중쓰기 해결 및 이벤트 유실 방지. 분산 환경에서는 MQ 발행보다 이벤트 기록이 우선임을 학습.</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 04. Presigned URL -->
-            <div class="accordion-item" id="acc-4">
-                <button class="accordion-header" onclick="toggleAccordion('acc-4')">
-                    <div class="header-main">
-                        <span class="card-index">04</span>
-                        <h3>대용량 업로드에서 서버를 거치지 않게 만든 구조</h3>
-                        <p>Presigned URL 기반 직접 업로드로 병목을 대비하였습니다.</p>
-                    </div>
-                    <div class="scan-results">
-                        <span>스트림 제거</span>
-                        <span>안정성 향상</span>
-                    </div>
-                    <i class="fas fa-chevron-down arrow-icon"></i>
-                </button>
-                <div class="accordion-content">
-                    <div class="inner-padding">
-                        <div class="detail-star-content">
-                            <div class="star-box star-red-box"><div class="star-head"><span>SITUATION</span><strong>상황</strong></div><p>대용량 파일 업로드 시 API 서버를 거치면 서버 리소스 급증 및 네트워크 병목 가능성이 컸다.</p></div>
-                            <div class="star-box star-yellow-box"><div class="star-head"><span>TASK</span><strong>과제</strong></div><ul class="star-list"><li>서버 부하 없이 파일 업로드 처리</li><li>업로드 경로에 대한 서버의 통제권 유지</li></ul></div>
-                            <div class="star-box star-blue-box"><div class="star-head"><span>ACTION</span><strong>실행</strong></div><ul class="star-list"><li>Presigned URL 기반 클라이언트 직접 업로드</li><li>API는 URL과 권한만 관리</li></ul></div>
-                            <div class="star-box star-green-box"><div class="star-head"><span>RESULT</span><strong>결과</strong></div><p>API 서버 파일 스트림 제거로 확장성 향상. 데이터 경로 최적화의 중요성을 학습.</p></div>
+                            <!-- 4. RESULT 카드 -->
+                            <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;">
+                                            <i class="fas fa-trophy"></i>
+                                        </div>
+                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                            <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span>
+                                            <strong style="font-size: 18px; color: #333;">결과</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">시스템 처리 성능(TPS) 극대화</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이벤트 기반 아키텍처(EDA) 전환 및 비동기 처리를 통해 기존 대비 처리 성능(TPS) <strong>500%</strong> 향상</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">사용자 경험(UX) 및 안정성 개선</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">실시간 진행률 표시로 사용자 대기 경험을 크게 개선했으며, 도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- ================= 02. iText 변환 ================= -->
+        <div class="accordion-item" id="acc-2">
+            <button class="accordion-header" onclick="toggleAccordion('acc-2'); const acc = document.getElementById('acc-2'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+                <div class="header-main">
+                    <span class="card-index">02</span>
+                    <h3>iText 를 통한 스트림 기반의 파일 변환 처리</h3>
+                    <p>빠른 처리 속도와 메모리 효율이 우수하며, 서버 리소스 점유율을 최소화할 수 있었습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>변환 최적화</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메모리 초과(OOM) 위험</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">대용량 문서(PDF) 변환 시 전체 파일을 메모리에 로드하는 기존 방식으로 인해 Heap Memory 부족 및 GC 부하로 인한 시스템 지연 발생</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Constant Memory Footprint 달성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">파일 크기에 관계없이 일정한 메모리 점유율을 유지하여 대용량 파일 처리 안정성 및 서버 가용성 확보</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">스트림 기반 아키텍처 개선</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">DOM 방식 대신 iText의 Stream 기반 PdfWriter를 도입하여 데이터를 Chunk 단위로 분할하여 순차 처리</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">파이프라인 데이터 흐름 최적화</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">InputStream과 OutputStream 파이프라인을 연결하여 디스크 I/O와 메모리 버퍼 간의 데이터 병목 현상 해소</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메모리 절감 및 처리 효율 극대화</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">기존 대비 메모리 사용량 70% 이상 절감 및 대용량 파일 변환 성공률 100% 달성하여 동시 처리 효율 극대화</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 03. CDC 도입 ================= -->
+        <div class="accordion-item" id="acc-3">
+            <button class="accordion-header" onclick="toggleAccordion('acc-3'); const acc = document.getElementById('acc-3'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+                <div class="header-main">
+                    <span class="card-index">03</span>
+                    <h3>Change Data Capture(CDC) 를 활용한 Publisher 구성</h3>
+                    <p>불필요한 스케줄링 방식을 Bin-log 감지 기반의 Debezium 으로 전환하여 데이터베이스 및 서버 성능을 최적화했습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>서버 데이터베이스 커넥션 최적화</span>
+                    <span>데이터베이스 I/O 최적화</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">DB 부하 및 변환 지연 발생</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변환 대상 파일의 상태 변화를 감지하기 위해 스케줄러가 DB를 지속적으로 조회(Polling)함에 따라 불필요한 I/O 부하 발생</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 정합성 보장 및 결합도 해소</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">DB와 메시지 큐(MQ) 간의 분산 트랜잭션 없이 데이터 정합성(Atomicity)을 보장하고 서비스 간 도메인 결합도 제거</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 패턴 적용</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">비즈니스 로직과 Outbox 테이블 기록을 단일 로컬 트랜잭션으로 묶어 이벤트 발행의 신뢰성 확보</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 연동</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터베이스의 Bin-log를 실시간으로 캡처하여 변경 감지 후 즉시 메시지 브로커로 이벤트 Publish</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">성능 최적화 및 지연 시간 단축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">DB 폴링 제거를 통해 커넥션 효율성을 향상시키고 이중 쓰기(Dual-write) 문제를 근본적으로 해결하여 이벤트 발행 지연 최소화</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 04. 메시지큐 트랜잭션 ================= -->
+        <div class="accordion-item" id="acc-4">
+            <button class="accordion-header" onclick="toggleAccordion('acc-4'); const acc = document.getElementById('acc-4'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+                <div class="header-main">
+                    <span class="card-index">04</span>
+                    <h3>메시지큐 트랜잭션 구조 구현</h3>
+                    <p>Consumer 의 수동 Manual Acknowledge 를 구현하여 변환 처리 신뢰성을 향상시켰습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>Transaction</span>
+                    <span>DeadLetterQueue</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메시지 유실 및 자원 고갈 위험</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">컨슈머(Consumer) 단에서 예외 발생 시 메시지가 즉시 유실되거나, 처리 실패 건이 무한 루프에 빠져 브로커 리소스를 점유할 위험 상존</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">At-least-once 전달 보장 및 예외 제어</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">메시지 최소 한 번 전송을 보장하고, 비정상적인 실패 건에 대한 명확한 격리 처리 체계 구축</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">수동 승인(Manual Ack) 도입</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Consumer Acknowledgement를 Manual 모드로 활성화하여 비즈니스 로직이 완전히 성공한 경우에만 브로커로 Ack 신호 전송</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">재시도 정책 및 DLQ 라우팅</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">RetryTemplate을 통해 일시적 오류에 대해 최대 3회 재시도를 수행하고, 최종 실패 시 Dead Letter Queue(DLQ)로 라우팅하여 별도의 에러 로깅 체계 구축</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 무결성 및 자생력 확보</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">메시지 유실 가능성을 0%로 수렴시키며, 일시적인 장애 상황에서도 유연한 복구 체계를 바탕으로 운영 안정성 및 내결함성 강화</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 05. 실시간 상태 표시 ================= -->
+        <div class="accordion-item" id="acc-5">
+            <button class="accordion-header" onclick="toggleAccordion('acc-5'); const acc = document.getElementById('acc-5'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+                <div class="header-main">
+                    <span class="card-index">05</span>
+                    <h3>SSE + Redis 를 통한 실시간 변환 상태 표시</h3>
+                    <p>변환 상태를 Redis Pub/Sub 을 통해 API 서버로 전송 및 SSE 를 통한 실시간으로 표시합니다. </p>
+                </div>
+                <div class="scan-results">
+                    <span>SSE</span>
+                    <span>Redis Pub/Sub</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">서버 자원 낭비 및 사용자 피드백 부재</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">파일 변환 완료 여부를 확인하기 위해 클라이언트가 지속적인 조회 요청(Short Polling)을 보냄에 따라 서버 CPU 및 네트워크 대역폭 낭비 심화</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 상태 가시화 설계</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자에게 변환 진행률을 실시간으로 Push하여 대기 경험(UX)을 개선하고, 다중 분산 서버 환경에서도 이벤트를 매칭할 수 있는 구조 필요</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">단방향 실시간 통신망 구축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">SSE(Server-Sent Events)를 통한 단방향 실시간 채널을 구축하여 불필요한 HTTP 오버헤드 최적화</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">다중 노드 브로드캐스팅 처리</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Redis Pub/Sub 아키텍처를 결합하여 워커 노드의 이벤트를 클라이언트의 UUID 및 파일명과 매칭하여 세션에 실시간 전달</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
+                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
+                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">UX 혁신 및 트래픽 절감</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">상태 조회 트래픽을 90% 이상 대폭 절감하였으며, 사용자에게 즉각적인 진행 상태 피드백을 제공하여 전체적인 서비스 신뢰도 확보</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
+
+
+
+
+
+
+
+    <span> 트러블 슈팅 </span>
+
 
     <section id="project-overview" class="section-block reveal">
         <div class="project-intro-meta">
