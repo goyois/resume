@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="project.css">
     <link rel="stylesheet" href="background-animation.css">
     <link rel="stylesheet" href="accordion.css">
+    <link rel="stylesheet" href="stack.css">
 </head>
 <body class="portfolio-body brand-dark">
 
@@ -122,7 +123,6 @@
     <section id="featured-projects-2" class="section-block reveal">
         <div class="section-intro">
             <span class="pill-label section-pill">Featured Projects</span>
-            <p>카드를 클릭하면 상세한 해결 과정(STAR)을 확인할 수 있습니다.</p>
         </div>
 
 
@@ -698,36 +698,150 @@
                 </div>
             </div>
         </div>
-
     </section>
 
 
 
+    <section class="tech-stack-section">
+        <div class="section-header">
+            <span class="badge">Tech Stack</span>
+        </div>
 
+        <div class="tech-category-grid">
 
+            <!-- 1. Backend & Framework (Spring 생태계 집중) -->
+            <div class="tech-box box-backend">
+                <h3 class="box-title">Language & Framework</h3>
+                <div class="badge-group">
+                    <div class="tech-badge">
+                        <span class="tech-emoji">☕</span>
+                        <span class="tech-name">Java</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🍃</span>
+                        <span class="tech-name">Spring Boot</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🛡️</span>
+                        <span class="tech-name">Spring Security</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🌿</span>
+                        <span class="tech-name">Thymeleaf</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- 2. Data & Event Pipeline (데이터베이스 및 메시징/이벤트) -->
+            <div class="tech-box box-data">
+                <h3 class="box-title">Data Access & DB</h3>
+                <div class="badge-group">
+                    <div class="tech-badge">
+                        <span class="tech-emoji">⚙️</span>
+                        <span class="tech-name">JDBC</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">💾</span>
+                        <span class="tech-name">JPA</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🔍</span>
+                        <span class="tech-name">QueryDSL</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🐬</span>
+                        <span class="tech-name">MySQL</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">⚡</span>
+                        <span class="tech-name">Redis</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                </div>
+            </div>
 
-    <span> 트러블 슈팅 </span>
+            <!-- 3. Infra & DevOps (인프라, 모니터링, 성능 테스트) -->
+            <div class="tech-box box-infra">
+                <h3 class="box-title">Infra & DevOps</h3>
+                <div class="badge-group">
+                    <div class="tech-badge">
+                        <span class="tech-emoji">☁️</span>
+                        <span class="tech-name">AWS</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">📡</span>
+                        <span class="tech-name">SSE</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🐇</span>
+                        <span class="tech-name">RabbitMQ</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🐳</span>
+                        <span class="tech-name">Docker</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🔄</span>
+                        <span class="tech-name">Debezium (CDC)</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                </div>
+            </div>
 
-
-    <section id="project-overview" class="section-block reveal">
-        <div class="project-intro-meta">
-            <div class="project-tech-line">
-                <span class="tech-line-label">&lt;/&gt; Tech Stack</span>
-                <div class="project-tech-tags">
-                    <span>Spring Boot</span>
-                    <span>MySQL</span>
-                    <span>Redis</span>
-                    <span>RabbitMQ</span>
-                    <span>Debezium(CDC)</span>
-                    <span>AWS</span>
-                    <span>Docker</span>
+            <!-- 4. Tools & Collaboration (API, 뷰, 협업 도구) -->
+            <div class="tech-box box-tools">
+                <h3 class="box-title"> Stress Test & Collaboration</h3>
+                <div class="badge-group">
+                    <div class="tech-badge">
+                        <span class="tech-emoji">📊</span>
+                        <span class="tech-name">Grafana</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🎯</span>
+                        <span class="tech-name">Artillery</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🔭</span>
+                        <span class="tech-name">Prometheus</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">📜</span>
+                        <span class="tech-name">Swagger</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">📓</span>
+                        <span class="tech-name">Notion</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">💬</span>
+                        <span class="tech-name">Slack</span>
+                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
 </div>
+
+
+
 
 <script src="/script.js"></script>
 <script>
