@@ -9,13 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/variants.css?v=20260415-flow">
-    <link rel="stylesheet" href="original-style.css">
-    <link rel="stylesheet" href="profile.css">
-    <link rel="stylesheet" href="project.css">
-    <link rel="stylesheet" href="background-animation.css">
-    <link rel="stylesheet" href="accordion.css">
-    <link rel="stylesheet" href="stack.css">
+    <link rel="stylesheet" href="css/variants.css?v=20260415-flow">
+    <link rel="stylesheet" href="css/original-style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/project.css">
+    <link rel="stylesheet" href="css/background-animation.css">
+    <link rel="stylesheet" href="css/accordion.css">
+    <link rel="stylesheet" href="css/stack.css">
+    <link rel="stylesheet" href="css/scroll.css">
 </head>
 <body class="portfolio-body brand-dark">
 
@@ -23,6 +24,10 @@
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
+</div>
+
+<div id="scroll-progress-container">
+    <div id="scroll-progress-bar"></div>
 </div>
 
 <div class="portfolio-shell brand-page main-portfolio">
@@ -34,6 +39,8 @@
             <p class="intro-text"> 비즈니스 성장을 실현하는 시스템을 구축하는 Backend Engineer 김주원입니다.<br>
                 기술이라는 도구를 통해 사람과 비즈니스를 연결시켜, 삶의 질을 향상시키는 것을 추구합니다.
             </p>
+
+
 
             <div class="hero-stats">
                 <div class="stat-group">
@@ -52,6 +59,8 @@
                     <a href="https://github.com/goyois" class="social-icon"><img src="/images/github.png" alt="Github"></a>
                     <a href="https://velog.io/@goyo/posts" class="social-icon"><img src="/images/blog.png" alt="Velog"></a>
                     <a href="mailto:bau12288@gmail.com" class="social-icon"><img src="/images/mail.png" alt="Mail"></a>
+                    <a href="/download/resume.pdf" download="백엔드_엔지니어_김주원_이력서.pdf" class="social-icon">
+                        <img src="/images/resume2.png" alt="Resume"></a>
                 </div>
             </div>
         </div>
@@ -71,7 +80,7 @@
 
     <div class="project-intro-head reveal">
     <span class="pill-label section-pill">
-        <i class="sparkle-icon">✨</i> Projects </span>
+        <i class="sparkle-icon">✨</i> Project </span>
 
         <h1>파일 스튜디오(PDF 변환 서비스)</h1>
         <p>이미지 파일을 PDF로 빠르게 변환합니다.</p>
@@ -122,7 +131,7 @@
     <!-- 핵심 카드 아코디언 섹션 -->
     <section id="featured-projects-2" class="section-block reveal">
         <div class="section-intro">
-            <span class="pill-label section-pill">Featured Projects</span>
+            <span class="pill-label section-pill">Featured Project</span>
         </div>
 
 
@@ -716,22 +725,47 @@
                     <div class="tech-badge">
                         <span class="tech-emoji">☕</span>
                         <span class="tech-name">Java</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🍃</span>
                         <span class="tech-name">Spring Boot</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🛡️</span>
                         <span class="tech-name">Spring Security</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🌿</span>
                         <span class="tech-name">Thymeleaf</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -743,27 +777,57 @@
                     <div class="tech-badge">
                         <span class="tech-emoji">⚙️</span>
                         <span class="tech-name">JDBC</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots"><span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">💾</span>
                         <span class="tech-name">JPA</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🔍</span>
                         <span class="tech-name">QueryDSL</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🐬</span>
                         <span class="tech-name">MySQL</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">⚡</span>
                         <span class="tech-name">Redis</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -775,27 +839,68 @@
                     <div class="tech-badge">
                         <span class="tech-emoji">☁️</span>
                         <span class="tech-name">AWS</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">📡</span>
                         <span class="tech-name">SSE</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🐇</span>
                         <span class="tech-name">RabbitMQ</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🐳</span>
                         <span class="tech-name">Docker</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🔄</span>
-                        <span class="tech-name">Debezium (CDC)</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <span class="tech-name">Debezium </span>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="tech-badge">
+                        <span class="tech-emoji">🐙</span>
+                        <span class="tech-name">Git </span>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -807,32 +912,68 @@
                     <div class="tech-badge">
                         <span class="tech-emoji">📊</span>
                         <span class="tech-name">Grafana</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🎯</span>
                         <span class="tech-name">Artillery</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">🔭</span>
                         <span class="tech-name">Prometheus</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">📜</span>
                         <span class="tech-name">Swagger</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">📓</span>
                         <span class="tech-name">Notion</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                     <div class="tech-badge">
                         <span class="tech-emoji">💬</span>
                         <span class="tech-name">Slack</span>
-                        <div class="tech-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+                        <div class="tech-dots">
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                            <span class="dot filled"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -843,33 +984,10 @@
 
 
 
-<script src="/script.js"></script>
-<script>
-    // 아코디언 토글 함수
-    function toggleAccordion(id) {
-        const item = document.getElementById(id);
-        const isActive = item.classList.contains('active');
+<script src="js/scroll-indicator.js"></script>
+<script src="js/script.js"></script>
+<script src="js/accordion.js"></script>
 
-        // 다른 열려있는 아코디언 닫기 (선택 사항)
-        document.querySelectorAll('.accordion-item').forEach(el => {
-            el.classList.remove('active');
-        });
 
-        // 현재 클릭한 것 토글
-        if (!isActive) {
-            item.classList.add('active');
-        }
-    }
-
-    window.onload = function() {
-        if (window.location.hash) {
-            history.replaceState('', document.title, window.location.pathname + window.location.search);
-            window.scrollTo(0, 0);
-        }
-    };
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-</script>
 </body>
 </html>

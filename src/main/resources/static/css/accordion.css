@@ -16,53 +16,57 @@
         }
 
         .accordion-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            color: inherit;
-        }
+                width: 100%;
+                display: grid;
+                /* [왼쪽 텍스트 1.5비율] | [태그 영역 1비율] | [화살표 24px] */
+                grid-template-columns: 1.5fr 1fr 24px;
+                align-items: center;
+                gap: 30px; /* 각 영역 사이의 여백 */
+                padding: 24px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                text-align: left;
+                color: inherit;
+            }
 
         .accordion-header:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
+                background: rgba(255, 255, 255, 0.06);
+            }
 
         .header-main {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
 
-        .accordion-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: #4dabf7;
-        }
+            .accordion-header h3 {
+                margin: 0;
+                font-size: 1.25rem;
+                color: #4dabf7;
+            }
 
-        .accordion-header p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #aaa;
-        }
+            .accordion-header p {
+                margin: 0;
+                font-size: 0.95rem;
+                color: #aaa;
+            }
 
         .scan-results {
-            display: flex;
-            gap: 10px;
-        }
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap; /* 태그가 길어져도 넘어가지 않게 줄바꿈 허용 */
+                justify-content: flex-start; /* 시작점을 왼쪽으로 고정 */
+            }
 
         .scan-results span {
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(0, 123, 255, 0.1);
-            color: #4dabf7;
-            border: 1px solid rgba(0, 123, 255, 0.2);
-        }
+                font-size: 0.8rem;
+                padding: 4px 10px;
+                border-radius: 20px;
+                background: rgba(0, 123, 255, 0.1);
+                color: #4dabf7;
+                border: 1px solid rgba(0, 123, 255, 0.2);
+            }
 
         .accordion-content {
             max-height: 0;
