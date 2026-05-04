@@ -1,0 +1,238 @@
+/* ================= 푸터 영역 스타일 ================= */
+.site-footer {
+    background-color: #121620;
+    color: #94a3b8;
+    padding: 50px 0 25px 0; /* 상하 패딩 최적화 */
+    font-family: 'Noto Sans KR', sans-serif;
+    border-top: 1px solid #2d3748;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-container {
+    max-width: 1100px; /* 컨테이너 폭을 살짝 줄여 조밀하게 구성 */
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+/* 칼럼 공통 */
+.footer-col {
+    flex: 1;
+}
+
+.footer-col h4 {
+    color: #f1f5f9;
+    font-size: 0.95rem; /* 제목 크기 하향 */
+    font-weight: 600;
+    margin-bottom: 22px;
+    letter-spacing: -0.02em;
+}
+
+/* 프로필 영역 */
+.footer-profile {
+    flex: 1.4;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.footer-profile-img {
+    width: 48px; /* 이미지 크기 살짝 축소 */
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: #2d3748;
+}
+
+.profile-info h3 {
+    color: #ffffff;
+    font-size: 1.05rem; /* 이름 크기 하향 */
+    margin: 0 0 2px 0;
+    letter-spacing: -0.03em;
+}
+
+.profile-info p {
+    margin: 0;
+    font-size: 0.8rem; /* 직무 크기 하향 */
+    color: #64748b;
+}
+
+.profile-bio {
+    font-size: 0.875rem; /* 본문 크기 하향 (14px) */
+    line-height: 1.65;
+    margin-bottom: 24px;
+    color: #94a3b8;
+    word-break: keep-all;
+    max-width: 320px; /* 너무 퍼지지 않게 제한 */
+}
+
+/* 소셜 버튼 */
+.social-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-btn {
+    width: 38px; /* 버튼 크기 축소 */
+    height: 38px;
+    background-color: #1e293b;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #94a3b8;
+    font-size: 1rem; /* 아이콘 크기 조정 */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: #ffffff; /* 배경을 완전 밝게 반전 */
+    color: #121620; /* 아이콘을 아주 어두운 배경색으로 반전 */
+    transform: translateY(-3px); /* 살짝 더 위로 떠오르게 */
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); /* 은은한 빛 효과 */
+}
+
+/* 바로가기 링크 영역 */
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* 간격 살짝 좁힘 */
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-size: 0.875rem; /* 14px */
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+}
+
+/* 연락처 및 버튼 영역 */
+.footer-contact {
+    position: relative;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 0.875rem; /* 14px */
+}
+
+.contact-item i {
+    width: 14px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #64748b;
+}
+
+/* 커피챗 버튼 */
+.coffee-chat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f97316;
+    color: #ffffff;
+    padding: 10px 18px; /* 버튼 크기 슬림하게 */
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem; /* 버튼 폰트 하향 */
+    text-decoration: none;
+    margin-top: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.coffee-chat-btn:hover {
+    background-color: #ea580c;
+}
+
+/* 우측 하단 다운로드 아이콘 */
+.download-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #475569; /* 평소엔 조금 더 연하게 */
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.download-icon:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* 하단 카피라이트 영역 */
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #1e293b;
+    text-align: center;
+    font-size: 0.75rem; /* 카피라이트 작게 */
+    color: #64748b;
+    letter-spacing: 0.02em;
+}
+
+/* ================= 우측 하단 플로팅 버튼 ================= */
+.floating-action-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px; /* 플로팅 버튼 크기 조정 */
+    height: 50px;
+    background-color: #f97316;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px; /* 아이콘 크기 조정 */
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-action-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+}
+
+/* 반응형 모바일 */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        gap: 35px;
+        text-align: center;
+    }
+    .profile-header, .contact-item {
+        justify-content: center;
+    }
+    .social-buttons {
+        justify-content: center;
+    }
+    .profile-bio {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .download-icon {
+        position: static;
+        display: inline-block;
+        margin-top: 20px;
+    }
+}
