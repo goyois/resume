@@ -85,6 +85,25 @@ document.addEventListener("DOMContentLoaded", function() {
                 createStardust(scrolled);
             }
         }
+
+        // =========================================================
+        // 🌟 [추가됨] 어두운 푸터 영역 감지하여 사이드 네비게이션 색상 변경 (노란색 모드)
+        // =========================================================
+        const footerElement = document.querySelector('.site-footer');
+        const navElement = document.querySelector('.side-nav');
+
+        if (footerElement && navElement) {
+            // 푸터의 현재 화면 상 위치(top)를 가져옵니다.
+            const footerTop = footerElement.getBoundingClientRect().top;
+
+            // 화면 높이의 절반(네비게이션이 위치한 곳) 쯤에 푸터가 도달하면 노란색 모드 켜기
+            if (footerTop <= window.innerHeight / 2 + 100) {
+                navElement.classList.add('nav-yellow-mode');
+            } else {
+                navElement.classList.remove('nav-yellow-mode');
+            }
+        }
+
         lastScrollTop = scrollPos;
     }, true);
 

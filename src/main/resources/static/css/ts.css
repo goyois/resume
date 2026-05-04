@@ -1,0 +1,210 @@
+/* =========================================
+   미니멀 트러블 슈팅 스타일 (시인성 강화 버전)
+   ========================================= */
+
+/* 헤더 부분 미니멀라이징 */
+.minimal-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+
+
+.minimal-header .header-desc {
+    font-size: 1rem;
+    color: #667085;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* 트러블 슈팅 리스트 컨테이너 */
+.minimal-ts-list {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 🌟 미니멀 카드 스타일 (배경과 분리되어 눈에 띄게 수정) */
+.mts-item.mts-card {
+    background: rgba(255, 255, 255, 0.75) !important; /* 0.4 -> 0.75로 불투명도를 높여 또렷하게 */
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(47, 109, 178, 0.15) !important; /* 테두리에 브랜드 블루 컬러를 연하게 추가하여 윤곽선 강조 */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(47, 109, 178, 0.04) !important; /* 그림자를 다중으로 주어 입체감 부여 */
+    border-radius: 20px !important;
+    padding: 30px 40px !important;
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 🌟 호버 시 박스가 더 강하게 떠오르는 효과 */
+.mts-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(47, 109, 178, 0.12), 0 8px 15px rgba(0, 0, 0, 0.03) !important;
+    border-color: rgba(47, 109, 178, 0.3) !important; /* 마우스를 올리면 테두리가 파란색으로 살짝 진해짐 */
+}
+
+/* 카드 헤더 (문제 정의) */
+.mts-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06); /* 구분선도 살짝 더 진하게 */
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.mts-item-header h3 {
+    font-size: 1.3rem;
+    color: #111827;
+    font-weight: 700;
+}
+
+/* 기술 태그들 */
+.mts-tags {
+    display: flex;
+    gap: 10px;
+}
+
+.mts-tags span {
+    font-size: 0.8rem;
+    color: var(--brand-blue);
+    background-color: rgba(47, 109, 178, 0.05);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* 카드 바디 (2열 구조) */
+.mts-item-body {
+    display: flex;
+    align-items: flex-start; /* 세로 위쪽 정렬 */
+    position: relative;
+}
+
+/* 각 열 */
+.mts-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 왼쪽 열 (원인) */
+.mts-cause {
+    padding-right: 40px;
+}
+
+/* 해결 상태 표시 */
+.ts-status.resolved {
+    font-size: 0.75rem;
+    color: var(--brand-blue);
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+/* 왼쪽 제목 (Root Cause) */
+.mts-cause h4 {
+    font-size: 0.9rem;
+    color: #667085; /* 회색 폰트 */
+    text-transform: uppercase; /* 대문자로 변환 */
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* 왼쪽 내용 */
+.mts-cause p {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+/* 중앙 연결선 (미니멀 화살표) */
+.mts-connector {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(47, 109, 178, 0.2); /* 은은한 파란색 화살표 */
+    font-size: 1.5rem;
+}
+
+/* 오른쪽 열 (해결 및 결과) */
+.mts-solution {
+    padding-left: 40px;
+}
+
+/* 오른쪽 제목 (Final Action...) */
+.mts-solution h4 {
+    font-size: 1rem;
+    color: #111827; /* 어두운색 폰트 */
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* 결과 리스트 */
+.ts-result-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ts-result-ul li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.ts-result-ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* 결과 강조 수치 */
+.ts-result-ul li strong {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+/* 결과 부연 설명 */
+.ts-result-ul li span {
+    font-size: 0.85rem;
+    color: #667085;
+}
+
+/* 색상 포인트들 */
+.mts-blue { color: var(--brand-blue); }
+.mts-green { color: #28a745; }
+
+/* 반응형: 화면이 좁아지면 세로로 배치 */
+@media (max-width: 850px) {
+    .mts-item.mts-card {
+        padding: 25px !important;
+    }
+
+    .mts-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .mts-item-body {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .mts-cause {
+        padding-right: 0;
+    }
+
+    .mts-solution {
+        padding-left: 0;
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
+        padding-top: 20px;
+    }
+
+    .mts-connector {
+        display: none; /* 모바일에선 화살표 제거 */
+    }
+}

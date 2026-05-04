@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="css/stack.css">
     <link rel="stylesheet" href="css/scroll.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/ts.css">
+    <link rel="stylesheet" href="css/insights.css">
 </head>
 <body class="portfolio-body brand-dark">
 
@@ -78,11 +80,11 @@
         </div>
     </section>
 
-    <div class="project-intro-head reveal">
+    <div class="project-intro-head minimal-header reveal">
     <span class="pill-label section-pill">
-        <i class="sparkle-icon">✨</i> Project </span>
+        <i class="sparkle-icon">✨</i> Project</span>
         <h1>파일 스튜디오</h1>
-        <p>이미지 파일을 PDF로 빠르게 변환합니다.</p>
+        <p class="header-desc">이미지 파일을 PDF로 빠르게 변환합니다.</p>
     </div>
 
     <section class="section-block reveal project-integration">
@@ -708,9 +710,11 @@
 
 
 
-    <section class="tech-stack-section">
-        <div class="section-header">
+    <section class="tech-stack-section reveal">
+        <div class="section-header minimal-header">
             <span class="badge">Tech Stack</span>
+            <h2>기술 스택</h2>
+            <p class="header-desc">현업,프로젝트에서 실제로 사용 중인 스택입니다.</p>
         </div>
 
         <div class="tech-category-grid">
@@ -980,22 +984,211 @@
 
 
 
-    <section class="tech-stack-section">
-        <div class="section-header">
-            <span class="badge">Trouble Shooting</span>
+<section id="troubleshooting-section" class="section-block reveal">
+
+    <div class="section-header minimal-header">
+        <span class="badge section-pill">Technical Case Studies</span>
+        <h2>문제 해결 사례</h2>
+        <p class="header-desc">기술적 난제를 정의하고, 원인을 분석하여 최적의 솔루션을 찾아낸 경험입니다.</p>
+    </div>
+
+    <div class="minimal-ts-list">
+        <!-- ================= Case 01 ================= -->
+        <div class="mts-item mts-card">
+
+            <div class="mts-item-header">
+                <h3>01. 대용량 PDF 변환 시 Worker 서버 OOM 장애 해결</h3>
+                <div class="mts-tags">
+                    <span>Performance</span>
+                    <span>JVM OOM</span>
+                    <span>iText7</span>
+                </div>
+            </div>
+
+            <div class="mts-item-body">
+                <!-- 왼쪽: 원인 분석 -->
+                <div class="mts-col mts-cause">
+                    <div class="mts-prefix">
+                        <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
+                    </div>
+                    <h4>Root Cause</h4>
+                    <p>MAT 분석 결과, iText7의 `PdfWriter` 객체가 대용량 파일 전체를 **힙 메모리에 로딩**하여 처리하는 DOM 방식 구조가 원인.</p>
+                </div>
+
+                <!-- 중앙 연결선 (CSS로 구현) -->
+                <div class="mts-connector">
+                    <i class="fas fa-arrow-right mts-arrow"></i>
+                </div>
+
+                <!-- 오른쪽: 해결 및 임팩트 -->
+                <div class="mts-col mts-solution">
+                    <h4>Final Action & Impact</h4>
+                    <ul class="ts-result-ul">
+                        <li>
+                            <strong class="mts-blue">Stream 처리로 전환</strong>
+                            <span>PdfWriter 대신 Stream 기반의 Chunk 처리 도입</span>
+                        </li>
+                        <li>
+                            <strong class="mts-green">메모리 사용량 70% 절감</strong>
+                            <span>Constant Memory Footprint 달성 및 처리 효율 향상</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </section>
+        <!-- ================= Case 01 끝 ================= -->
 
+        <div class="mts-item mts-card">
 
-    <section class="tech-stack-section">
-        <div class="section-header">
-            <span class="badge"></span>
+            <div class="mts-item-header">
+                <h3>01. 대용량 PDF 변환 시 Worker 서버 OOM 장애 해결</h3>
+                <div class="mts-tags">
+                    <span>Performance</span>
+                    <span>JVM OOM</span>
+                    <span>iText7</span>
+                </div>
+            </div>
+
+            <div class="mts-item-body">
+                <!-- 왼쪽: 원인 분석 -->
+                <div class="mts-col mts-cause">
+                    <div class="mts-prefix">
+                        <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
+                    </div>
+                    <h4>Root Cause</h4>
+                    <p>MAT 분석 결과, iText7의 `PdfWriter` 객체가 대용량 파일 전체를 **힙 메모리에 로딩**하여 처리하는 DOM 방식 구조가 원인.</p>
+                </div>
+
+                <!-- 중앙 연결선 (CSS로 구현) -->
+                <div class="mts-connector">
+                    <i class="fas fa-arrow-right mts-arrow"></i>
+                </div>
+
+                <!-- 오른쪽: 해결 및 임팩트 -->
+                <div class="mts-col mts-solution">
+                    <h4>Final Action & Impact</h4>
+                    <ul class="ts-result-ul">
+                        <li>
+                            <strong class="mts-blue">Stream 처리로 전환</strong>
+                            <span>PdfWriter 대신 Stream 기반의 Chunk 처리 도입</span>
+                        </li>
+                        <li>
+                            <strong class="mts-green">메모리 사용량 70% 절감</strong>
+                            <span>Constant Memory Footprint 달성 및 처리 효율 향상</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </section>
+</section>
 
 
 
 
+<section id="tech-insights" class="section-block reveal">
+    <div class="section-header minimal-header">
+        <span class="badge section-pill">Insights</span>
+        <h2>인사이트</h2>
+        <p class="header-desc">기술적 고민과 해결 과정을 기록하며 공유하는 것을 즐깁니다.</p>
+    </div>
+
+    <div class="insights-grid">
+        <!-- Post 01 -->
+        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+            <div class="insight-thumb">
+                <img src="/images/blog-thumb1.png" alt="EDA Architecture">
+                <span class="insight-category">Architecture</span>
+            </div>
+            <div class="insight-body">
+                <span class="insight-date">2026.04.10</span>
+                <h3>모놀리틱에서 EDA로: 왜 이벤트 기반인가?</h3>
+                <p>파일 스튜디오를 개발하며 겪은 강결합 구조의 한계와, 이를 Debezium과 RabbitMQ로 해결하며 느낀 비동기 설계의 이점.</p>
+                <div class="insight-tags">
+                    <span>#EDA</span>
+                    <span>#RabbitMQ</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Post 02 -->
+        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+            <div class="insight-thumb">
+                <img src="/images/blog-thumb2.png" alt="OOM Troubleshooting">
+                <span class="insight-category">Troubleshooting</span>
+            </div>
+            <div class="insight-body">
+                <span class="insight-date">2026.03.15</span>
+                <h3>JVM Heap Dump 분석으로 잡아낸 OOM</h3>
+                <p>MAT(Memory Analyzer Tool)를 활용해 iText7의 메모리 누수 지점을 파악하고, Stream 방식을 도입하여 메모리 사용량을 70% 절감한 기록.</p>
+                <div class="insight-tags">
+                    <span>#JVM</span>
+                    <span>#OOM</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Post 03 -->
+        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+            <div class="insight-thumb">
+                <img src="/images/blog-thumb3.png" alt="Algorithm study">
+                <span class="insight-category">Algorithm</span>
+            </div>
+            <div class="insight-body">
+                <span class="insight-date">2026.02.20</span>
+                <h3>Gold 1을 향한 알고리즘 최적화 전략</h3>
+                <p>그래프 이론과 다이나믹 프로그래밍 문제를 해결하며 복잡도를 줄여나가는 사고의 과정. 백준 1781번 문제 해결 회고.</p>
+                <div class="insight-tags">
+                    <span>#Baekjoon</span>
+                    <span>#Optimization</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+
+
+
+
+
+<nav class="side-nav">
+    <ul>
+        <li class="nav-item active" data-target="intro-hero">
+            <span class="nav-label">소개</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="project-intro-head">
+            <span class="nav-label">프로젝트</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="featured-projects-2">
+            <span class="nav-label">S.T.A.R 설명</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="tech-stack-section">
+            <span class="nav-label">기술 스택</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="troubleshooting-section">
+            <span class="nav-label">문제 해결 사례</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="tech-insights">
+            <span class="nav-label">인사이트</span>
+            <div class="nav-dot"></div>
+        </li>
+        <li class="nav-item" data-target="site-footer">
+            <span class="nav-label">연락처</span>
+            <div class="nav-dot"></div>
+        </li>
+    </ul>
+</nav>
+
+
+<!-- 화면 우측 하단 플로팅 커피챗 버튼 -->
+<a href="mailto:bau12288@gmail.com" class="floating-action-btn" title="">
+    <i class="fas fa-mug-hot"></i>
+</a>
 
 
 
@@ -1023,8 +1216,6 @@
             <div class="contact-item">
                 <span>Algorithm</span>
             </div>
-
-
             <div class="social-buttons">
                 <a href="https://github.com/goyois" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
                 <a href="https://velog.io/@goyo/posts" target="_blank" class="social-btn"><i class="fas fa-pen-nib"></i></a>
@@ -1032,6 +1223,7 @@
                 <a href="/download/resume.pdf" download="백엔드_엔지니어_김주원_이력서.pdf" class="social-btn"><i class="fas fa-external-link-alt"></i></a>
             </div>
         </div>
+
 
         <!-- 가운데: 네비게이션 영역 -->
         <div class="footer-col footer-links">
@@ -1041,6 +1233,8 @@
                 <li><a href="javascript:void(0)" class="footer-nav-link" data-target="project-intro-head">프로젝트</a></li>
                 <li><a href="javascript:void(0)" class="footer-nav-link" data-target="featured-projects-2">S.T.A.R 설명</a></li>
                 <li><a href="javascript:void(0)" class="footer-nav-link" data-target="tech-stack-section">기술 스택</a></li>
+                <li><a href="javascript:void(0)" class="footer-nav-link" data-target="troubleshooting-section">문제 해결 사례</a></li>
+                <li><a href="javascript:void(0)" class="footer-nav-link" data-target="tech-insights"> 인사이트</a></li>
                 <li><a href="javascript:void(0)" class="footer-nav-link" data-target="site-footer">연락하기</a></li>
             </ul>
         </div>
@@ -1068,37 +1262,6 @@
     </div>
 </footer>
 
-
-<!-- 화면 우측 하단 플로팅 커피챗 버튼 -->
-<a href="mailto:bau12288@gmail.com" class="floating-action-btn" title="">
-    <i class="fas fa-mug-hot"></i>
-</a>
-
-
-<nav class="side-nav">
-    <ul>
-        <li class="nav-item active" data-target="intro-hero">
-            <span class="nav-label">소개</span>
-            <div class="nav-dot"></div>
-        </li>
-        <li class="nav-item" data-target="project-intro-head">
-            <span class="nav-label">프로젝트</span>
-            <div class="nav-dot"></div>
-        </li>
-        <li class="nav-item" data-target="featured-projects-2">
-            <span class="nav-label">S.T.A.R 설명</span>
-            <div class="nav-dot"></div>
-        </li>
-        <li class="nav-item" data-target="tech-stack-section">
-            <span class="nav-label">기술 스택</span>
-            <div class="nav-dot"></div>
-        </li>
-        <li class="nav-item" data-target="site-footer">
-            <span class="nav-label">연락처</span>
-            <div class="nav-dot"></div>
-        </li>
-    </ul>
-</nav>
 
 
 

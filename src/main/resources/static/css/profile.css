@@ -197,6 +197,8 @@ body {
     box-shadow: 0 8px 20px rgba(47, 109, 178, 0.12);
 }
 
+
+
 /* 반응형: 화면이 좁아지면 세로로 배치 */
 @media (max-width: 720px) {
     .hero-stats {
