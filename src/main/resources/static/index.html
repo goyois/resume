@@ -142,7 +142,7 @@
                     <div class="header-main">
                         <span class="card-index">01</span>
                         <h3> MSA Architecture 로 전환 </h3>
-                        <p> 모놀리틱 -> 이벤트 기반 아키텍처로 전환하여 처리 성능 및 사용자 경험을 증대시켰습니다.</p>
+                        <p> 모놀리식에서 이벤트 기반 아키텍처로 전환하여 처리 성능 및 사용자 경험을 증대시켰습니다.</p>
                     </div>
                     <div class="scan-results">
                         <span>Event-Driven-Architecture</span>
@@ -495,17 +495,18 @@
             </div>
         </div>
 
-        <!-- ================= 04. 메시지큐 트랜잭션 ================= -->
+        <!-- ================= 04. 메트릭 수집 및 모니터링 구성 ================= -->
         <div class="accordion-item" id="acc-4">
             <button class="accordion-header" onclick="toggleAccordion('acc-4'); const acc = document.getElementById('acc-4'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
                 <div class="header-main">
                     <span class="card-index">04</span>
-                    <h3>메시지큐 트랜잭션 구조 구현</h3>
-                    <p>Consumer 의 수동 Manual Acknowledge 를 구현하여 변환 처리 신뢰성을 향상시켰습니다.</p>
+                    <h3>변환 프로세스 서버 및 메시지큐 모니터링 서버 구축</h3>
+                    <p>Docker 를 통해 변환 프로세스 서버의 Prometheus 수집 및 Grafana JVM,RabbitMQ Dashboard 를 활용하여 모니터링 패널을 구축했습니다.</p>
                 </div>
                 <div class="scan-results">
-                    <span>Transaction</span>
-                    <span>DeadLetterQueue</span>
+                    <span>Prometheus</span>
+                    <span>Grafana</span>
+                    <span>Infra</span>
                 </div>
                 <i class="fas fa-chevron-down arrow-icon"></i>
             </button>
@@ -526,8 +527,8 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메시지 유실 및 자원 고갈 위험</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">컨슈머(Consumer) 단에서 예외 발생 시 메시지가 즉시 유실되거나, 처리 실패 건이 무한 루프에 빠져 브로커 리소스를 점유할 위험 상존</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">신뢰성있는 처리 성능 확인 불가</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">배포 환경에서 컨슈머 서버의 동시 처리수,병렬 처리가 필요한 지점을 알 수 없어 트래픽 급증 시 불필요한 비용 증가 및 대비가 불가능함 </p>
                                     </div>
                                 </div>
                             </div>
@@ -546,8 +547,8 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">At-least-once 전달 보장 및 예외 제어</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">메시지 최소 한 번 전송을 보장하고, 비정상적인 실패 건에 대한 명확한 격리 처리 체계 구축</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메트릭 수집 및 시각화 패널 구성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Prometheus,Grafana 를 통해 모니터링 패널을 구성하여 수치 산출</p>
                                     </div>
                                 </div>
                             </div>
@@ -566,12 +567,12 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">수동 승인(Manual Ack) 도입</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Consumer Acknowledgement를 Manual 모드로 활성화하여 비즈니스 로직이 완전히 성공한 경우에만 브로커로 Ack 신호 전송</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Prometheus 기반 메트릭 수집 환경 구성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">pring Boot Actuator와 Micrometer를 통해 JVM 메트릭을 노출하고, RabbitMQ Exporter를 연동하여 Queue 대기열 및 처리량 데이터를 Prometheus가 주기적으로 수집(Scrape)하도록 타겟팅 구성</p>
                                     </div>
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">재시도 정책 및 DLQ 라우팅</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">RetryTemplate을 통해 일시적 오류에 대해 최대 3회 재시도를 수행하고, 최종 실패 시 Dead Letter Queue(DLQ)로 라우팅하여 별도의 에러 로깅 체계 구축</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Grafana 대시보드 시각화 및 핵심 패널 구축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">수집된 데이터를 바탕으로 컨슈머의 메시지 평균 Ack 처리 속도, Queue 적재량, 분당 처리량 등의 핵심 지표를 Grafana 패널로 시각화하여 병목 구간을 직관적으로 파악할 수 있도록 구성</p>
                                     </div>
                                 </div>
                             </div>
@@ -590,8 +591,8 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 무결성 및 자생력 확보</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">메시지 유실 가능성을 0%로 수렴시키며, 일시적인 장애 상황에서도 유연한 복구 체계를 바탕으로 운영 안정성 및 내결함성 강화</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 기반의 효율적인 스케일링 및 비용 최적화 환경 마련</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">실시간 트래픽 및 큐 대기열에 대한 가시성을 확보함에 따라, 트래픽 급증 시 직감에 의존하지 않고 정확한 메트릭에 기반하여 컨슈머 서버를 적절히 병렬처리할 수 있는 기반을 마련하여 리소스 낭비 방지 및 운영 안정성 향상</p>
                                     </div>
                                 </div>
                             </div>
@@ -995,13 +996,11 @@
     <div class="minimal-ts-list">
         <!-- ================= Case 01 ================= -->
         <div class="mts-item mts-card">
-
             <div class="mts-item-header">
-                <h3>01. 대용량 PDF 변환 시 Worker 서버 OOM 장애 해결</h3>
+                <h3>01. 재처리 전략 및 메시징 트랜잭션 구현 </h3>
                 <div class="mts-tags">
-                    <span>Performance</span>
-                    <span>JVM OOM</span>
-                    <span>iText7</span>
+                    <span>Transaction</span>
+                    <span>Event-Driven-Architecture</span>
                 </div>
             </div>
 
@@ -1012,7 +1011,7 @@
                         <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
                     </div>
                     <h4>Root Cause</h4>
-                    <p>MAT 분석 결과, iText7의 `PdfWriter` 객체가 대용량 파일 전체를 **힙 메모리에 로딩**하여 처리하는 DOM 방식 구조가 원인.</p>
+                    <p>Consumer 의 Default Acknowledgement Auto 로는 수신 즉시 큐에서 소진되므로 변환 실패 시 재처리 불가 및 변환 처리의 신뢰성을 보장하기 어려움</p>
                 </div>
 
                 <!-- 중앙 연결선 (CSS로 구현) -->
@@ -1025,12 +1024,12 @@
                     <h4>Final Action & Impact</h4>
                     <ul class="ts-result-ul">
                         <li>
-                            <strong class="mts-blue">Stream 처리로 전환</strong>
-                            <span>PdfWriter 대신 Stream 기반의 Chunk 처리 도입</span>
+                            <strong class="mts-blue">Ack Manual 로 전환 및 재처리 구현</strong>
+                            <span>개발자가 직접 Ack/Nack 제어, RetryTemplate 설정을 통한 재시도 및 DLQ 구성</span>
                         </li>
                         <li>
-                            <strong class="mts-green">메모리 사용량 70% 절감</strong>
-                            <span>Constant Memory Footprint 달성 및 처리 효율 향상</span>
+                            <strong class="mts-green">비즈니스 신뢰성 보장 및 에러 격리</strong>
+                            <span>비즈니스 로직이 성공한 경우만 Ack 전송, 실패 시 최대 3회 재시도를 수행하고 최종 실패 시 DLQ 로 라우팅하여 관리자 에러 모니터링 체계 구축</span>
                         </li>
                     </ul>
                 </div>
@@ -1041,11 +1040,11 @@
         <div class="mts-item mts-card">
 
             <div class="mts-item-header">
-                <h3>01. 대용량 PDF 변환 시 Worker 서버 OOM 장애 해결</h3>
+                <h3>02. 워커 서버와 S3 간의 Network Latency 개선</h3>
                 <div class="mts-tags">
                     <span>Performance</span>
-                    <span>JVM OOM</span>
-                    <span>iText7</span>
+                    <span>VPC</span>
+                    <span>Endpoint</span>
                 </div>
             </div>
 
@@ -1056,7 +1055,7 @@
                         <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
                     </div>
                     <h4>Root Cause</h4>
-                    <p>MAT 분석 결과, iText7의 `PdfWriter` 객체가 대용량 파일 전체를 **힙 메모리에 로딩**하여 처리하는 DOM 방식 구조가 원인.</p>
+                    <p> S3 Network Latency 가 변환 프로세스 Latency 의 44% 가량을 차지하며 길어질수록 Throughput 감소 및 병목을 유발함</p>
                 </div>
 
                 <!-- 중앙 연결선 (CSS로 구현) -->
@@ -1069,17 +1068,18 @@
                     <h4>Final Action & Impact</h4>
                     <ul class="ts-result-ul">
                         <li>
-                            <strong class="mts-blue">Stream 처리로 전환</strong>
-                            <span>PdfWriter 대신 Stream 기반의 Chunk 처리 도입</span>
+                            <strong class="mts-blue">AWS VPC Endpoint 적용</strong>
+                            <span>기존 NAT Gateway,Internet 을 거치던 경로를 VPC Endpoint (AWS 내부망 전용 경로) 로 대체 </span>
                         </li>
                         <li>
-                            <strong class="mts-green">메모리 사용량 70% 절감</strong>
-                            <span>Constant Memory Footprint 달성 및 처리 효율 향상</span>
+                            <strong class="mts-green"> Network Latency 10 ~ 15% 감소 </strong>
+                            <span>최대 지연 시간 0.3s -> 0.2s 감소 및 Throughput 5 ~ 10 % 증가하며 내부망을 통한 안정적인 처리 성능이 보장됨 </span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+    </div>>
 </section>
 
 
@@ -1089,54 +1089,54 @@
     <div class="section-header minimal-header">
         <span class="badge section-pill">Insights</span>
         <h2>인사이트</h2>
-        <p class="header-desc">기술적 고민과 해결 과정을 기록하며 공유하는 것을 즐깁니다.</p>
+        <p class="header-desc">기술적 고민의 해결 과정 및 결과를 기록하고 공유합니다.</p>
     </div>
 
     <div class="insights-grid">
         <!-- Post 01 -->
-        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+        <a href="https://velog.io/@goyo/%EB%82%98%EB%8A%94-%EC%99%9C-RabbitMQ-%EC%9D%84-%EC%B1%84%ED%83%9D%ED%96%88%EB%8A%94%EA%B0%80" target="_blank" class="insight-card">
             <div class="insight-thumb">
-                <img src="/images/blog-thumb1.png" alt="EDA Architecture">
+                <img src="/images/messageQueue.png" alt="나는 왜 RabbitMQ 를 채택했는가?">
                 <span class="insight-category">Architecture</span>
             </div>
             <div class="insight-body">
-                <span class="insight-date">2026.04.10</span>
-                <h3>모놀리틱에서 EDA로: 왜 이벤트 기반인가?</h3>
-                <p>파일 스튜디오를 개발하며 겪은 강결합 구조의 한계와, 이를 Debezium과 RabbitMQ로 해결하며 느낀 비동기 설계의 이점.</p>
+                <span class="insight-date">2026.04.26</span>
+                <h3>나는 왜 RabbitMQ 을 채택했는가?</h3>
+                <p>파일 스튜디오를 구성한 기술의 채택 이유 및 워커 서버의 성능 측정</p>
                 <div class="insight-tags">
-                    <span>#EDA</span>
+                    <span>#Async Architecture</span>
                     <span>#RabbitMQ</span>
                 </div>
             </div>
         </a>
 
         <!-- Post 02 -->
-        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+        <a href="https://velog.io/@goyo/S3-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-IO-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0" target="_blank" class="insight-card">
             <div class="insight-thumb">
-                <img src="/images/blog-thumb2.png" alt="OOM Troubleshooting">
-                <span class="insight-category">Troubleshooting</span>
+                <img src="/images/vpc.png" alt="VPC Endpoint">
+                <span class="insight-category">Performance</span>
             </div>
             <div class="insight-body">
-                <span class="insight-date">2026.03.15</span>
-                <h3>JVM Heap Dump 분석으로 잡아낸 OOM</h3>
-                <p>MAT(Memory Analyzer Tool)를 활용해 iText7의 메모리 누수 지점을 파악하고, Stream 방식을 도입하여 메모리 사용량을 70% 절감한 기록.</p>
+                <span class="insight-date">2026.05.08</span>
+                <h3>VPC Endpoint 로 S3 Network Latency 개선</h3>
+                <p>변환 과정에서 빈번한 S3 Network Latency 를 VPC Endpoint 설정으로 안정성,비용 절감,처리 효율 3마리 토끼 잡기.</p>
                 <div class="insight-tags">
-                    <span>#JVM</span>
-                    <span>#OOM</span>
+                    <span>#VPC</span>
+                    <span>#Endpoint</span>
                 </div>
             </div>
         </a>
 
         <!-- Post 03 -->
-        <a href="https://velog.io/@goyo/posts" target="_blank" class="insight-card">
+        <a href="https://velog.io/@goyo/%EB%B0%B1%EC%A4%80-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%ED%92%80%EC%9D%B4-%ED%9A%8C%EA%B3%A0" target="_blank" class="insight-card">
             <div class="insight-thumb">
-                <img src="/images/blog-thumb3.png" alt="Algorithm study">
+                <img src="/images/gp1.png" alt="Algorithm study">
                 <span class="insight-category">Algorithm</span>
             </div>
             <div class="insight-body">
-                <span class="insight-date">2026.02.20</span>
-                <h3>Gold 1을 향한 알고리즘 최적화 전략</h3>
-                <p>그래프 이론과 다이나믹 프로그래밍 문제를 해결하며 복잡도를 줄여나가는 사고의 과정. 백준 1781번 문제 해결 회고.</p>
+                <span class="insight-date">2026.05.06</span>
+                <h3>내 목표 달성의 보상이 서비스 종료!? (회고)</h3>
+                <p>꾸준히 알고리즘 문제를 풀며 자료구조를 공부하여 목표 티어 달성 회고.</p>
                 <div class="insight-tags">
                     <span>#Baekjoon</span>
                     <span>#Optimization</span>
@@ -1185,10 +1185,10 @@
 </nav>
 
 
-<!-- 화면 우측 하단 플로팅 커피챗 버튼 -->
-<a href="mailto:bau12288@gmail.com" class="floating-action-btn" title="">
-    <i class="fas fa-mug-hot"></i>
-</a>
+<!--&lt;!&ndash; 화면 우측 하단 플로팅 커피챗 버튼 &ndash;&gt;-->
+<!--<a href="mailto:bau12288@gmail.com" class="floating-action-btn" title="">-->
+<!--    <i class="fas fa-mug-hot"></i>-->
+<!--</a>-->
 
 
 

@@ -9,5 +9,4 @@ public class SwPortfolioApplication {
     public static void main(String[] args) {
         SpringApplication.run(SwPortfolioApplication.class, args);
     }
-
 }
