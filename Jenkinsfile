@@ -14,8 +14,6 @@ pipeline {
                     git branch: 'main', url: 'https://github.com/goyois/resume.git'
                 }
             }
-
-
             stage('deploy to s3') {
                 agent {
                     docker {
@@ -24,7 +22,6 @@ pipeline {
                         args "--entrypoint=''"
                     }
                 }
-
                 steps {
                     withCredentials([usernamePassword(credentialsId: 'my-aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                         sh '''
