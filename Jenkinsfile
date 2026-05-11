@@ -9,6 +9,7 @@ pipeline {
             stage ('check'){
 
                 agent any
+
                 steps {
                     echo 'GitHub 에서 SSR Server 소스를 가져옵니다.'
                     git branch: 'main', url: 'https://github.com/goyois/resume.git'
