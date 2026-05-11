@@ -6,24 +6,16 @@ pipeline {
         }
 
     stages {
-            stage ('check'){
-
-                agent any
-
-                steps {
-                    echo 'GitHub 에서 SSR Server 소스를 가져옵니다.'
-                    git branch: 'main', url: 'https://github.com/goyois/resume.git'
-                }
-            }
             stage('deploy to s3') {
                 agent {
                     docker {
                         image 'amazon/aws-cli'
-                        reuseNode true
                         args "--entrypoint=''"
                     }
                 }
             steps {
+                checkout scm
+
                 withCredentials([
                     usernamePassword(credentialsId: 'my-aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'cloudfront', variable: 'CF_ID') // Secret text인 경우
