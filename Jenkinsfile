@@ -23,14 +23,18 @@ pipeline {
                         args "--entrypoint=''"
                     }
                 }
-                steps {
-                    withCredentials([usernamePassword(credentialsId: 'my-aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                        sh '''
-                            echo "aws-cli version:"
-                            aws --version
-                            echo "파일 s3 동기화.."
-                            aws s3 sync src/main/resources/static/ s3://${AWS_S3_BUCKET} --delete
-                        '''
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'my-aws', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'cloudfront', variable: 'CF_ID') // Secret text인 경우
+                ]) {
+                    sh '''
+                        echo ">> S3 파일 동기화 중.."
+                        aws s3 sync src/main/resources/static/ s3://${AWS_S3_BUCKET} --delete
+
+                        echo ">> CloudFront 캐시 무효화 중.."
+                        aws cloudfront create-invalidation --distribution-id ${CF_ID} --paths "/*"
+                    '''
                 }
             }
         }
