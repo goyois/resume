@@ -38,21 +38,5 @@ pipeline {
                 }
             }
         }
-
-    post {
-
-        success {
-            echo 's3 배포 완료'
-        }
-
-        failure {
-            echo 's3 배포 실패'
-        }
-
-        always {
-            node('main') {
-                cleanWs()
-            }
-        }
     }
 }
