@@ -32,10 +32,7 @@ pipeline {
                             aws --version
 
                             echo "파일 s3 동기화.."
-                            aws s3 sync . s3://$AWS_S3_BUCKET \
-                            --exclude ".git/*" \
-                            --exclude "Jenkinsfile" \
-                            --delete
+                            sh "aws s3 sync . s3://$AWS_S3_BUCKET --exclude '*' --include 'index.html' --delete"
                         '''
                     }
                 }
