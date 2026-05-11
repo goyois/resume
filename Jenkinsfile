@@ -31,7 +31,7 @@ pipeline {
                             echo "aws-cli version:"
                             aws --version
                             echo "파일 s3 동기화.."
-                            aws s3 sync . s3://$AWS_S3_BUCKET --exclude '*' --include 'index.html' --delete
+                            aws s3 sync src/main/resources/static/ s3://${AWS_S3_BUCKET} --delete
                         '''
                 }
             }
