@@ -34,7 +34,7 @@ pipeline {
                             echo "파일 s3 동기화.."
                             sh "aws s3 sync . s3://$AWS_S3_BUCKET --exclude '*' --include 'index.html' --delete"
                         '''
-                    }
+
                 }
             }
         }
