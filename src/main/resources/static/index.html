@@ -395,7 +395,7 @@
                 <div class="header-main">
                     <span class="card-index">03</span>
                     <h3>Change Data Capture(CDC) 를 활용한 Publisher 구성</h3>
-                    <p>불필요한 스케줄링 방식을 Bin-log 감지 기반의 Debezium 으로 전환하여 데이터베이스 및 서버 성능을 최적화했습니다.</p>
+                    <p>무분별한 HTTP Scheduling 을 Bin-log 감지 기반의 Debezium 으로 전환하여 데이터베이스 및 서버 성능을 최적화했습니다.</p>
                 </div>
                 <div class="scan-results">
                     <span>서버 데이터베이스 커넥션 최적화</span>
@@ -420,8 +420,8 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">DB 부하 및 변환 지연 발생</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변환 대상 파일의 상태 변화를 감지하기 위해 스케줄러가 DB를 지속적으로 조회(Polling)함에 따라 불필요한 I/O 부하 발생</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">무분별한 HTTP Polling Scheduling 으로 데이터베이스 부하 및 실시간성 저하</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터 유무 상관없이 메시지큐로 보내기 위한 Scheduling 작업으로 데이터베이스를 무분별하게 조회함에 따라 불필요한 I/O 부하 발생</p>
                                     </div>
                                 </div>
                             </div>
@@ -440,8 +440,8 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 정합성 보장 및 결합도 해소</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">DB와 메시지 큐(MQ) 간의 분산 트랜잭션 없이 데이터 정합성(Atomicity)을 보장하고 서비스 간 도메인 결합도 제거</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터베이스 I/O 부하 제거 및 미들웨어를 추가하여 관심사 분리</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">메시지큐에 데이터를 발행하는 방식 변경하여 부하 감소 및 API 서버와 메시지 발행 역할을 분리하여 API 서버에 장애가 밣생하더라도 직전 변환요청은 정상적으로 발행될 수 있도록 구성</p>
                                     </div>
                                 </div>
                             </div>
@@ -464,8 +464,12 @@
                                         <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">비즈니스 로직과 Outbox 테이블 기록을 단일 로컬 트랜잭션으로 묶어 이벤트 발행의 신뢰성 확보</p>
                                     </div>
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 연동</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터베이스의 Bin-log를 실시간으로 캡처하여 변경 감지 후 즉시 메시지 브로커로 이벤트 Publish</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 채택</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터베이스의 Bin-log 를 실시간으로 캡처하여 변경 감지 후 즉시 메시지큐로 이벤트 발행</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Docker 를 통한 독립 CDC 서버 구성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">임베디드로 구성하지않고 독립적으로 구성하여 확장에 용이</p>
                                     </div>
                                 </div>
                             </div>
@@ -485,7 +489,11 @@
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">성능 최적화 및 지연 시간 단축</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">DB 폴링 제거를 통해 커넥션 효율성을 향상시키고 이중 쓰기(Dual-write) 문제를 근본적으로 해결하여 이벤트 발행 지연 최소화</p>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무분별한 HTTP Polling 제거를 통해 커넥션 효율성을 향상시키고 데이터베이스의 I/O 부하 감소 및 이벤트 발행 실시간성 확대</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 구조에 적합한 미들웨어 역할 수행</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Docker 를 통한 독립적인 Debezium 서버를 띄워 API 서버에 의존되어있던 메시지 발행 역할을 분리하여 API 서버에 장애 발생 시에도 별도의 영향을 받지 않음</p>
                                     </div>
                                 </div>
                             </div>
@@ -500,13 +508,14 @@
             <button class="accordion-header" onclick="toggleAccordion('acc-4'); const acc = document.getElementById('acc-4'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
                 <div class="header-main">
                     <span class="card-index">04</span>
-                    <h3>변환 프로세스 서버 및 메시지큐 모니터링 서버 구축</h3>
-                    <p>Docker 를 통해 변환 프로세스 서버의 Prometheus 수집 및 Grafana JVM,RabbitMQ Dashboard 를 활용하여 모니터링 패널을 구축했습니다.</p>
+                    <h3>모니터링 서버 구축 및 성능 측정</h3>
+                    <p>Docker 를 통해 변환 프로세스 서버의 Prometheus 수집 및 Grafana JVM, RabbitMQ Dashboard 를 활용하여 모니터링 패널을 구축하여 성능 측정을 했습니다.</p>
                 </div>
                 <div class="scan-results">
                     <span>Prometheus</span>
                     <span>Grafana</span>
                     <span>Infra</span>
+                    <span>Docker</span>
                 </div>
                 <i class="fas fa-chevron-down arrow-icon"></i>
             </button>
@@ -527,8 +536,12 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">신뢰성있는 처리 성능 확인 불가</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">배포 환경에서 컨슈머 서버의 동시 처리수,병렬 처리가 필요한 지점을 알 수 없어 트래픽 급증 시 불필요한 비용 증가 및 대비가 불가능함 </p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변환 작업에 필요한 서버 리소스(CPU,Memory,GC) 확인 불가</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">컨슈머 서버 리소스를 확인하기 어려워 병렬 처리,서버 스케일아웃 등의 적용이 필요한 지점을 알기 어려움</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변환 작업의 처리량 및 S3 네트워크 속도 측정이 불가</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로컬 환경과 운영 환경에서 차이가 밣생하는 요소들을 명확히 수치로 측정하기 어려움</p>
                                     </div>
                                 </div>
                             </div>
@@ -547,8 +560,12 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메트릭 수집 및 시각화 패널 구성</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Prometheus,Grafana 를 통해 모니터링 패널을 구성하여 수치 산출</p>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">모니터링 서버 구축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">독립적인 서버를 생성하여 모니터링에 최적화된 환경 구성</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">부하테스트 시나리오 작성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Warm up ~ Traffic spike 까지 5단계 가량의 시나리오를 작성</p>
                                     </div>
                                 </div>
                             </div>
@@ -568,11 +585,19 @@
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Prometheus 기반 메트릭 수집 환경 구성</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">pring Boot Actuator와 Micrometer를 통해 JVM 메트릭을 노출하고, RabbitMQ Exporter를 연동하여 Queue 대기열 및 처리량 데이터를 Prometheus가 주기적으로 수집(Scrape)하도록 타겟팅 구성</p>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">SpringBoot Actuator와 Micrometer를 통해 JVM 메트릭을 노출하고, RabbitMQ Exporter를 연동하여 Queue 대기열 및 처리량 데이터를 Prometheus가 주기적으로 수집(Scrape)하도록 타겟팅 구성</p>
                                     </div>
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Grafana 대시보드 시각화 및 핵심 패널 구축</strong>
                                         <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">수집된 데이터를 바탕으로 컨슈머의 메시지 평균 Ack 처리 속도, Queue 적재량, 분당 처리량 등의 핵심 지표를 Grafana 패널로 시각화하여 병목 구간을 직관적으로 파악할 수 있도록 구성</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Artillery 활용하여 배포 서버로 부하테스트 실행</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Warm Up ~ Traffic Spike 까지 5단계 가량의 시나리오를 기반으로 처리량,지연 시간 등의 성능 측정</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">운영 환경에서 S3 네트워크의 안정적인 전송환경 구성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">VPC Endpoint 를 적용하여 S3 통신이 VPC 내부망을 통해 전달하도록 구성</p>
                                     </div>
                                 </div>
                             </div>
@@ -593,6 +618,10 @@
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 기반의 효율적인 스케일링 및 비용 최적화 환경 마련</strong>
                                         <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">실시간 트래픽 및 큐 대기열에 대한 가시성을 확보함에 따라, 트래픽 급증 시 직감에 의존하지 않고 정확한 메트릭에 기반하여 컨슈머 서버를 적절히 병렬처리할 수 있는 기반을 마련하여 리소스 낭비 방지 및 운영 안정성 향상</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">개선된 S3 Network Latency</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Network Latency 가 약 10 ~ 15% 감소 및 처리량 또한 10% 가량 향상</p>
                                     </div>
                                 </div>
                             </div>
