@@ -79,6 +79,7 @@
    3. 우측 사이드 플로팅 네비게이션 (Expanding Line Style)
    ========================================= */
 .side-nav {
+    pointer-events: none;
     position: fixed;
     right: 30px;
     top: 50%;
