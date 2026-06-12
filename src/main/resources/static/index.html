@@ -240,12 +240,12 @@
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무거운 파일 변환 작업을 RabbitMQ를 활용해 비동기로 분리하고, 수동 Ack 및 DLQ(Dead Letter Queue) 설정을 통해 처리 안정성 확보</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">관심사 분리</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">역할별로 모듈화하여 강결합을 해소하고 추후 트래픽이 몰려도 확장이 용이하도록하며 변환 과정에서 장애가 발생하더라도 메인 서버는 죽지않는 구조</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 구조와 CDC 도입</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Transactional Outbox Pattern과 Debezium(CDC)을 적용하여 데이터베이스 업데이트와 도메인 이벤트 발행 간의 원자성 확보</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 정합성 보장</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Transactional Outbox Pattern과 Debezium(CDC)을 적용하여 데이터베이스 업데이트와 도메인 이벤트 발행 간의 원자성 확보</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">관심사 분리</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">역할별로 결합도를 낮추기 위한 모듈화 진행</p>
                                         </div>
                                     </div>
                                 </div>
@@ -268,12 +268,17 @@
                                 <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">시스템 처리 성능(TPS) 극대화</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이벤트 기반 아키텍처(EDA) 전환 및 비동기 처리를 통해 기존 대비 처리 성능(TPS) <strong>500%</strong> 향상</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">빠른 피드백과 안정적인 변환 서비스</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">무거운 파일 변환 작업을 개별적인 컨슈머 서버로 분리하여 사용자는 요청 즉시 응답을 받고, 안정적으로 순차 처리가 가능한 환경을 실현</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">사용자 경험(UX) 및 안정성 개선</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">실시간 진행률 표시로 사용자 대기 경험을 크게 개선했으며, 도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">장애 전파 격리</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">확장성 확보 및 비용 최적화</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">메인 서버와 변환 작업이 완전히 분리되어, 트래픽 급증 시 컨슈머 서버만 유연하게 스케일 아웃 할 수 있는 구조를 확보하여 인프라 비용 최적화</p
+                                            >
                                         </div>
                                     </div>
                                 </div>
