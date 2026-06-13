@@ -38,7 +38,7 @@
         <div class="intro-copy">
             <span class="pill-label section-pill">Introduction</span>
             <h2>안녕하세요,<br>백엔드 엔지니어 <span class="name-highlight">김주원</span>입니다.</h2>
-            <p class="intro-highlight">"작은 흐름조차 효율적이어야 한다."</p>
+            <p class="intro-highlight">"서비스의 품질을 좌우하는 것은 효율적인 구조와 시스템입니다."</p>
             <p class="intro-text"> 비즈니스 성장을 실현하는 시스템을 구축하는 Backend Engineer 김주원입니다.<br>
                 기술이라는 도구를 통해 사람과 비즈니스를 연결시켜, 삶의 질을 향상시키는 것을 추구합니다.
             </p>
@@ -402,16 +402,15 @@
             </div>
         </div>
 
-        <!-- ================= 03. CDC 도입 ================= -->
         <div class="accordion-item" id="acc-3">
             <button class="accordion-header" onclick="toggleAccordion('acc-3'); const acc = document.getElementById('acc-3'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
                 <div class="header-main">
                     <span class="card-index">03</span>
                     <h3>Change Data Capture(CDC) 를 활용한 Publisher 구성</h3>
-                    <p>무분별한 HTTP Polling Scheduling 을 Bin-log 감지 기반의 Debezium 으로 전환하여 데이터베이스 디스크 I/O 비용 절감했습니다.</p>
+                    <p>무분별한 HTTP Polling Scheduling 을 바이너리 로그 감지 기반의 Debezium 으로 전환하여 데이터베이스 CPU 사용률, 디스크 I/O 비용을 절감했습니다.</p>
                 </div>
                 <div class="scan-results">
-                    <span>데이터베이스 디스크 I/O 절감</span>
+                    <span>데이터베이스 CPU 사용률, 디스크 I/O 절감</span>
                     <span>Docker</span>
                 </div>
                 <i class="fas fa-chevron-down arrow-icon"></i>
@@ -419,7 +418,7 @@
             <div class="accordion-content">
                 <div class="inner-padding" style="padding: 24px 16px;">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <!-- S -->
+
                         <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                             <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
                                 <div style="display: flex; align-items: center; gap: 16px;">
@@ -430,16 +429,35 @@
                                 </div>
                                 <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
-                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터베이스의 지속적인 부하</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터 유무 관계없이 Scheduling 작업으로 데이터베이스를 무분별하게 조회함에 따라 불필요한 부하 발생</p>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터베이스 부하</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">주기적인 HTTP Polling 스케줄러 작업이 테이블을 무분별하게 조회하고 있으며, 데이터가 누적될수록 CPU 부하량 증가 및 디스크 I/O 자원 낭비 발생</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">(처리 성능을 중점으로 25만 건의 데이터 적재 후 검증)</p>
+                                        </div>
                                     </div>
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; height: 180px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #ffe2e2; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div id="imageTrack-cdc-situation" data-current-index="0" style="display: flex; height: 100%; transition: transform 0.4s ease-in-out; width: 200%;">
+                                            <img src="/images/sql.png" alt="sql" onclick="window.open(this.src, '_blank')" style="width: 50%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; background-color: #fff;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                            <img src="/images/polling.png" alt="기존 스케줄링 방식의 문제점" onclick="window.open(this.src, '_blank')" style="width: 50%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; background-color: #fff;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                        </div>
+
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-situation'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx - 1 + 2) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-left" style="font-size: 14px;"></i>
+                                        </button>
+
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-situation'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx + 1) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-right" style="font-size: 14px;"></i>
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <!-- T -->
                         <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                             <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
                                 <div style="display: flex; align-items: center; gap: 16px;">
@@ -453,13 +471,12 @@
                             <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">HTTP Polling Scheduling 으로 인한 디스크 I/O 낭비 제거</strong>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">HTTP Polling Scheduling 으로 인한 디스크 I/O 부하 제거</strong>
                                         <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청 데이터가 생성되는 경우에만 테이블을 스캔하도록 변경</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- A -->
                         <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                             <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
                                 <div style="display: flex; align-items: center; gap: 16px;">
@@ -470,24 +487,32 @@
                                 </div>
                                 <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
-                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 채택</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">다양한 데이터베이스 지원이 가능한 Debezium 을 채택하여 sink(목적지)를 RabbitMQ 로 지정</p>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 채택</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">다양한 데이터베이스 지원이 가능한 Debezium 을 채택하여 sink(목적지)를 RabbitMQ 로 지정</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 패턴 적용</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">사용자의 요청 테이블 기록과 Outbox 테이블 기록을 단일 트랜잭션으로 묶어 이벤트 발행의 신뢰성 확보하고 outbox 테이블에 생성 명령어만 들어가도록 설계</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Docker 를 통한 독립 CDC 서버 구성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">독립 서버로 구성하여 확장에 용이</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 패턴 적용</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자의 요청 테이블 기록과 Outbox 테이블 기록을 단일 트랜잭션으로 묶어 이벤트 발행의 신뢰성 확보하고 outbox 테이블에 생성 명령어만 들어가도록 설계</p>
-                                    </div>
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Docker 를 통한 독립 CDC 서버 구성</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">독립 서버로 구성하여 확장에 용이</p>
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; height: 320px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #e2effe; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div id="imageTrack-cdc-action" data-current-index="0" style="display: flex; height: 100%; transition: transform 0.4s ease-in-out; width: 200%;">
+                                            <img src="/images/debezium_package.png" alt="Debezium CDC 구조도" onclick="window.open(this.src, '_blank')" style="width: 50%; height: 100%; object-fit: contain; display: block; cursor: zoom-in; background-color: #fff;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- R -->
                         <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                             <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
                                 <div style="display: flex; align-items: center; gap: 16px;">
@@ -498,15 +523,31 @@
                                 </div>
                                 <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
-                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">성능 최적화 및 비용 절감</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">데이터베이스의 Bin-log 를 실시간으로 캡처하여 변경 감지 후 즉시 메시지큐로 이벤트 메시지를 발행하여 데이터베이스를 점유하던 디스크 I/O 비용을 80% 절감</p>
+                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">성능 최적화 및 비용 절감</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">데이터베이스의 바이너리 로그를 실시간으로 캡처하여 변경 감지 후 즉시 메시지큐로 이벤트 메시지를 발행하여 데이터베이스를 점유하던 CPU 사용률, 디스크 I/O 비용을 80% 절감</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 구조에 최적화된 미들웨어 역할 수행하며 장애 전파 격리</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">독립적인 CDC 서버로 인해 API 서버에 의존되어있던 메시지 발행 역할을 분리하여 API 서버에 장애 발생 시에도 별도의 영향을 받지 않음</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 구조에 최적화된 미들웨어 역할 수행하며 장애 전파 격리</strong>
-                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">독립적인 CDC 서버로 인해 API 서버에 의존되어있던 메시지 발행 역할을 분리하여 API 서버에 장애 발생 시에도 별도의 영향을 받지 않음</p>
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #e2eee2; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div id="imageTrack-cdc-result" data-current-index="0" style="display: flex; transition: transform 0.4s ease-in-out; width: 200%;">
+                                            <img src="/images/mq.png" alt="메시지 정상 적재" onclick="window.open(this.src, '_blank')" style="width: 50%; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                            <img src="/images/after.png" alt="CPU 현황" onclick="window.open(this.src, '_blank')" style="width: 50%; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                        </div>
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-result'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx - 1 + 2) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-left" style="font-size: 14px;"></i>
+                                        </button>
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-result'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx + 1) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-right" style="font-size: 14px;"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1337,10 +1378,6 @@
             <div class="contact-item">
                 <i class="fas fa-mobile-alt"></i>
                 <span>010-9197-3400</span>
-            </div>
-            <div class="contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>대한민국</span>
             </div>
         </div>
     </div>
