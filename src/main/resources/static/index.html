@@ -138,7 +138,7 @@
             <!-- ================= 메인 프로젝트 아코디언 ================= -->
             <div class="accordion-item" id="acc-1">
                 <!-- 메인 헤더 클릭 시 toggleAccordion 실행 후, 내부 아코디언 상태 강제 초기화 -->
-                <button class="accordion-header" onclick="toggleAccordion('acc-1'); const acc = document.getElementById('acc-1'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+                <button class="accordion-header" onclick="toggleAccordion('acc-1')">
                     <div class="header-main">
                         <span class="card-index">01</span>
                         <h3> Event-Driven-Architecture </h3>
@@ -251,7 +251,6 @@
                                 </div>
                             </div>
 
-                            <!-- 4. RESULT 카드 -->
                             <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                                 <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
                                     <div style="display: flex; align-items: center; gap: 16px;">
@@ -265,21 +264,29 @@
                                     </div>
                                     <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
                                 </div>
+
                                 <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
-                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
-                                        <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">빠른 피드백과 안정적인 변환 서비스</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">무거운 파일 변환 작업을 개별적인 컨슈머 서버로 분리하여 사용자는 요청 즉시 응답을 받고, 안정적으로 순차 처리가 가능한 환경을 실현</p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 10px; align-items: center;">
+
+                                        <div style="flex: 1 1 500px; display: flex; flex-direction: column; gap: 20px;">
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">빠른 피드백과 안정적인 변환 서비스</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">무거운 파일 변환 작업을 개별적인 컨슈머 서버로 분리하여 사용자는 요청 즉시 응답을 받고, 안정적으로 순차 처리가 가능한 환경을 실현</p>
+                                            </div>
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">장애 전파 격리</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+                                            </div>
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">확장성 확보 및 비용 최적화</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">메인 서버와 변환 작업이 완전히 분리되어, 트래픽 급증 시 컨슈머 서버만 유연하게 스케일 아웃 할 수 있는 구조를 확보하여 인프라 비용 최적화</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">장애 전파 격리</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+
+                                        <div style="flex: 1 1 400px; border: 1px solid #e1e8ed; border-radius: 12px; overflow: hidden; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                            <img src="/images/eda.png" alt="Architecture Diagram" style="width: 100%; height: auto; display: block; object-fit: contain;">
                                         </div>
-                                        <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">확장성 확보 및 비용 최적화</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">메인 서버와 변환 작업이 완전히 분리되어, 트래픽 급증 시 컨슈머 서버만 유연하게 스케일 아웃 할 수 있는 구조를 확보하여 인프라 비용 최적화</p
-                                            >
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -291,7 +298,7 @@
 
         <!-- ================= 02. iText 변환 ================= -->
         <div class="accordion-item" id="acc-2">
-            <button class="accordion-header" onclick="toggleAccordion('acc-2'); const acc = document.getElementById('acc-2'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+            <button class="accordion-header" onclick="toggleAccordion('acc-2')">
                 <div class="header-main">
                     <span class="card-index">02</span>
                     <h3>iText 를 통한 스트림 기반의 파일 변환 처리</h3>
@@ -403,7 +410,7 @@
         </div>
 
         <div class="accordion-item" id="acc-3">
-            <button class="accordion-header" onclick="toggleAccordion('acc-3'); const acc = document.getElementById('acc-3'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+            <button class="accordion-header" onclick="toggleAccordion('acc-3')">
                 <div class="header-main">
                     <span class="card-index">03</span>
                     <h3>Debezium 을 활용한 Publisher 구성</h3>
@@ -538,7 +545,7 @@
 
         <!-- ================= 04. 메트릭 수집 및 모니터링 구성 ================= -->
         <div class="accordion-item" id="acc-4">
-            <button class="accordion-header" onclick="toggleAccordion('acc-4'); const acc = document.getElementById('acc-4'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+            <button class="accordion-header" onclick="toggleAccordion('acc-4')">
                 <div class="header-main">
                     <span class="card-index">04</span>
                     <h3>모니터링 서버 구축 및 성능 측정</h3>
@@ -692,7 +699,7 @@
 
         <!-- ================= 05. 실시간 상태 표시 ================= -->
         <div class="accordion-item" id="acc-5">
-            <button class="accordion-header" onclick="toggleAccordion('acc-5'); const acc = document.getElementById('acc-5'); acc.querySelectorAll('.inner-accordion-content').forEach(el => el.style.display = 'none'); acc.querySelectorAll('.inner-arrow-icon').forEach(icon => icon.style.transform = 'rotate(0deg)');">
+            <button class="accordion-header" onclick="toggleAccordion('acc-5')">
                 <div class="header-main">
                     <span class="card-index">05</span>
                     <h3>SSE + Redis 를 통한 실시간 변환 상태 표시</h3>

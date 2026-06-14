@@ -1,30 +1,31 @@
+function toggleAccordion(id) {
+    const item = document.getElementById(id);
+    if (!item) return;
 
-    // 아코디언 토글 함수
-    function toggleAccordion(id) {
-        const item = document.getElementById(id);
-        const isActive = item.classList.contains('active');
+    const isActive = item.classList.contains('active');
 
+    if (isActive) {
+        // 메인 아코디언을 닫을 때
+        item.classList.remove('active');
+    } else {
+        // 메인 아코디언을 열 때
+        item.classList.add('active');
 
-        if (isActive) {
-                item.classList.remove('active'); // 이미 열려있다면 active 제거 (닫기)
-            } else {
-                item.classList.add('active');    // 닫혀있다면 active 추가 (열기)
+        // 현재 열린 메인 아코디언(item) 내부의 S,T,A,R 콘텐츠를 모두 찾음
+        const innerContents = item.querySelectorAll('.inner-accordion-content');
+
+        innerContents.forEach(content => {
+            // 내부 콘텐츠 강제 열기
+            content.style.display = 'block';
+
+            // 가장 가까운 카드 테두리(부모)를 찾아 화살표 아이콘 회전
+            const card = content.parentElement;
+            if (card) {
+                const icon = card.querySelector('.inner-arrow-icon');
+                if (icon) {
+                    icon.style.transform = 'rotate(180deg)';
+                }
             }
-
-        // 현재 클릭한 것 토글
-        if (!isActive) {
-            item.classList.add('active');
-        }
+        });
     }
-
-    window.onload = function() {
-        if (window.location.hash) {
-            history.replaceState('', document.title, window.location.pathname + window.location.search);
-            window.scrollTo(0, 0);
-        }
-    };
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-
-
+}
