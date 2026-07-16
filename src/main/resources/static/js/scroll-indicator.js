@@ -1,3 +1,24 @@
+// 사이드 네비게이션과 푸터 네비게이션이 공유하는 부드러운 스크롤 이동 로직
+function scrollToTarget(targetClass) {
+    const targetElement = document.querySelector(`.${targetClass}`) || document.querySelector(`#${targetClass}`);
+    if (!targetElement) return;
+
+    const elementPosition = targetElement.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset;
+
+    let headerOffset = 70;
+    if (targetClass === 'tech-stack-section') {
+        headerOffset = 10;
+    } else if (targetClass === 'site-footer') {
+        headerOffset = 0;
+    }
+
+    window.scrollTo({
+        top: offsetPosition - headerOffset,
+        behavior: 'smooth'
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     // =========================================================
     // 1. 우측 사이드 네비게이션 클릭 이동 로직
@@ -6,26 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            const targetClass = item.getAttribute('data-target');
-            const targetElement = document.querySelector(`.${targetClass}`) || document.querySelector(`#${targetClass}`);
-
-            if (targetElement) {
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset;
-
-                let headerOffset = 70;
-
-                if (targetClass === 'tech-stack-section') {
-                    headerOffset = 10;
-                } else if (targetClass === 'site-footer') {
-                    headerOffset = 0;
-                }
-
-                window.scrollTo({
-                    top: offsetPosition - headerOffset,
-                    behavior: 'smooth'
-                });
-            }
+            scrollToTarget(item.getAttribute('data-target'));
         });
     });
 
@@ -139,26 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     footerLinks.forEach(link => {
         link.addEventListener('click', () => {
-            const targetClass = link.getAttribute('data-target');
-            const targetElement = document.querySelector(`.${targetClass}`) || document.querySelector(`#${targetClass}`);
-
-            if (targetElement) {
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset;
-
-                // 우측 사이드바와 동일한 여백 설정
-                let headerOffset = 70;
-                if (targetClass === 'tech-stack-section') {
-                    headerOffset = 10;
-                } else if (targetClass === 'site-footer') {
-                    headerOffset = 0;
-                }
-
-                window.scrollTo({
-                    top: offsetPosition - headerOffset,
-                    behavior: 'smooth'
-                });
-            }
+            scrollToTarget(link.getAttribute('data-target'));
         });
     });
 });

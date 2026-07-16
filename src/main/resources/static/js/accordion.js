@@ -1,3 +1,16 @@
+// S,T,A,R 카드 내부 토글 (index.html 20곳에서 동일 로직 인라인으로 중복되던 것을 정리)
+function toggleStarCard(headerEl) {
+    const content = headerEl.nextElementSibling;
+    const icon = headerEl.querySelector('.inner-arrow-icon');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+    } else {
+        content.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+
 function toggleAccordion(id) {
     const item = document.getElementById(id);
     if (!item) return;

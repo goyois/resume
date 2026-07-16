@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/variants.css?v=20260415-flow">
-    <link rel="stylesheet" href="css/original-style.css">
+    <link rel="stylesheet" href="css/star-card.css">
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/project.css">
     <link rel="stylesheet" href="css/background-animation.css">
@@ -160,20 +160,20 @@
                         <div style="display: flex; flex-direction: column; gap: 20px;">
 
                             <!-- 1. SITUATION 카드 -->
-                            <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                    <div style="display: flex; align-items: center; gap: 16px;">
-                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;">
+                            <div class="star-card star-card--situation">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--situation">
                                             <i class="fas fa-exclamation-circle"></i>
                                         </div>
-                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                            <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span>
-                                            <strong style="font-size: 18px; color: #333;">상황</strong>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--situation">SITUATION</span>
+                                            <strong class="star-title">상황</strong>
                                         </div>
                                     </div>
-                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
                                 </div>
-                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">동기 처리 방식의 한계</strong>
@@ -192,20 +192,20 @@
                             </div>
 
                             <!-- 2. TASK 카드 -->
-                            <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                    <div style="display: flex; align-items: center; gap: 16px;">
-                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;">
+                            <div class="star-card star-card--task">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--task">
                                             <i class="fas fa-bullseye"></i>
                                         </div>
-                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                            <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span>
-                                            <strong style="font-size: 18px; color: #333;">과제</strong>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--task">TASK</span>
+                                            <strong class="star-title">과제</strong>
                                         </div>
                                     </div>
-                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
                                 </div>
-                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 아키텍처 구성</strong>
@@ -220,20 +220,20 @@
                             </div>
 
                             <!-- 3. ACTION 카드 -->
-                            <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                    <div style="display: flex; align-items: center; gap: 16px;">
-                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;">
+                            <div class="star-card star-card--action">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--action">
                                             <i class="fas fa-wrench"></i>
                                         </div>
-                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                            <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span>
-                                            <strong style="font-size: 18px; color: #333;">실행</strong>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--action">ACTION</span>
+                                            <strong class="star-title">실행</strong>
                                         </div>
                                     </div>
-                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
                                 </div>
-                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">비동기 메시지 브로커 도입</strong>
@@ -251,21 +251,21 @@
                                 </div>
                             </div>
 
-                            <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                    <div style="display: flex; align-items: center; gap: 16px;">
-                                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;">
+                            <div class="star-card star-card--result">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--result">
                                             <i class="fas fa-trophy"></i>
                                         </div>
-                                        <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                            <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span>
-                                            <strong style="font-size: 18px; color: #333;">결과</strong>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--result">RESULT</span>
+                                            <strong class="star-title">결과</strong>
                                         </div>
                                     </div>
-                                    <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
                                 </div>
 
-                                <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 10px; align-items: center;">
 
                                         <div style="flex: 1 1 500px; display: flex; flex-direction: column; gap: 20px;">
@@ -313,17 +313,17 @@
                 <div class="inner-padding" style="padding: 24px 16px;">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
                         <!-- S -->
-                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">예측불가한 대용량 및 다변형 이미지 리스크</strong>
@@ -337,17 +337,17 @@
                             </div>
                         </div>
                         <!-- T -->
-                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Constant Memory Footprint 최적화</strong>
@@ -357,17 +357,17 @@
                             </div>
                         </div>
                         <!-- A -->
-                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">스트림 기반 메모리 버퍼링 및 Auto-Closeable 적용</strong>
@@ -381,17 +381,17 @@
                             </div>
                         </div>
                         <!-- R -->
-                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">레이아웃 성공률 100% 달성</strong>
@@ -426,17 +426,17 @@
                 <div class="inner-padding" style="padding: 24px 16px;">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
 
-                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
                                 <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
 
                                     <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
@@ -449,17 +449,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">HTTP Polling Scheduling 으로 인한 디스크 I/O 부하 제거</strong>
@@ -468,17 +468,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
                                 <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
 
                                     <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
@@ -498,17 +498,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
                                 <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
 
                                     <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
@@ -562,17 +562,17 @@
             <div class="accordion-content">
                 <div class="inner-padding" style="padding: 24px 16px;">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
-                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변환 작업에 필요한 서버 리소스(CPU,Memory,GC) 확인 불가</strong>
@@ -586,17 +586,17 @@
                             </div>
                         </div>
 
-                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">모니터링 서버 구축</strong>
@@ -611,21 +611,21 @@
                         </div>
 
 
-                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;">
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action">
                                         <i class="fas fa-wrench"></i>
                                     </div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span>
-                                        <strong style="font-size: 18px; color: #333;">실행</strong>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span>
+                                        <strong class="star-title">실행</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
 
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
                                 <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
 
                                     <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
@@ -642,21 +642,21 @@
                             </div>
                         </div>
 
-                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;">
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result">
                                         <i class="fas fa-trophy"></i>
                                     </div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span>
-                                        <strong style="font-size: 18px; color: #333;">결과</strong>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span>
+                                        <strong class="star-title">결과</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
 
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 24px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
                                 <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
                                     <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
                                         <div>
@@ -715,17 +715,17 @@
                 <div class="inner-padding" style="padding: 24px 16px;">
                     <div style="display: flex; flex-direction: column; gap: 20px;">
                         <!-- S -->
-                        <div style="border: 2px solid #ffeded; background-color: #fff9f9; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ffe6e6; display: flex; justify-content: center; align-items: center; color: #ff3333; font-size: 24px;"><i class="fas fa-exclamation-circle"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ff3333; font-weight: bold;">SITUATION</span><strong style="font-size: 18px; color: #333;">상황</strong>
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">서버 자원 낭비 및 사용자 피드백 부재</strong>
@@ -735,17 +735,17 @@
                             </div>
                         </div>
                         <!-- T -->
-                        <div style="border: 2px solid #fffdf2; background-color: #fffefa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #fffde0; display: flex; justify-content: center; align-items: center; color: #ffcc00; font-size: 24px;"><i class="fas fa-bullseye"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #ffcc00; font-weight: bold;">TASK</span><strong style="font-size: 18px; color: #333;">과제</strong>
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 상태 가시화 및 상태 전송 로직</strong>
@@ -755,17 +755,17 @@
                             </div>
                         </div>
                         <!-- A -->
-                        <div style="border: 2px solid #f2faff; background-color: #fafdff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0f2fe; display: flex; justify-content: center; align-items: center; color: #007bff; font-size: 24px;"><i class="fas fa-wrench"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #007bff; font-weight: bold;">ACTION</span><strong style="font-size: 18px; color: #333;">실행</strong>
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">단방향 실시간 통신 구축</strong>
@@ -779,17 +779,17 @@
                             </div>
                         </div>
                         <!-- R -->
-                        <div style="border: 2px solid #f2fff2; background-color: #fafffa; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                            <div onclick="const content = this.nextElementSibling; const icon = this.querySelector('.inner-arrow-icon'); if(content.style.display === 'none') { content.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { content.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }" style="padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0fee6; display: flex; justify-content: center; align-items: center; color: #28a745; font-size: 24px;"><i class="fas fa-trophy"></i></div>
-                                    <div style="display: flex; flex-direction: column; gap: 2px; align-items: flex-start;">
-                                        <span style="font-size: 14px; color: #28a745; font-weight: bold;">RESULT</span><strong style="font-size: 18px; color: #333;">결과</strong>
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
                                     </div>
                                 </div>
-                                <i class="fas fa-chevron-down inner-arrow-icon" style="font-size: 18px; color: #666; transition: transform 0.3s;"></i>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
                             </div>
-                            <div class="inner-accordion-content" style="display: none; padding: 0 20px 20px 20px;">
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                 <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                     <div>
                                         <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">UX 개선 및 트래픽 절감</strong>
