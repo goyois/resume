@@ -1,0 +1,1295 @@
+/* ==========================================================================
+   main.css — 김주원 포트폴리오, 미니멀 개발자 포트폴리오 디자인 시스템
+   토큰 → 베이스 → 레이아웃 → 컴포넌트 순으로 구성된 단일 스타일시트.
+   흑/백/회색만 사용하고 색상 액센트는 두지 않는다. 위계는 두께·크기·
+   테두리·간격으로 만든다.
+   ========================================================================== */
+
+:root {
+    --ink: #0a0a0a;
+    --paper: #ffffff;
+    --surface: #ffffff;
+    --surface-subtle: #fafafa;
+    --border: #e6e6e6;
+    --border-strong: #d0d0d0;
+    --muted: #62636a;
+    --muted-2: #8f8f95;
+
+    --radius-lg: 14px;
+    --radius: 10px;
+    --radius-sm: 6px;
+
+    --container-prose: 860px;
+    --container-wide: 1140px;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+    --space-10: 140px;
+
+    --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+        "Noto Sans KR", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI",
+        "Noto Sans KR", "Malgun Gothic", Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+    --header-h: 64px;
+}
+
+/* ---------- 리셋 / 베이스 ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: var(--header-h);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 560ms ease, transform 560ms ease;
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ---------- 레이아웃 유틸 ---------- */
+.container {
+    width: min(calc(100% - 40px), var(--container-prose));
+    margin: 0 auto;
+}
+
+.container-wide {
+    width: min(calc(100% - 40px), var(--container-wide));
+    margin: 0 auto;
+}
+
+/* index.html의 최상위 래퍼: 자체 max-width가 없는 자식(아코디언 리스트 등)의
+   안전망 역할. hero/project/tech-stack 등은 각자 더 안쪽에서 다시 폭을
+   맞추므로 이중으로 중앙정렬돼도 문제 없다. */
+.portfolio-shell {
+    width: min(calc(100% - 40px), var(--container-wide));
+    margin: 0 auto;
+    padding: 0 0 var(--space-9);
+}
+
+.section {
+    padding: var(--space-9) 0;
+    border-top: 1px solid var(--border);
+}
+
+.section:first-of-type {
+    border-top: none;
+}
+
+@media (max-width: 720px) {
+    .section {
+        padding: var(--space-7) 0;
+    }
+}
+
+/* 공통 섹션 헤더 (project-intro-head / section-header.minimal-header) */
+.project-intro-head,
+.minimal-header {
+    text-align: center;
+    margin: 0 auto var(--space-6);
+    max-width: 640px;
+}
+
+/* project-intro-head는 별도 <section> 래퍼 없이 히어로 바로 다음에 오므로
+   여기서 직접 섹션 구분선/여백을 만든다 */
+.project-intro-head {
+    padding-top: var(--space-9);
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 720px) {
+    .project-intro-head {
+        padding-top: var(--space-7);
+    }
+}
+
+.pill-label,
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    box-shadow: none !important;
+}
+
+.sparkle-icon {
+    display: inline-block;
+    color: var(--ink);
+    font-size: 0.85em;
+    animation: sparkle-twinkle 1.8s ease-in-out infinite;
+}
+
+@keyframes sparkle-twinkle {
+    0%, 100% {
+        transform: scale(0.8) rotate(-10deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+.spin-icon {
+    display: inline-block;
+    color: var(--ink);
+    font-size: 0.85em;
+    animation: spin-slow 3s linear infinite;
+}
+
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.bulb-icon {
+    display: inline-block;
+    color: var(--ink);
+    font-size: 0.85em;
+    animation: bulb-flicker 1.6s ease-in-out infinite;
+}
+
+@keyframes bulb-flicker {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.65;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sparkle-icon,
+    .spin-icon,
+    .bulb-icon {
+        animation: none;
+    }
+}
+
+.section-intro {
+    text-align: left;
+    margin-bottom: var(--space-5);
+}
+
+.project-intro-head h1,
+.minimal-header h2 {
+    margin: 16px 0 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+}
+
+.project-intro-head p,
+.minimal-header .header-desc {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* 태그/키워드 = 모노스페이스 아웃라인 칩 (전 섹션 공통) */
+.showcase-keywords span,
+.scan-results span,
+.insight-tags span,
+.mts-tags span,
+.keyword-row span,
+.tag-row span {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface-subtle);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.tag-impact {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.86rem;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   1. 상단 고정 헤더
+   ========================================================================== */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-h);
+    z-index: 500;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    width: min(calc(100% - 40px), var(--container-wide));
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+}
+
+.wordmark {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+}
+
+.header-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.header-nav a {
+    font-size: 0.88rem;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 160ms ease;
+}
+
+.back-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+    color: var(--ink);
+}
+
+.header-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-sm);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.84rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 160ms ease;
+}
+
+.header-cta:hover {
+    opacity: 0.78;
+}
+
+@media (max-width: 720px) {
+    .header-inner {
+        gap: var(--space-3);
+    }
+
+    .header-nav {
+        justify-content: flex-start;
+        gap: var(--space-4);
+        -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 16px), transparent);
+        mask-image: linear-gradient(90deg, #000 calc(100% - 16px), transparent);
+    }
+
+    .wordmark {
+        font-size: 0.95rem;
+    }
+
+    /* 이력서 버튼은 히어로/푸터에도 있으니 좁은 화면에서는 내비 공간을 우선한다 */
+    .header-cta {
+        display: none;
+    }
+}
+
+/* ---------- 스크롤 진행바 ---------- */
+#scroll-progress-container {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    z-index: 499;
+    pointer-events: none;
+}
+
+#scroll-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--ink);
+    transition: width 120ms linear;
+}
+
+/* ==========================================================================
+   2. 히어로 — 마케팅 배너형 2단 그리드 대신, 저자 프로필/바이라인 구조.
+   작은 원형 아바타 + eyebrow → 큰 헤드라인 → 바이오 → 구분선 → 인용구/
+   경력/링크를 한 줄로 배치하는 단일 컬럼 구성.
+   ========================================================================== */
+.hero {
+    padding: var(--space-9) 0 var(--space-8);
+    border-top: none;
+}
+
+.hero-inner {
+    width: min(calc(100% - 40px), var(--container-wide));
+    margin: 0 auto;
+}
+
+.hero-byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-5);
+}
+
+.hero-avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    flex-shrink: 0;
+}
+
+.hero-avatar-sm img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.hero-eyebrow strong {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.hero-title {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 5.4vw, 3.8rem);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+}
+
+.hero-name {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+}
+
+.hero-bio {
+    margin: 0 0 var(--space-7);
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    max-width: 56ch;
+}
+
+.hero-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.hero-quote {
+    margin: 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--ink);
+    white-space: nowrap;
+    font-size: 0.98rem;
+    font-style: normal;
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+.hero-meta-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    flex-shrink: 0;
+}
+
+.hero-stat span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--muted-2);
+    margin-bottom: 2px;
+}
+
+.hero-stat strong {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.hero-links {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.hero-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.hero-link:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
+
+@media (max-width: 720px) {
+    .hero-meta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-quote {
+        white-space: normal;
+    }
+
+    .hero-meta-right {
+        justify-content: space-between;
+    }
+}
+
+/* ==========================================================================
+   3. 프로젝트 카드
+   ========================================================================== */
+.project-integration {
+    max-width: var(--container-wide);
+    margin: 0 auto var(--space-9);
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.project-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+}
+
+.showcase-thumb {
+    display: block;
+    padding: 0;
+    border: none;
+    border-right: 1px solid var(--border);
+    background: var(--surface-subtle);
+}
+
+.thumb-image-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.thumb-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.showcase-meta {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+}
+
+.showcase-date-row {
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: var(--space-4);
+}
+
+.impact-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: var(--space-3);
+}
+
+.impact-header-title i {
+    color: var(--ink);
+}
+
+.impact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-5);
+}
+
+.showcase-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+    .project-showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .showcase-thumb {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+/* ==========================================================================
+   3-1. 프로젝트 개요 그리드 (여러 프로젝트 카드) / 상세 탭 전환
+   ========================================================================== */
+.project-grid-section {
+    max-width: var(--container-wide);
+    margin: 0 auto var(--space-9);
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+}
+
+@media (max-width: 780px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.project-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+}
+
+.project-card-thumb {
+    height: 190px;
+    overflow: hidden;
+    background: var(--surface-subtle);
+    border-bottom: 1px solid var(--border);
+}
+
+.project-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+}
+
+.project-card:hover .project-card-thumb img {
+    transform: scale(1.06);
+}
+
+.project-card-thumb--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted-2);
+    font-size: 1.4rem;
+}
+
+.project-card-body {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    flex: 1;
+}
+
+.project-card-date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.project-card-body h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-family: var(--font-display);
+}
+
+.project-card-body p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.project-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: var(--space-3);
+}
+
+.project-card-tags span {
+    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+}
+
+.project-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: var(--space-2);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.project-card-cta i {
+    font-size: 0.78rem;
+    transition: transform 160ms ease;
+}
+
+.project-card-cta:hover i {
+    transform: translateX(3px);
+}
+
+.placeholder-note {
+    font-size: 0.78rem;
+    color: var(--muted-2);
+    font-family: var(--font-mono);
+    padding: var(--space-6);
+    text-align: center;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+}
+
+/* ==========================================================================
+   4. My Contributions — 아코디언 / STAR 카드
+   ========================================================================== */
+.featured-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.accordion-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.accordion-item.active {
+    border-color: var(--ink);
+}
+
+.accordion-header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 20px;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font: inherit;
+}
+
+.accordion-header:hover {
+    background: var(--surface-subtle);
+}
+
+.header-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.header-main h3 {
+    margin: 0;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.header-main p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.card-index {
+    display: none;
+}
+
+.scan-results {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.arrow-icon {
+    font-size: 1rem;
+    color: var(--muted-2);
+    transition: transform 220ms ease;
+    justify-self: end;
+}
+
+.accordion-item.active .arrow-icon {
+    transform: rotate(180deg);
+    color: var(--ink);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 480ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--surface-subtle);
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 4000px;
+}
+
+.inner-padding {
+    padding: var(--space-5) var(--space-4);
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 720px) {
+    .accordion-header {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .arrow-icon {
+        justify-self: start;
+    }
+}
+
+/* ---- STAR (Situation/Task/Action/Result) 카드: 색 대신 라벨/두께로 구분 ---- */
+.star-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: none;
+}
+
+.star-card--situation,
+.star-card--task,
+.star-card--action,
+.star-card--result {
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+}
+
+.star-card__header {
+    padding: var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.star-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.star-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+.star-icon--situation,
+.star-icon--task,
+.star-icon--action,
+.star-icon--result {
+    background-color: var(--ink);
+    color: var(--paper);
+}
+
+.star-label-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.star-type-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.star-type-label--situation,
+.star-type-label--task,
+.star-type-label--action,
+.star-type-label--result {
+    color: var(--muted-2);
+}
+
+.star-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.inner-arrow-icon {
+    font-size: 0.92rem;
+    color: var(--muted-2);
+    transition: transform 220ms ease;
+}
+
+.inner-accordion-content {
+    display: none;
+    border-top: 1px solid var(--border);
+}
+
+/* STAR 카드 내부에 촘촘히 박힌 인라인 스타일(색/굵기)은 대부분 이미
+   중립 회색조라 그대로 둬도 새 시스템과 잘 어울린다. */
+
+/* ==========================================================================
+   5. 기술 스택
+   ========================================================================== */
+.tech-stack-section {
+    max-width: var(--container-wide);
+    margin: 0 auto;
+}
+
+.tech-stack-section::before {
+    display: none;
+}
+
+.tech-category-grid {
+    display: grid;
+    /* 박스 안 배지가 2열로 앉을 때 "Spring Security" 같은 긴 이름 +
+       숙련도 점이 잘리지 않을 만큼 최소 폭을 확보한다 */
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: var(--space-4);
+}
+
+.tech-box {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    background: var(--surface);
+    box-shadow: none;
+    transition: border-color 160ms ease;
+}
+
+.tech-box:hover {
+    transform: none;
+    border-color: var(--border-strong);
+    box-shadow: none;
+}
+
+.box-backend,
+.box-data,
+.box-infra,
+.box-tools {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.tech-stack-section .tech-category-grid .tech-box .box-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border);
+}
+
+/* 2열 그리드는 유지하되, 배지 내부(아이콘+이름)는 폭이 좁아도 절대
+   두 줄로 넘어가지 않도록 한다 — 이름이 길면 말줄임(...)로 잘라내고
+   숙련도 점은 항상 오른쪽에 고정 노출 */
+.badge-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+}
+
+.tech-badge {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 10px;
+    box-shadow: none;
+    gap: 6px;
+}
+
+.tech-badge:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-strong);
+}
+
+.tech-emoji {
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.tech-stack-section .tech-category-grid .tech-box .tech-badge .tech-name {
+    color: var(--ink);
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tech-dots {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 3px;
+    margin-left: auto;
+    padding-left: 2px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    border-radius: 50%;
+    background-color: var(--border);
+}
+
+.dot.filled {
+    background-color: var(--ink);
+}
+
+/* ==========================================================================
+   6. Technical Case Studies (트러블슈팅)
+   ========================================================================== */
+.minimal-ts-list {
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.mts-item.mts-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: none;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: 0;
+    transition: border-color 160ms ease;
+}
+
+.mts-item:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-strong);
+}
+
+.mts-item-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
+}
+
+.mts-item-header h3 {
+    font-size: 1.12rem;
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.mts-cause h4,
+.mts-solution h4 {
+    color: var(--ink);
+}
+
+.mts-cause h4 {
+    color: var(--muted-2);
+}
+
+.mts-connector {
+    color: var(--border-strong);
+}
+
+.mts-blue,
+.mts-green {
+    color: var(--ink) !important;
+}
+
+.ts-status.resolved {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+@media (max-width: 850px) {
+    .mts-item.mts-card {
+        padding: var(--space-5) !important;
+    }
+}
+
+/* ==========================================================================
+   7. 인사이트
+   ========================================================================== */
+.insights-grid {
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+    padding: 0;
+}
+
+.insight-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: none;
+    transition: border-color 200ms ease;
+}
+
+.insight-card:hover {
+    transform: none;
+    background: var(--surface) !important;
+    border-color: var(--ink) !important;
+    box-shadow: none;
+}
+
+/* 썸네일: 다이어그램/스크린샷 원본 크기와 무관하게 고정 높이로 자르고,
+   overflow:hidden으로 아래 텍스트 영역과 절대 겹치지 않게 한다 */
+.insight-thumb {
+    position: relative;
+    width: 100%;
+    height: 168px;
+    overflow: hidden;
+    background-color: var(--surface-subtle);
+    border-bottom: 1px solid var(--border);
+}
+
+.insight-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+}
+
+.insight-card:hover .insight-thumb img {
+    transform: none;
+    opacity: 0.92;
+}
+
+.insight-category {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    padding: 4px 10px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+/* 이미지 위가 아니라 이미지 "아래" 흰 영역에 텍스트를 배치 — 이미지와
+   충분한 여백을 두어 절대 겹치지 않도록 함 */
+.insight-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: var(--space-5);
+}
+
+.insight-date {
+    color: var(--muted-2);
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+}
+
+.insight-body h3 {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    color: var(--ink) !important;
+}
+
+.insight-body p {
+    margin: 0 0 var(--space-4);
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.insight-tags {
+    margin-top: auto;
+}
+
+/* ==========================================================================
+   8. 반응형 컨테이너 보정
+   ========================================================================== */
+@media (max-width: 720px) {
+    .container,
+    .container-wide,
+    .header-inner,
+    .hero-grid {
+        width: min(calc(100% - 24px), var(--container-wide));
+    }
+}

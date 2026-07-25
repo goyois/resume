@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 스튜디오 · 김주원의 포트폴리오</title>
+    <meta name="description" content="파일 변환 서비스 아키텍처를 중심으로 정리한 프로젝트 상세 페이지">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css?v=20260725-5">
+</head>
+<body class="portfolio-body">
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="wordmark" href="index.html">김주원</a>
+        <nav class="header-nav">
+            <a href="index.html" class="back-nav-link"><i class="fas fa-arrow-left"></i> 전체 프로젝트</a>
+            <a href="javascript:void(0)" class="scroll-nav-link" data-target="my-contributions">S.T.A.R</a>
+            <a href="javascript:void(0)" class="scroll-nav-link" data-target="troubleshooting-section">문제해결</a>
+        </nav>
+        <a class="header-cta" href="/download/resume.pdf" download="백엔드_엔지니어_김주원_이력서.pdf"><i class="fas fa-download"></i> <span>이력서</span></a>
+    </div>
+</header>
+
+<div id="scroll-progress-container">
+    <div id="scroll-progress-bar"></div>
+</div>
+
+<div class="portfolio-shell brand-page main-portfolio">
+
+    <div class="project-intro-head minimal-header reveal">
+        <span class="pill-label section-pill"><i class="fas fa-star sparkle-icon"></i> Project</span>
+        <h1>파일 스튜디오</h1>
+        <p class="header-desc">이미지 파일을 PDF로 빠르게 변환합니다.</p>
+    </div>
+
+        <div class="project-showcase" style="margin-bottom: var(--space-7);">
+            <a class="showcase-thumb" href="https://github.com/toy-boyz/File-Conversion" target="_blank" rel="noreferrer">
+                <div class="thumb-image-wrap">
+                    <img src="/images/img.png" alt="Project Thumbnail" class="thumb-image">
+                </div>
+            </a>
+
+            <div class="showcase-meta">
+                <div class="showcase-date-row">
+                    <span class="showcase-date"><i class="far fa-calendar-alt"></i> 2026.01 ~ 2026.04 (4개월)</span>
+                    <span class="showcase-team"><i class="far fa-user"></i> 2명</span>
+                </div>
+
+                <div class="impact-header-title">
+                    <i class="fas fa-arrow-trend-up"></i> 핵심 임팩트
+                </div>
+
+                <div class="impact-list">
+                    <span class="tag-impact">무거운 변환 로직 전용 서버 분리로 성능 향상</span>
+                    <span class="tag-impact">메시지큐 도입하여 비동기 처리 및 사용자 경험 개선</span>
+                    <span class="tag-impact">CDC를 통한 이벤트 트리거 구성</span>
+                    <span class="tag-impact">실시간 변환 작업 상태 구현</span>
+                    <span class="tag-impact">서버 성능 측정 패널 구축</span>
+                </div>
+
+                <div class="showcase-keywords">
+                    <span>Java</span>
+                    <span>Spring Boot</span>
+                    <span>RabbitMQ</span>
+                    <span>Debezium</span>
+                    <span>MySQL</span>
+                    <span>Redis</span>
+                    <span>AWS</span>
+                    <span class="tag-more">+4</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="my-contributions" class="section-block section reveal">
+        <div class="section-intro">
+            <span class="pill-label section-pill">My Contributions </span>
+        </div>
+
+        <div class="featured-list">
+            <!-- ================= 메인 프로젝트 아코디언 ================= -->
+            <div class="accordion-item" id="acc-1">
+                <!-- 메인 헤더 클릭 시 toggleAccordion 실행 후, 내부 아코디언 상태 강제 초기화 -->
+                <button class="accordion-header" onclick="toggleAccordion('acc-1')">
+                    <div class="header-main">
+                        <span class="card-index">01</span>
+                        <h3> Event-Driven-Architecture </h3>
+                        <p> 모놀리식에서 이벤트 기반 아키텍처로 전환하여 처리 성능 및 사용자 경험을 증대시켰습니다.</p>
+                    </div>
+                    <div class="scan-results">
+                        <span>Event-Driven-Architecture</span>
+                        <span>Async</span>
+                        <span>UX</span>
+                    </div>
+                    <i class="fas fa-chevron-down arrow-icon"></i>
+                </button>
+
+                <!-- 메인 아코디언 콘텐츠 영역 -->
+                <div class="accordion-content">
+                    <div class="inner-padding" style="padding: 24px 16px;">
+
+                        <!-- S, T, A, R 카드 리스트 (세로 배치) -->
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                            <!-- 1. SITUATION 카드 -->
+                            <div class="star-card star-card--situation">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--situation">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--situation">SITUATION</span>
+                                            <strong class="star-title">상황</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">동기 처리 방식의 한계</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">동기 처리 구조로 인해 사용자의 요청에 대한 응답을 변환이 완료될 때까지 기다려야 하는 상황 발생</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">장애 전파 위험성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변환 처리 장애가 생기는 경우 메인 서버까지 전파</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">확장성 저하</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">도메인 간의 강결합으로 인해 트래픽 급증 시 확장성이 저하</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. TASK 카드 -->
+                            <div class="star-card star-card--task">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--task">
+                                            <i class="fas fa-bullseye"></i>
+                                        </div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--task">TASK</span>
+                                            <strong class="star-title">과제</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 아키텍처 구성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">전체 프로세스를 비동기 이벤트 기반으로 전환하여 시스템의 처리 성능을 향상시키는 것이 목표</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 모니터링 환경 조성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자에게 작업 진행 상태를 실시간으로 전달할 수 있는 모니터링 환경 구축</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. ACTION 카드 -->
+                            <div class="star-card star-card--action">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--action">
+                                            <i class="fas fa-wrench"></i>
+                                        </div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--action">ACTION</span>
+                                            <strong class="star-title">실행</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">비동기 메시지 브로커 도입</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무거운 파일 변환 작업을 RabbitMQ를 활용해 비동기로 분리하고, 수동 Ack 및 DLQ(Dead Letter Queue) 설정을 통해 처리 안정성 확보</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 구조와 CDC 도입</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Transactional Outbox Pattern과 Debezium(CDC)을 적용하여 데이터베이스 업데이트와 도메인 이벤트 발행 간의 원자성 확보</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">관심사 분리</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">역할별로 결합도를 낮추기 위한 모듈화 진행</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="star-card star-card--result">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--result">
+                                            <i class="fas fa-trophy"></i>
+                                        </div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--result">RESULT</span>
+                                            <strong class="star-title">결과</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-wrap: wrap; gap: 24px; margin-top: 10px; align-items: center;">
+
+                                        <div style="flex: 1 1 500px; display: flex; flex-direction: column; gap: 20px;">
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">빠른 피드백과 안정적인 변환 서비스</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">무거운 파일 변환 작업을 개별적인 컨슈머 서버로 분리하여 사용자는 요청 즉시 응답을 받고, 안정적으로 순차 처리가 가능한 환경을 실현</p>
+                                            </div>
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">장애 전파 격리</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">도메인 간 결합도를 낮춰 변환 모듈의 장애가 메인 서버로 전파되는 것을 완벽히 차단</p>
+                                            </div>
+                                            <div>
+                                                <strong style="font-size: 1.05em; color: #111; display: block; margin-bottom: 6px; font-weight: 700;">확장성 확보 및 비용 최적화</strong>
+                                                <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">메인 서버와 변환 작업이 완전히 분리되어, 트래픽 급증 시 컨슈머 서버만 유연하게 스케일 아웃 할 수 있는 구조를 확보하여 인프라 비용 최적화</p>
+                                            </div>
+                                        </div>
+
+                                        <div style="flex: 1 1 400px; border: 1px solid #e1e8ed; border-radius: 12px; overflow: hidden; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                            <img src="/images/eda.png" alt="Architecture Diagram" style="width: 100%; height: auto; display: block; object-fit: contain;">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 02. iText 변환 ================= -->
+        <div class="accordion-item" id="acc-2">
+            <button class="accordion-header" onclick="toggleAccordion('acc-2')">
+                <div class="header-main">
+                    <span class="card-index">02</span>
+                    <h3>iText 를 통한 스트림 기반의 파일 변환 처리</h3>
+                    <p>빠른 처리 속도와 메모리 효율이 우수하며, 서버 리소스 점유율을 최소화할 수 있었습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>변환 최적화</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">예측불가한 대용량 및 다변형 이미지 리스크</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자가 변환 요청하는 이미지의 해상도 및 크기를 예측할 수 없으므로 고정된 규격으로 PDF 생성시 이미지가 깨지거나 여백 발생 가능</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">메모리 버퍼 제어</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">트래픽 스파이크처럼 변환이 집중될 때 파일 전체를 무겁게 제어하면 가용 JVM 힙 메모리가 급증하여 서버가 다운될 위험 있음</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Constant Memory Footprint 최적화</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">원본 파일의 크기나 해상도와 상관없이 ByteArrayOutputStream 내에서  유연하게 chunk 단위 처리가 가능하도록 스트림 파이프라인 설계</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">스트림 기반 메모리 버퍼링 및 Auto-Closeable 적용</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ByteArrayOutputStream 을 try-with-resources 구조로 자원 누수를 차단 및 PdfWriter 와 PdfDocument 를 파이프라인으로 연결하여 순차적 데이터 플러시 환경을 구축</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">동적 페이지 해상도 매핑 및 제로 마진 설계</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ImageDataFactory 를 통해 이미지 원본 가로,세로 픽셀을 런타임에 추출해서 PDF PageSize를 1:1 로 동적 일치시키고 여백으로 인한 문서 용량 낭비와 레이아웃 꺠짐 방지</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">레이아웃 성공률 100% 달성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">비표준 해상도 및 파노라마 형태의 긴 이미지 파일도 원본 왜곡이나 화질 저하없이 변환</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">안정적인 힙 메모리 유자</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">가변적인 변환 처리에도 일정한 메모리 점유율을 유지</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item" id="acc-3">
+            <button class="accordion-header" onclick="toggleAccordion('acc-3')">
+                <div class="header-main">
+                    <span class="card-index">03</span>
+                    <h3>Debezium 을 활용한 Publisher 구성</h3>
+                    <p>무분별한 HTTP Polling Scheduling 을 바이너리 로그 감지 기반의 Debezium 으로 전환하여 데이터베이스 CPU 최적화, 디스크 I/O 부하 제거했습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>데이터베이스 CPU 사용률, 디스크 I/O 절감</span>
+                    <span>Docker</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터베이스 부하</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">주기적인 HTTP Polling 스케줄러 작업이 테이블을 무분별하게 조회하고 있으며, 데이터가 누적될수록 CPU 부하량 증가 및 디스크 I/O 자원 낭비 발생</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">HTTP Polling Scheduling 으로 인한 디스크 I/O 부하 제거</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청 데이터가 생성되는 경우에만 테이블을 스캔하도록 변경</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Debezium(CDC) 채택</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">다양한 데이터베이스 지원이 가능한 Debezium 을 채택하여 sink(목적지)를 RabbitMQ 로 지정</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Transactional Outbox 패턴 적용</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">사용자의 요청 테이블 기록과 Outbox 테이블 기록을 단일 트랜잭션으로 묶어 이벤트 발행의 신뢰성 확보하고 outbox 테이블에 생성 명령어만 들어가도록 설계</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Docker 를 통한 독립 CDC 서버 구성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">독립 서버로 구성하여 확장에 용이</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">성능 최적화 및 비용 절감</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">데이터베이스의 바이너리 로그를 실시간으로 캡처하여 변경 감지 후 즉시 메시지큐로 이벤트 메시지를 발행하여 데이터베이스를 점유하던 CPU 사용률 80% 절감 및 디스크 I/O 부하 제거</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">(처리 성능을 중점으로 25만 건의 데이터 적재 후 검증)</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">이벤트 기반 구조에 최적화된 미들웨어 역할 수행하며 장애 전파 격리</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">독립적인 CDC 서버로 인해 API 서버에 의존되어있던 메시지 발행 역할을 분리하여 API 서버에 장애 발생 시에도 별도의 영향을 받지 않음</p>
+                                        </div>
+                                    </div>
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #e2eee2; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div id="imageTrack-cdc-result" data-current-index="0" style="display: flex; transition: transform 0.4s ease-in-out; width: 200%;">
+                                            <img src="/images/polling.png" alt="메시지 정상 적재" onclick="window.open(this.src, '_blank')" style="width: 50%; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                            <img src="/images/after.png" alt="CPU 현황" onclick="window.open(this.src, '_blank')" style="width: 50%; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                        </div>
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-result'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx - 1 + 2) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-left" style="font-size: 14px;"></i>
+                                        </button>
+                                        <button onclick="const track = document.getElementById('imageTrack-cdc-result'); let idx = parseInt(track.getAttribute('data-current-index')); idx = (idx + 1) % 2; track.setAttribute('data-current-index', idx); track.style.transform = `translateX(-${idx * 50}%)`;" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-right" style="font-size: 14px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 04. 메트릭 수집 및 모니터링 구성 ================= -->
+        <div class="accordion-item" id="acc-4">
+            <button class="accordion-header" onclick="toggleAccordion('acc-4')">
+                <div class="header-main">
+                    <span class="card-index">04</span>
+                    <h3>모니터링 서버 구축 및 성능 측정</h3>
+                    <p> Prometheus 를 통해 컨슈머 서버의 메트릭 수집 및 Grafana의 PromQL 를 활용하여 모니터링 패널을 구축하여 성능 측정을 했습니다.</p>
+                </div>
+                <div class="scan-results">
+                    <span>Prometheus</span>
+                    <span>Grafana</span>
+                    <span>Infra</span>
+                    <span>Docker</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변환 작업에 필요한 서버 리소스(CPU,Memory,GC) 확인 불가</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">컨슈머 서버 리소스를 확인하기 어려워 병렬 처리,서버 스케일아웃 등의 적용이 필요한 지점을 알기 어려움</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변환 작업의 처리량 및 S3 네트워크 속도 측정이 불가</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로컬 환경과 운영 환경에서 차이가 발생하는 요소들을 명확히 수치로 측정하기 어려움</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">모니터링 서버 구축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">독립적인 서버를 생성하여 모니터링에 최적화된 환경 구성</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">부하테스트 시나리오 작성</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Warm up ~ Traffic spike 까지 5단계 가량의 시나리오를 작성</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action">
+                                        <i class="fas fa-wrench"></i>
+                                    </div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span>
+                                        <strong class="star-title">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Prometheus 기반 메트릭 수집 환경 구성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">SpringBoot Actuator와 Micrometer를 통해 JVM, MQ 메트릭을 수집</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Artillery 를 통해 배포 서버로 페이즈 및 시나리오 작성</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">rampTo 를 통해 서서히 트래픽을 증가, 랜덤한 UUID 생성, 서비스 기준 최대 크기의 테스트 이미지 파일 바인딩 처리</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span>
+                                        <strong class="star-title">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+
+                            <div class="inner-accordion-content" style="padding: 0 20px 24px 20px;">
+                                <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 10px;">
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; display: flex; flex-direction: column; gap: 24px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Grafana 대시보드 시각화 및 애플리케이션 성능 측정 패널 구축</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">수집된 데이터를 바탕으로 컨슈머의 메시지 개당 평균 Ack 처리시간, 최대 지연시간, 처리량 등의 애플리케이션 성능 지표를 PromQL 을 통해 패널로 구성</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">데이터 기반의 효율적인 스케일링 시점 파악 및 비용 최적화 환경 마련</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">실시간 트래픽 및 큐 대기열에 대한 가시성을 확보함에 따라, 트래픽 급증 시 컨슈머 서버를 적절히 병렬처리할 수 있는 기반을 마련하여 리소스 낭비 방지 및 운영 안정성 향상</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">5단계 페이즈와 비즈니스 시나리오를 통해 API 및 S3 업로드 부하 테스트</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.6; word-break: keep-all;">가상의 uuid & 임의 이미지 파일을 통해 오류가 발생되지 않는 견고한 처리 과정을 입증</p>
+                                        </div>
+                                    </div>
+
+                                    <div style="flex: 1 1 calc(50% - 12px); min-width: 300px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid #e2eee2; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                                        <div id="imageTrack" style="display: flex; transition: transform 0.4s ease-in-out; width: 300%;">
+                                            <img src="/images/monitoring.png" alt="프로메테우스 메트릭 수집 구조" onclick="window.open(this.src, '_blank')" style="width: 33.333%; flex-shrink: 0; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                            <img src="/images/grafana.png" alt="S3 및 RabbitMQ 모니터링 그래프" onclick="window.open(this.src, '_blank')" style="width: 33.333%; flex-shrink: 0; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                            <img src="/images/artillery.png" alt="부하테스트 결과" onclick="window.open(this.src, '_blank')" style="width: 33.333%; flex-shrink: 0; height: auto; display: block; cursor: zoom-in;" title="클릭하면 원본 이미지를 새 창으로 봅니다." />
+                                        </div>
+
+                                        <button onclick="changeSlide(-1)" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-left" style="font-size: 14px;"></i>
+                                        </button>
+                                        <button onclick="changeSlide(1)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: rgba(0, 0, 0, 0.6); z-index: 2; transition: background 0.2s, color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.8)'; this.style.color='rgba(0,0,0,0.9)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.4)'; this.style.color='rgba(0, 0, 0, 0.6)'">
+                                            <i class="fas fa-chevron-right" style="font-size: 14px;"></i>
+                                        </button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 05. 실시간 상태 표시 ================= -->
+        <div class="accordion-item" id="acc-5">
+            <button class="accordion-header" onclick="toggleAccordion('acc-5')">
+                <div class="header-main">
+                    <span class="card-index">05</span>
+                    <h3>SSE + Redis 를 통한 실시간 변환 상태 표시</h3>
+                    <p>변환 상태를 Redis Pub/Sub 을 통해 API 서버로 상태 전송 및 SSE 단방향 통신으로 실시간 표시합니다. </p>
+                </div>
+                <div class="scan-results">
+                    <span>SSE</span>
+                    <span>Redis Pub/Sub</span>
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="inner-padding" style="padding: 24px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <!-- S -->
+                        <div class="star-card star-card--situation">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">서버 자원 낭비 및 사용자 피드백 부재</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;"> 변환 진행 상태 확인을 위해 지속적인 폴링 요청을 보냄에 따라 서버 자원 및 네트워크 대역폭 낭비</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- T -->
+                        <div class="star-card star-card--task">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실시간 상태 가시화 및 상태 전송 로직</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변환 진행률을 가볍고 빠르게 전송하고 사용자의 요청없이도 진행 상태를 알 수 있도록 하여 UX 개선 필요</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- A -->
+                        <div class="star-card star-card--action">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">단방향 실시간 통신 구축</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">SSE(Server-Sent Events) 를 통한 단방향 실시간 채널을 구축하여 불필요한 HTTP 오버헤드 최적화 및 클라이언트의 UUID 및 파일명과 매칭하여 실시간 전달</p>
+                                    </div>
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">상태 업데이트에 적합한 가볍고 빠른 메시지 전송</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Redis Pub/Sub 를 통해 변환 진행되는 과정에서 API 서버로 상태 메시지를 전송</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- R -->
+                        <div class="star-card star-card--result">
+                            <div class="star-card__header" onclick="toggleStarCard(this)">
+                                <div class="star-header-left">
+                                    <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                    <div class="star-label-col">
+                                        <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                            </div>
+                            <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                    <div>
+                                        <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">UX 개선 및 트래픽 절감</strong>
+                                        <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">상태 조회 트래픽을 90% 이상 대폭 절감하였으며, 사용자에게 즉각적인 진행 상태 피드백을 제공하여 전체적인 서비스 신뢰도 확보</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <section id="troubleshooting-section" class="section-block section reveal">
+        
+            <div class="section-header minimal-header">
+                <span class="badge section-pill">Technical Case Studies</span>
+                <h2>문제 해결 사례</h2>
+                <p class="header-desc">기술적 난제를 정의하고, 원인을 분석하여 최적의 솔루션을 찾아낸 경험입니다.</p>
+            </div>
+        
+            <div class="minimal-ts-list">
+                <!-- ================= Case 01 ================= -->
+                <div class="mts-item mts-card">
+                    <div class="mts-item-header">
+                        <h3>01. 재처리 전략 및 메시징 트랜잭션 구현 </h3>
+                        <div class="mts-tags">
+                            <span>Transaction</span>
+                            <span>Event-Driven-Architecture</span>
+                        </div>
+                    </div>
+        
+                    <div class="mts-item-body">
+                        <!-- 왼쪽: 원인 분석 -->
+                        <div class="mts-col mts-cause">
+                            <div class="mts-prefix">
+                                <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
+                            </div>
+                            <h4>Root Cause</h4>
+                            <p>Consumer 의 Default Acknowledgement Auto 로는 수신 즉시 큐에서 소진되므로 변환 실패 시 재처리 불가 및 변환 처리의 신뢰성을 보장하기 어려움</p>
+                        </div>
+        
+                        <!-- 중앙 연결선 (CSS로 구현) -->
+                        <div class="mts-connector">
+                            <i class="fas fa-arrow-right mts-arrow"></i>
+                        </div>
+        
+                        <!-- 오른쪽: 해결 및 임팩트 -->
+                        <div class="mts-col mts-solution">
+                            <h4>Final Action & Impact</h4>
+                            <ul class="ts-result-ul">
+                                <li>
+                                    <strong class="mts-blue">Ack Manual 로 전환 및 재처리 구현</strong>
+                                    <span>개발자가 직접 Ack/Nack 제어, RetryTemplate 설정을 통한 재시도 및 DLQ 구성</span>
+                                </li>
+                                <li>
+                                    <strong class="mts-green">비즈니스 신뢰성 보장 및 에러 격리</strong>
+                                    <span>비즈니스 로직이 성공한 경우만 Ack 전송, 실패 시 최대 3회 재시도를 수행하고 최종 실패 시 DLQ 로 라우팅하여 관리자 에러 모니터링 체계 구축</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ================= Case 01 끝 ================= -->
+        
+                <div class="mts-item mts-card">
+        
+                    <div class="mts-item-header">
+                        <h3>02. 워커 서버와 S3 간의 Network Latency 개선</h3>
+                        <div class="mts-tags">
+                            <span>Performance</span>
+                            <span>VPC</span>
+                            <span>Endpoint</span>
+                        </div>
+                    </div>
+        
+                    <div class="mts-item-body">
+                        <!-- 왼쪽: 원인 분석 -->
+                        <div class="mts-col mts-cause">
+                            <div class="mts-prefix">
+                                <span class="ts-status resolved"><i class="fas fa-check-circle"></i> Resolved</span>
+                            </div>
+                            <h4>Root Cause</h4>
+                            <p> S3 Network Latency 가 변환 프로세스 Latency 의 44% 가량을 차지하며 길어질수록 Throughput 감소 및 병목을 유발함</p>
+                        </div>
+        
+                        <!-- 중앙 연결선 (CSS로 구현) -->
+                        <div class="mts-connector">
+                            <i class="fas fa-arrow-right mts-arrow"></i>
+                        </div>
+        
+                        <!-- 오른쪽: 해결 및 임팩트 -->
+                        <div class="mts-col mts-solution">
+                            <h4>Final Action & Impact</h4>
+                            <ul class="ts-result-ul">
+                                <li>
+                                    <strong class="mts-blue">AWS VPC Endpoint 적용</strong>
+                                    <span>기존 NAT Gateway,Internet 을 거치던 경로를 VPC Endpoint (AWS 내부망 전용 경로) 로 대체 </span>
+                                </li>
+                                <li>
+                                    <strong class="mts-green"> Network Latency 10 ~ 15% 감소 </strong>
+                                    <span>최대 지연 시간 0.3s -> 0.2s 감소 및 Throughput 5 ~ 10 % 증가하며 내부망을 통한 안정적인 처리 성능이 보장됨 </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+</div>
+
+<script src="js/scroll-indicator.js"></script>
+<script src="js/script.js"></script>
+<script src="js/accordion.js"></script>
+<script src="js/star.js"></script>
+
+</body>
+</html>
