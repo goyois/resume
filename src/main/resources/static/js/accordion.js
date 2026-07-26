@@ -11,6 +11,20 @@ function toggleStarCard(headerEl) {
     }
 }
 
+// 핵심 임팩트 태그 클릭 시 해당 My Contributions 아코디언으로 이동 후 펼침
+function goToContribution(id) {
+    const item = document.getElementById(id);
+    if (!item) return;
+
+    if (!item.classList.contains('active')) {
+        toggleAccordion(id);
+    }
+
+    if (typeof scrollToTarget === 'function') {
+        scrollToTarget(id);
+    }
+}
+
 function toggleAccordion(id) {
     const item = document.getElementById(id);
     if (!item) return;

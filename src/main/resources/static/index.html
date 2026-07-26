@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css?v=20260725-5">
+    <link rel="stylesheet" href="css/main.css?v=20260726-11">
 </head>
 <body class="portfolio-body">
 
@@ -33,24 +33,42 @@
 <div class="portfolio-shell brand-page main-portfolio">
     <section class="intro-hero hero reveal">
         <div class="hero-inner">
-            <div class="hero-byline">
-                <span class="hero-avatar-sm"><img src="/images/image5.jpeg" alt="김주원"></span>
-                <span class="hero-eyebrow"><strong>김주원</strong> · Backend Engineer</span>
-            </div>
+            <div class="hero-grid">
+                <div class="hero-main">
+                    <div class="hero-byline">
+                        <span class="hero-avatar-sm"><img src="/images/image5.jpeg" alt="김주원"></span>
+                        <span class="hero-eyebrow"><strong>김주원</strong> · Backend Engineer</span>
+                    </div>
 
-            <h1 class="hero-title">안녕하세요,<br>백엔드 엔지니어 <span class="hero-name">김주원</span>입니다.</h1>
+                    <h1 class="hero-title">안녕하세요,<br>백엔드 엔지니어 <span class="hero-name">김주원</span>입니다.</h1>
 
-            <p class="hero-bio">비즈니스 성장을 실현하는 시스템을 구축하는 Backend Engineer 김주원입니다.<br>
-                기술이라는 도구를 통해 사람과 비즈니스를 연결시켜, 삶의 질을 향상시키는 것을 추구합니다.
-            </p>
+                    <p class="hero-bio">비즈니스 성장을 실현하는 시스템을 구축하는 Backend Engineer 김주원입니다. 기술이라는 도구를 통해 사람과 비즈니스를 연결시켜, 삶의 질을 향상시키는 것을 추구합니다.</p>
 
-            <div class="hero-meta">
-                <blockquote class="hero-quote">서비스의 품질을 좌우하는 것은 효율적인 구조와 시스템입니다.</blockquote>
+                    <div class="hero-tags">
+                        <span>Java</span>
+                        <span>Spring Boot</span>
+                        <span>Event-Driven Architecture</span>
+                        <span>RabbitMQ</span>
+                    </div>
+                </div>
 
-                <div class="hero-meta-right">
-                    <div class="hero-stat">
-                        <span>개발 경력</span>
-                        <strong>2년+</strong>
+                <div class="hero-card">
+                    <span class="hero-card-label">Snapshot</span>
+
+                    <div class="hero-card-quote">
+                        <span class="hero-card-quote-mark">"</span>
+                        <p>서비스의 품질을 좌우하는 것은 효율적인 구조와 시스템입니다.</p>
+                    </div>
+
+                    <div class="hero-fact-grid">
+                        <div class="hero-fact">
+                            <strong>2년+</strong>
+                            <span>개발 경력</span>
+                        </div>
+                        <div class="hero-fact">
+                            <strong>2건</strong>
+                            <span>진행 프로젝트</span>
+                        </div>
                     </div>
 
                     <div class="hero-links">
@@ -134,16 +152,34 @@
     <section class="project-grid-section reveal">
         <div class="project-grid">
             <a class="project-card" href="project-file-studio.html">
-                <div class="project-card-thumb">
+                <div class="project-card-thumb project-card-thumb--overlay">
                     <img src="/images/img.png" alt="파일 스튜디오 썸네일">
+                    <div class="project-card-scrim"></div>
+                    <span class="project-card-meta-chip"><i class="far fa-calendar-alt"></i> 2026.01 ~ 2026.04 · 2명</span>
+                    <div class="project-card-overlay">
+                        <h3>파일 스튜디오</h3>
+                        <p>여러 장의 이미지 파일을 깔끔한 PDF 로 변환합니다.</p>
+                    </div>
                 </div>
                 <div class="project-card-body">
-                    <span class="project-card-date"><i class="far fa-calendar-alt"></i> 2026.01 ~ 2026.04 · 2명</span>
-                    <h3>파일 스튜디오</h3>
-                    <p>이미지 파일을 PDF로 빠르게 변환하는 파일 변환 서비스. 이벤트 기반 아키텍처 전환으로 처리 성능과 UX를 개선했습니다.</p>
+                    <div class="project-card-stats">
+                        <div class="stat-tile">
+                            <strong>Zero</strong>
+                            <span>장애 전파 (EDA 전환)</span>
+                        </div>
+                        <div class="stat-tile">
+                            <strong>-80%</strong>
+                            <span>DB CPU 사용률 (CDC)</span>
+                        </div>
+                        <div class="stat-tile">
+                            <strong>-90%</strong>
+                            <span>상태 조회 트래픽 (SSE)</span>
+                        </div>
+                    </div>
                     <div class="project-card-tags">
                         <span>Java</span>
                         <span>Spring Boot</span>
+                        <span>MySQL</span>
                         <span>RabbitMQ</span>
                         <span>Debezium</span>
                         <span>+4</span>
@@ -449,6 +485,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="coffee-chat" class="coffee-chat-section section reveal">
+        <div class="coffee-chat-inner">
+            <span class="badge section-pill"><i class="fas fa-mug-hot"></i> Coffee Chat</span>
+            <h2>가볍게 커피챗 하실까요?</h2>
+            <p class="header-desc">협업, 채용, 기술 이야기 등 어떤 주제든 환영합니다. 편하게 연락 주세요.</p>
+            <a href="mailto:bau12288@gmail.com" class="coffee-chat-cta"><i class="far fa-envelope"></i> <span>커피챗 요청하기</span></a>
         </div>
     </section>
 </div>
