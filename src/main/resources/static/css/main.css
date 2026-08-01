@@ -1188,7 +1188,8 @@ ul {
 .box-backend,
 .box-data,
 .box-infra,
-.box-tools {
+.box-tools,
+.box-ai {
     background-color: var(--surface);
     border: 1px solid var(--border);
 }
