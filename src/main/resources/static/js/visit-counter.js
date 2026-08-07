@@ -13,8 +13,13 @@
     }
 
     function render(stats) {
-        todayEl.textContent = Number(stats.today).toLocaleString();
-        totalEl.textContent = Number(stats.total).toLocaleString();
+        if (window.animateCountUp) {
+            window.animateCountUp(todayEl, Number(stats.today), { duration: 900 });
+            window.animateCountUp(totalEl, Number(stats.total), { duration: 1200 });
+        } else {
+            todayEl.textContent = Number(stats.today).toLocaleString();
+            totalEl.textContent = Number(stats.total).toLocaleString();
+        }
     }
 
     const today = todayString();
