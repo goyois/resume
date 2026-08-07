@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/main.css?v=20260726-11">
+    <link rel="stylesheet" href="css/main.css?v=20260807-2">
 </head>
 <body class="portfolio-body">
 
@@ -44,6 +44,65 @@
                 </div>
                 <p>파일 스튜디오는 사용자가 업로드한 이미지 파일(PNG, JPG, BMP)을 PDF 문서로 변환해주는 서비스입니다. 처음엔 동기 처리로 짰는데, 변환이 오래 걸리는 요청 하나가 응답 지연은 물론 장애까지 메인 서버로 그대로 퍼뜨리는 구조라 이벤트 기반으로 다시 짰습니다. RabbitMQ로 비동기 처리를 하고 Debezium CDC를 붙여서 변환 작업을 메인 서버와 완전히 떼어냈고, 사용자는 요청하자마자 바로 응답을 받고 SSE로 변환 진행 상태를 실시간으로 확인할 수 있습니다.</p>
                 <a class="showcase-intro-link" href="https://github.com/toy-boyz/File-Conversion" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub 저장소 보기</a>
+
+                <div class="arch-diagram">
+                    <div>
+                        <div class="arch-row-label">요청 처리 (이벤트 기반)</div>
+                        <div class="arch-row">
+                            <span class="arch-node">Client</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">API 서버</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">MySQL 저장</span>
+                            <span class="arch-arrow">→(CDC)</span>
+                            <span class="arch-node arch-node--accent">Debezium</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">RabbitMQ</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">Worker 서버 (변환)</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node arch-node--accent">S3</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="arch-row-label">실시간 진행 상태</div>
+                        <div class="arch-row">
+                            <span class="arch-node">Worker 서버</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node arch-node--accent">SSE</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">Client</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="impact-header-title">
+                    <i class="fas fa-play-circle"></i> 실제 화면
+                </div>
+                <div class="proof-media-grid">
+                    <figure class="proof-figure">
+                        <img src="/images/file-studio-demo-add-delete.gif" alt="파일 추가 및 삭제 데모" loading="lazy">
+                        <figcaption>파일 추가 및 삭제</figcaption>
+                    </figure>
+                    <figure class="proof-figure">
+                        <img src="/images/file-studio-demo-upload.gif" alt="파일 업로드 및 실시간 변환 현황 데모" loading="lazy">
+                        <figcaption>업로드 및 실시간 변환 현황</figcaption>
+                    </figure>
+                </div>
+
+                <div class="impact-header-title">
+                    <i class="fas fa-diagram-project"></i> 상세 다이어그램
+                </div>
+                <div class="proof-media-grid">
+                    <figure class="proof-figure">
+                        <img src="/images/file-studio-uml.png" alt="파일 스튜디오 시퀀스 다이어그램(UML)" loading="lazy">
+                        <figcaption>시퀀스 다이어그램 (UML)</figcaption>
+                    </figure>
+                    <figure class="proof-figure">
+                        <img src="/images/file-studio-cloud-arch.png" alt="파일 스튜디오 클라우드 아키텍처(AWS)" loading="lazy">
+                        <figcaption>클라우드 아키텍처 (AWS)</figcaption>
+                    </figure>
+                </div>
             </div>
 
             <div class="showcase-meta">
