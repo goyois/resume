@@ -58,6 +58,11 @@ public class VisitCounterService {
         }
     }
 
+    /** 서버 기준(KST) 오늘 날짜. 컨트롤러가 방문 쿠키와 비교할 때 사용한다. */
+    public String todayDateString() {
+        return LocalDate.now(ZONE).toString();
+    }
+
     private void rolloverIfNeeded() {
         String today = LocalDate.now(ZONE).toString();
         if (!today.equals(date)) {

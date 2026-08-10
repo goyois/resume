@@ -1,15 +1,9 @@
 (function () {
-    const STORAGE_KEY = "portfolio_last_visit_date";
     const todayEl = document.getElementById("visit-today-count");
     const totalEl = document.getElementById("visit-total-count");
 
     if (!todayEl || !totalEl) {
         return;
-    }
-
-    function todayString() {
-        const now = new Date();
-        return now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
     }
 
     function render(stats) {
@@ -22,18 +16,11 @@
         }
     }
 
-    const today = todayString();
-    const alreadyCounted = localStorage.getItem(STORAGE_KEY) === today;
-    const method = alreadyCounted ? "GET" : "POST";
-
-    fetch("/api/visits", { method: method })
+    // "오늘 이미 카운트했는지"는 서버가 쿠키(KST 기준 날짜)로 판단하므로
+    // 클라이언트는 항상 같은 요청만 보내면 된다.
+    fetch("/api/visits", { method: "POST" })
         .then((res) => res.json())
-        .then((stats) => {
-            if (!alreadyCounted) {
-                localStorage.setItem(STORAGE_KEY, today);
-            }
-            render(stats);
-        })
+        .then(render)
         .catch(() => {
             todayEl.textContent = "-";
             totalEl.textContent = "-";
