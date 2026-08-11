@@ -75,6 +75,55 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="impact-header-title">
+                    <i class="fas fa-play-circle"></i> 실제 화면
+                </div>
+                <div class="demo-carousel">
+                    <button type="button" class="carousel-btn carousel-btn--prev" id="demoCarouselPrev" onclick="demoCarouselMove(-1)" aria-label="이전 데모"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-viewport">
+                        <div class="carousel-track" id="demoCarouselTrack">
+                            <figure class="proof-figure carousel-slide">
+                                <video src="/images/schedule-manager-chatbot-demo.mp4" controls muted loop playsinline preload="metadata" aria-label="AI 챗봇 일정 추천 및 등록 데모"></video>
+                                <figcaption>LLM 챗봇 일정 추천 · 등록</figcaption>
+                            </figure>
+                            <figure class="proof-figure carousel-slide">
+                                <div class="carousel-placeholder" aria-hidden="true">
+                                    <i class="fas fa-clapperboard"></i>
+                                    <span>촬영 예정</span>
+                                </div>
+                                <figcaption>① 만다라트 목표 입력</figcaption>
+                            </figure>
+                            <figure class="proof-figure carousel-slide">
+                                <div class="carousel-placeholder" aria-hidden="true">
+                                    <i class="fas fa-clapperboard"></i>
+                                    <span>촬영 예정</span>
+                                </div>
+                                <figcaption>② 목표 → AI 챗봇 추천에 반영</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <button type="button" class="carousel-btn carousel-btn--next" id="demoCarouselNext" onclick="demoCarouselMove(1)" aria-label="다음 데모"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <script>
+                    (function () {
+                        var track = document.getElementById('demoCarouselTrack');
+                        var slides = track.querySelectorAll('.carousel-slide');
+                        var prevBtn = document.getElementById('demoCarouselPrev');
+                        var nextBtn = document.getElementById('demoCarouselNext');
+                        var index = 0;
+                        function update() {
+                            track.style.transform = 'translateX(-' + (index * 100) + '%)';
+                            prevBtn.disabled = index === 0;
+                            nextBtn.disabled = index === slides.length - 1;
+                        }
+                        window.demoCarouselMove = function (delta) {
+                            index = Math.min(Math.max(index + delta, 0), slides.length - 1);
+                            update();
+                        };
+                        update();
+                    })();
+                </script>
             </div>
 
             <div class="showcase-meta">
