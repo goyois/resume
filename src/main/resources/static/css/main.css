@@ -825,7 +825,7 @@ ul {
 
 .carousel-track {
     display: flex;
-    transition: transform 280ms ease;
+    align-items: flex-start;
 }
 
 .carousel-slide {

@@ -81,25 +81,26 @@
                 </div>
                 <div class="demo-carousel">
                     <button type="button" class="carousel-btn carousel-btn--prev" id="demoCarouselPrev" onclick="demoCarouselMove(-1)" aria-label="이전 데모"><i class="fas fa-chevron-left"></i></button>
-                    <div class="carousel-viewport">
+                    <div class="carousel-viewport" id="demoCarouselViewport">
                         <div class="carousel-track" id="demoCarouselTrack">
                             <figure class="proof-figure carousel-slide">
-                                <video src="/images/schedule-manager-chatbot-demo.mp4" controls muted loop playsinline preload="metadata" aria-label="AI 챗봇 일정 추천 및 등록 데모"></video>
-                                <figcaption>LLM 챗봇 일정 추천 · 등록</figcaption>
+                                <video src="/images/schedule-manager-sse-status-demo.mp4" width="1280" height="838" muted loop playsinline preload="metadata" aria-label="일정 상태 변경이 새로고침 없이 SSE로 실시간 반영되는 데모"></video>
+                                <figcaption>일정을 완료로 바꾸면 새로고침 없이 완료율·보드가 SSE로 바로 갱신됩니다</figcaption>
+                            </figure>
+                            <figure class="proof-figure carousel-slide">
+                                <video src="/images/schedule-manager-chatbot-demo.mp4" width="1280" height="578" muted loop playsinline preload="metadata" aria-label="AI 챗봇 일정 추천 및 등록 데모"></video>
+                                <figcaption>채팅으로 요청하면 AI가 여러 일정을 구조화해서 추천하고, 선택한 항목이 바로 등록됩니다</figcaption>
+                            </figure>
+                            <figure class="proof-figure carousel-slide">
+                                <video src="/images/schedule-manager-mandalart-demo.mp4" width="1280" height="578" muted loop playsinline preload="metadata" aria-label="만다라트 목표 AI 자동 채우기 데모"></video>
+                                <figcaption>① 만다라트 목표 칸을 비워두면 AI가 맥락에 맞는 세부 목표를 자동으로 채워줍니다</figcaption>
                             </figure>
                             <figure class="proof-figure carousel-slide">
                                 <div class="carousel-placeholder" aria-hidden="true">
                                     <i class="fas fa-clapperboard"></i>
                                     <span>촬영 예정</span>
                                 </div>
-                                <figcaption>① 만다라트 목표 입력</figcaption>
-                            </figure>
-                            <figure class="proof-figure carousel-slide">
-                                <div class="carousel-placeholder" aria-hidden="true">
-                                    <i class="fas fa-clapperboard"></i>
-                                    <span>촬영 예정</span>
-                                </div>
-                                <figcaption>② 목표 → AI 챗봇 추천에 반영</figcaption>
+                                <figcaption>② 채워진 만다라트 목표가 챗봇 추천에 어떻게 반영되는지 보여줄 예정입니다</figcaption>
                             </figure>
                         </div>
                     </div>
@@ -107,20 +108,35 @@
                 </div>
                 <script>
                     (function () {
+                        var viewport = document.getElementById('demoCarouselViewport');
                         var track = document.getElementById('demoCarouselTrack');
                         var slides = track.querySelectorAll('.carousel-slide');
                         var prevBtn = document.getElementById('demoCarouselPrev');
                         var nextBtn = document.getElementById('demoCarouselNext');
                         var index = 0;
+                        function syncHeight() {
+                            viewport.style.height = slides[index].offsetHeight + 'px';
+                        }
                         function update() {
                             track.style.transform = 'translateX(-' + (index * 100) + '%)';
                             prevBtn.disabled = index === 0;
                             nextBtn.disabled = index === slides.length - 1;
+                            syncHeight();
+                            slides.forEach(function (slide, i) {
+                                var video = slide.querySelector('video');
+                                if (!video) return;
+                                if (i === index) {
+                                    video.play().catch(function () {});
+                                } else {
+                                    video.pause();
+                                }
+                            });
                         }
                         window.demoCarouselMove = function (delta) {
                             index = Math.min(Math.max(index + delta, 0), slides.length - 1);
                             update();
                         };
+                        window.addEventListener('resize', syncHeight);
                         update();
                     })();
                 </script>
@@ -161,6 +177,7 @@
                     <button type="button" class="tag-impact" onclick="goToContribution('acc-3')">테스트 자동화 & 개발 하네스 엔지니어링</button>
                     <button type="button" class="tag-impact" onclick="goToContribution('acc-4')">JWT 인증 & 리프레시 토큰 로테이션</button>
                     <button type="button" class="tag-impact" onclick="goToContribution('acc-5')">성능·RAG 파이프라인 전수 감사</button>
+                    <button type="button" class="tag-impact" onclick="goToContribution('acc-6')">일정 리포트 & AI 회고 인사이트</button>
                 </div>
 
                 <div class="showcase-keywords">
@@ -442,6 +459,30 @@
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">과금도, Redis 장애도 다 대비했다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청 빈도 제한과 fail-open 정책 덕분에 과금이 갑자기 튀거나 Redis가 죽는 상황 모두 걱정을 덜었다.</p>
+                                        </div>
+
+                                        <div style="margin-top: 4px; padding: 18px; border: 1px solid #eee; border-radius: 12px; background: #f8f8fb;">
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">직접 검증: "그럴싸한 답"과 "실제로 검색한 답"은 겉보기론 구분이 안 된다</strong>
+                                            <p style="margin: 0 0 14px; font-size: 0.9em; color: #555; line-height: 1.5;">
+                                                RAG가 붙어있다고 홍보만 하고 실제로 검색이 일어나는지 확인 안 하는 경우가 많길래, 직접 캐너리 데이터로 검증해봤다. ±2주 컨텍스트 윈도우 <strong>밖</strong>인 7/10에 "사이드 프로젝트 리팩토링"(21:00~22:30) 일정 하나를, 윈도우 <strong>안</strong>인 내일(8/13)에는 이것과 무관한 일상 일정 4건(아침 운동·점심 약속·장보기·독서 22:00~23:00)을 등록해뒀다. 그다음 챗봇에 "내일 빈 시간에 겹치지 않게, 예전에 하던 방식대로 사이드 프로젝트 작업 일정 하나 추천해줘"라고 물었다.
+                                            </p>
+                                            <div class="proof-media-grid">
+                                                <figure class="proof-figure">
+                                                    <img src="/images/schedule-manager-rag-verify-canary-0710.png" alt="7월 10일에 등록해 둔 사이드 프로젝트 리팩토링 캐너리 일정" loading="lazy">
+                                                    <figcaption>① 캐너리 등록 — 7/10 "사이드 프로젝트 리팩토링" (21:00~22:30, ±2주 윈도우 밖)</figcaption>
+                                                </figure>
+                                                <figure class="proof-figure">
+                                                    <img src="/images/schedule-manager-rag-verify-tomorrow-0813.png" alt="내일(8월 13일)에 이미 등록된 일상 일정 4건" loading="lazy">
+                                                    <figcaption>② 대조군 — 내일(8/13) 무관한 일상 일정 4건 (윈도우 안, 직접 컨텍스트로 주입됨)</figcaption>
+                                                </figure>
+                                            </div>
+                                            <figure class="proof-figure" style="margin-bottom: 14px;">
+                                                <img src="/images/schedule-manager-rag-verify-ai-response.png" alt="AI 챗봇이 캐너리 데이터를 인용해 겹치지 않는 시간대로 일정을 추천한 응답" loading="lazy">
+                                                <figcaption>③ 응답 — 캐너리 문구·시간대 인용 + 내일 일정과 겹치지 않는 시간대 계산</figcaption>
+                                            </figure>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">
+                                                응답은 "예전 '사이드 프로젝트 리팩토링' 일정처럼 밤 시간대(21:00~22:30)에 작업하시던 방식을 참고했습니다"라며 3주 전 캐너리의 제목과 시간을 그대로 인용했고, 동시에 "내일(8/13) 독서(22:00~23:00) 등 기존 일정과 겹치지 않도록" 20:00~21:30을 골랐다. 앞 문장은 pgvector 유사도 검색(RAG) 경로가 아니면 나올 수 없는 정보고(±2주 밖이라 직접 컨텍스트엔 안 들어감), 뒤 문장은 반대로 윈도우 직접 주입 컨텍스트가 아니면 나올 수 없는 정보다. 한 응답 안에서 두 경로가 각자 맡은 역할대로 실제로 작동한다는 걸 확인했다.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -868,6 +909,149 @@
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 무관한 결과는 빠지고, 쓰기는 안 막히게</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">임계값을 적용하고 나니 치과 예약, 회계 보고서 같은 무관한 후보가 실제로 빠지는 걸 확인했다. 임베딩 색인을 비동기로 돌린 덕분에 300ms 지연을 모킹한 기준으로 호출자 블로킹 시간이 310ms → 1ms로 줄었다. 다만 코사인 유사도 순서가 실제 관련도와 어긋나는 구간이 아직 남아있어서, 이 부분은 한계로 남겨뒀다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= 06. 일정 리포트 & AI 회고 인사이트 ================= -->
+            <div class="accordion-item" id="acc-6">
+                <button class="accordion-header" onclick="toggleAccordion('acc-6')">
+                    <div class="header-main">
+                        <span class="card-index">06</span>
+                        <h3>일정 리포트 & AI 회고 인사이트</h3>
+                        <p>쌓이기만 하던 일정을 주/월/년 단위 통계와 AI 회고로 되돌아볼 수 있게 만들었습니다. 결정형 통계와 AI 서술의 책임을 분리하고, 캐싱과 RAG로 회고에 깊이를 더했습니다.</p>
+                    </div>
+                    <div class="scan-results">
+                        <span>Chart</span>
+                        <span>Claude</span>
+                        <span>Cache</span>
+                    </div>
+                    <i class="fas fa-chevron-down arrow-icon"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="inner-padding" style="padding: 24px 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                            <div class="star-card star-card--situation">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--situation"><i class="fas fa-exclamation-circle"></i></div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--situation">SITUATION</span><strong class="star-title">상황</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">일정을 기록만 하고 돌아볼 방법이 없었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">CRUD와 챗봇 추천까지는 갖췄는데, 정작 쌓인 일정을 주/월/년 단위로 되돌아보는 기능이 없었다. 다이어리처럼 기록만 하고 회고는 못 하는 반쪽짜리였다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">통계와 AI 서술을 한 응답에 묶으면 위험했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율, 카테고리별 분포 같은 결정형 통계까지 Anthropic API 장애나 레이트리밋에 발목 잡히게 만들 수는 없었다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">완료율 분모부터 정의가 안 되어 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">취소된(CANCELLED) 일정을 완료 대상으로 볼지, 애초에 분모에서 뺄지조차 정해진 게 없었다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="star-card star-card--task">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--task"><i class="fas fa-bullseye"></i></div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--task">TASK</span><strong class="star-title">과제</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">통계는 항상 즉시, AI 인사이트는 선택적으로</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">두 책임을 응답 레벨이 아니라 엔드포인트 레벨에서부터 분리해야 했다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">기간마다 다른 촘촘함으로 차트를 보여줘야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">주/월 단위는 일 단위로, 년 단위는 월 단위로 - 기간에 안 맞는 촘촘함이면 차트가 과밀해지거나 너무 성겨진다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">매번 다시 부르지 않으면서도 최신성은 챙겨야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">페이지에 재진입할 때마다 Claude를 다시 부르면 과금도, 응답 속도도 손해다. 그렇다고 일정이 바뀌었는데 예전 회고를 계속 보여줄 수도 없었다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="star-card star-card--action">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--action"><i class="fas fa-wrench"></i></div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--action">ACTION</span><strong class="star-title">실행</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">엔드포인트째 갈랐다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">GET /api/reports/stats(무료·즉시)와 GET /api/reports/insight/cached, POST /api/reports/insight(AI·명시적 요청)를 물리적으로 분리했다. AiRateLimiter는 실제로 AI를 호출하는 POST 쪽에만 걸어서, 통계 조회는 레이트리밋과 완전히 무관하게 뒀다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">완료율 정의를 코드로 못박았다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">completed / (total - cancelled)로 취소 건은 분모에서 빼고, 분모가 0이 되는 경우도 방어했다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">기간별로 버킷 단위를 다르게 나눴다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">WEEK/MONTH는 일 단위(최대 31개 포인트), YEAR는 월 단위(12개 포인트)로 나눴다. 겹치는 일정도 시작 시각(startAt) 기준 한 구간에만 배정했다 - "언제 걸쳐 있었는지"가 아니라 "언제 발생했는지"를 보여줘야 한다고 판단했다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">스냅샷 캐시로 재호출을 막았다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ReportInsightSnapshot에 user×period×rangeStart 유니크로 결과를 저장해두고, 생성 시점의 일정 건수·최근 수정 시각을 함께 남겼다. 다음 조회 때 이 값을 현재 상태와 비교해서 다르면 "새로운 결과를 얻을 수 있습니다"로 재생성을 안내하고, 같으면 캐시를 그대로 보여준다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">RAG로 회고에 연속성을 더했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이번 기간 일정 제목으로 ScheduleEmbeddingService를 다시 조회해서, 의미상 비슷한 다른 시기의 활동을 top 5로 찾아 "[참고: 의미상 비슷한 다른 시기의 활동]"으로 프롬프트에 끼워 넣었다. 그 결과를 ChatClient.entity(ReportInsightDto.class)로 strengths/improvements/behaviorPattern/personalityNote 구조로 받고, null이거나 과다한 항목은 방어적으로 다듬었다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="star-card star-card--result">
+                                <div class="star-card__header" onclick="toggleStarCard(this)">
+                                    <div class="star-header-left">
+                                        <div class="star-icon star-icon--result"><i class="fas fa-trophy"></i></div>
+                                        <div class="star-label-col">
+                                            <span class="star-type-label star-type-label--result">RESULT</span><strong class="star-title">결과</strong>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-chevron-down inner-arrow-icon"></i>
+                                </div>
+                                <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
+                                    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">AI가 죽어도 통계는 산다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Anthropic API가 장애가 나거나 레이트리밋에 걸려도 완료율·카테고리 분포 같은 통계 카드는 항상 그대로 뜬다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">불필요한 재호출이 사라졌다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">페이지 재진입이나 기간 전환만으로는 Claude를 다시 안 부른다. 실제로 일정이 바뀐 경우에만 재생성을 안내한다.</p>
+                                        </div>
+                                        <div>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">테스트 17개로 경계 케이스까지 덮었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율 0/0 방어, WEEK/YEAR 버킷팅, RAG 컨텍스트 포함/생략, stale 판정(건수 변경/내용 변경/무변경) 3가지 케이스까지 ReportServiceTest로 검증해뒀다.</p>
                                         </div>
                                     </div>
                                 </div>
