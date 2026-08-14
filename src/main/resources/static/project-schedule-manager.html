@@ -230,20 +230,20 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] 무효화 범위가 너무 넓었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일정 목록 캐시를 write할 때마다 allEntries=true로 전체를 지우고 있었다. 한 명이 일정 하나 바꿨을 뿐인데 아무 상관없는 다른 유저들 캐시까지 다 날아가는 구조였다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">캐시 무효화 범위가 너무 넓었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일정 목록 캐시를 write할 때마다 allEntries=true로 전체를 지우고 있었다. 한 명이 일정 하나 바꿨을 뿐인데 아무 상관없는 다른 유저들 캐시까지 다 날아갔다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] KEYS 명령이 숨겨둔 문제</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">캐시 무효화 로직에 KEYS 명령을 그대로 쓰고 있었다. 지금 당장은 괜찮아도 블로킹 명령이라, 데이터가 늘어나면 Redis 메인 스레드를 오래 붙잡을 소지가 있었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">블로킹되는 KEYS 명령을 그대로 쓰고 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">캐시 무효화 로직 안에서 KEYS를 그냥 호출하고 있었다. 데이터가 지금이야 적어서 티가 안 났지, 늘어나면 Redis 메인 스레드를 붙잡고 놓아주지 않을 게 뻔했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] 흔한 N+1이 여기도 있었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일정 목록을 DTO로 매핑하는 단계에서 LAZY로 걸어둔 user/category를 그냥 호출해버리고 있었다. 그러다 보니 목록 개수만큼 추가 SELECT가 따라붙었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">여기도 흔한 N+1이 숨어 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일정 목록을 DTO로 매핑할 때 LAZY로 걸어둔 user/category를 아무 생각 없이 호출하고 있었다. 목록 개수만큼 SELECT가 따라붙는 구조였다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] 인덱스는 있는데 정작 안 맞았다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">user_id, category_id에 각각 FK 기반 단일 컬럼 인덱스만 걸려 있어서, 두 조건을 같이 필터링하면 한쪽만 인덱스를 타고 나머지는 row-by-row로 걸러내고 있었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">인덱스는 있었는데 조합 조회엔 안 맞았다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">user_id, category_id 각각에 FK 기반 단일 인덱스만 걸려 있었다. 두 조건을 같이 필터링하면 한쪽만 인덱스를 타고 나머지는 row-by-row로 걸러내는 식이었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -262,12 +262,12 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] 정확하면서도 최소한으로</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무효화를 빠뜨리지 않으면서 불필요한 전체 삭제는 막고, 거기에 Redis가 죽어도 서비스는 멀쩡해야 한다는 것까지 - 세 가지를 동시에 만족하는 캐시 전략이 필요했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">정확하면서도 최소한으로 지우기</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">무효화를 빠뜨리면 안 되지만 불필요한 전체 삭제도 막아야 했다. 거기에 Redis가 죽어도 서비스는 멀쩡해야 한다는 조건까지, 세 가지를 같이 만족하는 캐시 전략이 필요했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] SQL 한 방, 그리고 숫자로 확인</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">목록 조회를 SQL 한 번으로 끝내고 싶었고, 실제 사용 패턴(유저는 여러 카테고리를 갖고 카테고리는 여러 유저가 공유)을 그대로 재현한 벤치마크로 인덱스 효과가 진짜 있는지 숫자로 확인하고 싶었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">SQL 한 방으로 끝내고, 효과는 숫자로 확인하기</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">목록 조회를 SQL 한 번으로 끝내고 싶었다. 그리고 실제 사용 패턴(유저는 여러 카테고리를 갖고, 카테고리는 여러 유저가 공유)을 그대로 재현한 벤치마크로 인덱스 효과가 진짜 있는지 확인하고 싶었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -286,20 +286,20 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] 유저 단위로 타겟팅해서 지우기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">update/delete는 findSchedule(id) 시점에, create는 request.userId()로 어차피 소유자를 알 수 있다는 데 착안했다. 해당 유저 관련 키만 패턴 매칭으로 지우는 evictScheduleCacheForUser()를 만들어 전체 무효화를 대체했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">유저 단위로 타겟팅해서 지우기</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">어떤 요청이든 소유자가 누군지는 이미 알 수 있다는 데 착안했다. 해당 유저 키만 패턴 매칭으로 지우는 방식으로 바꿔서 전체 무효화를 대체했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] SCAN·fail-open·TTL로 안전망까지</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">블로킹 KEYS는 논블로킹 SCAN으로 바꿨다. CacheFailSafeErrorHandler를 붙여서 Redis가 죽어도 그냥 DB 조회로 폴백하게 했고, TTL 5분을 안전망으로 깔았다. ADMIN 전체조회 키("-null-" 패턴)를 evict 대상에서 빠뜨렸던 사각지대도 이참에 같이 없앴다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">SCAN·fail-open·TTL로 안전망도 같이</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">블로킹 KEYS는 논블로킹 SCAN으로 바꿨다. Redis가 죽으면 그냥 DB 조회로 폴백하게 했고, TTL 5분을 마지막 안전망으로 깔았다. ADMIN 전체조회 캐시가 evict 대상에서 빠져 있던 사각지대도 이참에 같이 고쳤다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] QueryDSL로 갈아엎고 조회 통합</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ScheduleRepositoryCustom/Impl을 추가해서 QueryDSL로 user/category를 join하고, @QueryProjection으로 DTO 필드를 SQL 1번에 바로 projection하게 했다. 네 갈래로 흩어져 있던 조회 메서드도 동적 where 조건 하나로 합쳤다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">QueryDSL로 갈아엎고 조회를 하나로 합쳤다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">QueryDSL로 user/category를 join해서 필요한 필드를 SQL 한 번에 바로 뽑도록 했다. 네 갈래로 흩어져 있던 조회 메서드도 동적 조건 하나로 합쳤다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] 복합 인덱스 추가하고 직접 재보기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Schedule 엔티티에 (user_id, category_id) 복합 인덱스를 추가했다. 감으로 끝내지 않고 5개 카테고리·15명 공유 규모(약 5.7만 건)의 컨텐션을 재현하는 ScheduleIndexPerformanceTest를 짜서 EXPLAIN 실행계획과 응답시간을 같이 재봤다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">복합 인덱스를 추가하고 직접 재봤다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">(user_id, category_id) 복합 인덱스를 추가했다. 감으로 끝내지 않으려고 5개 카테고리·15명 공유 규모(약 5.7만 건)의 컨텐션을 재현하는 벤치마크를 짜서 실행계획과 응답시간을 직접 재봤다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -318,12 +318,12 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[캐싱] 무효화 범위 최소화, Redis 죽어도 서비스는 유지</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">전체 삭제에서 해당 유저 캐시만 지우는 구조로 바뀌었다. fail-open 정책 덕분에 Redis에 장애가 나도 API 응답 실패로는 이어지지 않는다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Redis가 죽어도 서비스는 유지된다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">전체 삭제 대신 해당 유저 캐시만 지우는 구조로 바뀌었다. fail-open 정책 덕분에 Redis에 장애가 나도 API 응답 실패로는 이어지지 않는다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[조회] N+1 없애고 비용 74% 줄이기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">목록 조회는 이제 항상 SQL 1회로 끝난다. EXPLAIN 기준 옵티마이저 비용이 975 → 251(-74%)로 떨어졌고, 평균 응답도 10.85ms → 9.6ms, 최대 응답은 19ms → 13ms로 편차 자체가 줄었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">N+1을 없애니 조회 비용이 74% 줄었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">목록 조회는 이제 항상 SQL 1회로 끝난다. EXPLAIN 기준 옵티마이저 비용이 975 → 251로 떨어졌고, 평균 응답도 10.85ms → 9.6ms, 최대 응답은 19ms → 13ms로 편차가 줄었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -366,15 +366,15 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">처음엔 그냥 텍스트만 던져줬다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">초기 버전은 프롬프트 한 번 보내면 자유 텍스트 응답 한 번 받는 게 전부였다. 답변은 그럴싸했지만 프론트에서 이걸 그대로 폼에 넣을 방법이 없었다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">초기 버전은 프롬프트 보내면 자유 텍스트 응답 하나 받는 게 전부였다. 답변 자체는 그럴싸한데, 프론트에서 이걸 그대로 폼에 넣을 방법이 없었다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">라이브러리가 아직 Milestone 버전이었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">spring-ai-anthropic 스타터가 1.0.0-M1이라, 공식 문서대로 했는데 실제 바인딩 경로와 안 맞는 지점이 종종 나왔다. 설정 프로퍼티 경로가 다르거나 temperature가 아예 지원 안 되는 식이었다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">spring-ai-anthropic 스타터가 1.0.0-M1이었다. 공식 문서대로 따라 해도 실제 바인딩 경로와 안 맞는 지점이 종종 나왔다. 설정 프로퍼티 경로가 다르거나, temperature가 아예 지원이 안 되거나.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">호출할 때마다 실제로 돈이 나간다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청 한 번마다 Anthropic API 과금이 붙다 보니, 남용 방지나 실패 처리를 대충 넘길 수 없었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">호출 한 번에 실제로 돈이 나간다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청마다 Anthropic API 과금이 붙는다. 남용 방지나 실패 처리를 대충 넘길 수 있는 문제가 아니었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -393,12 +393,12 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">자유 텍스트를 등록 가능한 데이터로</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">자유 텍스트를 프론트가 바로 등록에 쓸 수 있는 구조화 데이터로 바꾸고 싶었다. 거기에 여러 일정을 한 번에 추천/수정 제안하면서 대화 맥락도 유지하도록 넓혀야 했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">자유 텍스트를 등록 가능한 데이터로 바꾸기</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">자유 텍스트를 프론트가 바로 등록에 쓸 수 있는 구조화 데이터로 바꾸고 싶었다. 여러 일정을 한 번에 추천하거나 수정 제안하면서 대화 맥락도 유지하도록 범위를 넓혀야 했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">개인화도 챙기고 과금도 막아야 했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자의 과거 일정이나 만다라트 목표를 참고하는 개인화 추천이 필요했고, 동시에 과금이 튀지 않게 호출 빈도도 제한해둬야 했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">개인화는 챙기고 과금은 막아야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자의 과거 일정이나 만다라트 목표를 참고하는 개인화 추천이 필요했다. 동시에 과금이 튀지 않도록 호출 빈도도 제한해둬야 했다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -417,20 +417,20 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">구조화된 응답 받고, 방어적으로 파싱하기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ChatClient.call().entity(DTO.class)로 title/content/startAt/endAt/categoryId를 구조화해서 받도록 했다. 존재하지 않는 카테고리나 깨진 시각값이 오면 서버가 그냥 null로 비워버리게 방어적으로 짰다. AiResponseCategory(SCHEDULE_RECOMMENDATION/SCHEDULE_UPDATE/GENERAL)로 응답을 먼저 분류해서, 분류에 맞는 등록/수정 UI만 뜨게 했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">구조화된 응답을 받고, 방어적으로 파싱했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">모델 응답을 제목/내용/시간/카테고리가 구조화된 형태로 받도록 했다. 존재하지 않는 카테고리나 깨진 시각값이 오면 서버가 null로 비워버리게 방어적으로 짰다. 응답 성격(추천/수정/일반 대화)을 먼저 분류해서 거기 맞는 등록·수정 UI만 뜨도록 했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">대화가 이어지도록 이력 관리</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">AiChatMessage로 대화 이력을 DB에 쌓아서 맥락을 유지했다. 요청을 보낼 때마다 최근 대화 요약도 같이 실어 보낸다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">대화가 이어지도록 이력을 관리했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">대화 이력을 DB에 쌓아 맥락을 유지했다. 요청을 보낼 때마다 최근 대화 요약도 같이 실어 보낸다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">pgvector로 RAG 붙이기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완성된 만다라트 블록과 ±2주 윈도우 밖의 과거 일정을 미리 임베딩해두고, 지금 대화와 의미적으로 비슷한 항목을 few-shot 예시나 컨텍스트로 끼워 넣는다. vector_store 테이블 하나를 docType 메타데이터로 구분해서 같이 쓰는 식으로 구성했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">pgvector로 RAG를 붙였다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완성된 만다라트 블록과 ±2주 윈도우 밖의 과거 일정을 미리 임베딩해뒀다. 지금 대화와 의미적으로 비슷한 항목을 찾아 few-shot 예시나 컨텍스트로 끼워 넣는 식이다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">호출 제한, 그리고 M1 버전이 던져준 자잘한 버그들</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Redis 고정 윈도우 카운터로 ADMIN을 제외한 유저는 분당 5회로 제한했다(Redis 장애 시엔 fail-open). 여기까진 예상한 작업이었는데, M1 라이브러리라 그런지 자잘한 이슈가 계속 튀어나왔다. temperature 필드 때문에 400이 나서 ChatModel 빈을 직접 구성해 그 필드를 아예 빼버렸고, 다중 추천(최대 10개) 응답이 길어지니 기본 max_tokens(500)에 JSON이 중간에 잘려 파싱이 깨지길래 4096으로 올렸다. "오늘 날짜 강제" 로직도 미래 날짜 요청까지 뭉개버리는 회귀를 일으켜서, 모델이 계산한 날짜를 그냥 믿는 쪽으로 바꿨다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">호출을 제한하고, 라이브러리가 던진 버그들을 잡았다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ADMIN을 제외한 유저는 분당 5회로 호출을 제한했다(Redis 장애 시엔 fail-open). 아직 정식 릴리스 전 버전의 라이브러리라 자잘한 이슈도 계속 튀어나왔는데, 응답이 중간에 잘려 파싱이 깨지는 문제나 날짜 계산이 꼬이는 회귀 같은 걸 하나씩 잡아나갔다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -450,38 +450,38 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">텍스트 한 줄에서 대화형 추천 챗봇으로</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이제 카드 단위로 구조화된 추천(최대 10개, 수동/자동 등록 선택)이 나오고, 기존 일정 수정 제안까지 같이 지원한다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">카드 단위로 구조화된 추천(최대 10개, 수동/자동 등록 선택)이 나오고, 기존 일정 수정 제안까지 같이 지원한다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">RAG로 개인화된 추천</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">RAG로 조금 더 개인화된 추천</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">사용자의 만다라트 목표와 과거 일정 패턴을 반영해서 추천이 나온다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">과금도, Redis 장애도 다 대비했다</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">과금도, Redis 장애도 대비해뒀다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">요청 빈도 제한과 fail-open 정책 덕분에 과금이 갑자기 튀거나 Redis가 죽는 상황 모두 걱정을 덜었다.</p>
                                         </div>
 
                                         <div style="margin-top: 4px; padding: 18px; border: 1px solid #eee; border-radius: 12px; background: #f8f8fb;">
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">직접 검증: "그럴싸한 답"과 "실제로 검색한 답"은 겉보기론 구분이 안 된다</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">실제로 RAG가 검색하는지 직접 확인해봤다</strong>
                                             <p style="margin: 0 0 14px; font-size: 0.9em; color: #555; line-height: 1.5;">
-                                                RAG가 붙어있다고 홍보만 하고 실제로 검색이 일어나는지 확인 안 하는 경우가 많길래, 직접 캐너리 데이터로 검증해봤다. ±2주 컨텍스트 윈도우 <strong>밖</strong>인 7/10에 "사이드 프로젝트 리팩토링"(21:00~22:30) 일정 하나를, 윈도우 <strong>안</strong>인 내일(8/13)에는 이것과 무관한 일상 일정 4건(아침 운동·점심 약속·장보기·독서 22:00~23:00)을 등록해뒀다. 그다음 챗봇에 "내일 빈 시간에 겹치지 않게, 예전에 하던 방식대로 사이드 프로젝트 작업 일정 하나 추천해줘"라고 물었다.
+                                                RAG를 붙였다고 해놓고 실제로 검색이 일어나는지는 확인 안 하고 넘어가는 경우를 종종 봤다. 내 것도 그런 건 아닌지 궁금해서 캐너리 데이터로 직접 테스트해봤다. ±2주 컨텍스트 윈도우 <strong>밖</strong>인 7/10에 "사이드 프로젝트 리팩토링"(21:00~22:30) 일정을 하나 넣어두고, 윈도우 <strong>안</strong>인 내일(8/13)에는 이것과 상관없는 일상 일정 4건(아침 운동·점심 약속·장보기·독서 22:00~23:00)을 등록해뒀다. 그러고 나서 챗봇한테 "내일 빈 시간에 겹치지 않게, 예전에 하던 방식대로 사이드 프로젝트 작업 일정 하나 추천해줘"라고 물어봤다.
                                             </p>
                                             <div class="proof-media-grid">
                                                 <figure class="proof-figure">
                                                     <img src="/images/schedule-manager-rag-verify-canary-0710.png" alt="7월 10일에 등록해 둔 사이드 프로젝트 리팩토링 캐너리 일정" loading="lazy">
-                                                    <figcaption>① 캐너리 등록 — 7/10 "사이드 프로젝트 리팩토링" (21:00~22:30, ±2주 윈도우 밖)</figcaption>
+                                                    <figcaption>7/10에 미리 심어둔 캐너리 일정 — "사이드 프로젝트 리팩토링" (21:00~22:30, ±2주 윈도우 밖)</figcaption>
                                                 </figure>
                                                 <figure class="proof-figure">
                                                     <img src="/images/schedule-manager-rag-verify-tomorrow-0813.png" alt="내일(8월 13일)에 이미 등록된 일상 일정 4건" loading="lazy">
-                                                    <figcaption>② 대조군 — 내일(8/13) 무관한 일상 일정 4건 (윈도우 안, 직접 컨텍스트로 주입됨)</figcaption>
+                                                    <figcaption>내일(8/13)에 미리 채워둔 일상 일정 4건 — 캐너리와 무관하고, 윈도우 안이라 컨텍스트에 바로 들어간다</figcaption>
                                                 </figure>
                                             </div>
                                             <figure class="proof-figure" style="margin-bottom: 14px;">
                                                 <img src="/images/schedule-manager-rag-verify-ai-response.png" alt="AI 챗봇이 캐너리 데이터를 인용해 겹치지 않는 시간대로 일정을 추천한 응답" loading="lazy">
-                                                <figcaption>③ 응답 — 캐너리 문구·시간대 인용 + 내일 일정과 겹치지 않는 시간대 계산</figcaption>
+                                                <figcaption>챗봇 응답 — 캐너리 문구·시간대를 인용하면서 내일 일정과 안 겹치는 시간대를 계산해서 추천했다</figcaption>
                                             </figure>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">
-                                                응답은 "예전 '사이드 프로젝트 리팩토링' 일정처럼 밤 시간대(21:00~22:30)에 작업하시던 방식을 참고했습니다"라며 3주 전 캐너리의 제목과 시간을 그대로 인용했고, 동시에 "내일(8/13) 독서(22:00~23:00) 등 기존 일정과 겹치지 않도록" 20:00~21:30을 골랐다. 앞 문장은 pgvector 유사도 검색(RAG) 경로가 아니면 나올 수 없는 정보고(±2주 밖이라 직접 컨텍스트엔 안 들어감), 뒤 문장은 반대로 윈도우 직접 주입 컨텍스트가 아니면 나올 수 없는 정보다. 한 응답 안에서 두 경로가 각자 맡은 역할대로 실제로 작동한다는 걸 확인했다.
+                                                응답은 "예전 '사이드 프로젝트 리팩토링' 일정처럼 밤 시간대(21:00~22:30)에 작업하시던 방식을 참고했습니다"라며 3주 전 캐너리의 제목과 시간을 그대로 가져왔다. 동시에 "내일(8/13) 독서(22:00~23:00) 등 기존 일정과 겹치지 않도록" 20:00~21:30을 골랐다. 앞 문장은 pgvector 유사도 검색을 실제로 거치지 않으면 나올 수 없는 정보다(±2주 밖이라 직접 컨텍스트엔 안 들어간다). 뒤 문장은 반대로 윈도우 안에서 직접 주입된 컨텍스트가 없으면 나올 수 없다. 한 응답 안에서 두 경로가 각자 자기 몫을 하고 있다는 걸 이렇게 확인했다.
                                             </p>
                                         </div>
                                     </div>
@@ -525,15 +525,15 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">"코드 읽어봤으니 됐다"는 함정</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Claude Code로 페어 프로그래밍을 하다 보니 변경 속도가 빨라졌는데, 그만큼 실제로 돌려보지도 않고 코드만 읽고 "완료"라고 보고해버릴 위험도 같이 커졌다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Claude Code로 페어 프로그래밍을 하다 보니 변경 속도는 빨라졌다. 그런데 그만큼 실제로 돌려보지도 않고 코드만 읽고 "완료"라고 보고해버릴 위험도 같이 커졌다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">벤치마크 테스트가 CI에 그냥 섞여 있었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">EXPLAIN 실행계획이나 응답시간을 재는 벤치마크 테스트를 일반 테스트와 똑같이 돌리고 있었다. 그런데 CI용 DB는 매번 텅 비어있으니 그 값 자체가 의미가 없고, 실행 시간만 쓸데없이 늘어나는 꼴이었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">벤치마크 테스트가 CI에 섞여 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">EXPLAIN 실행계획이나 응답시간을 재는 벤치마크 테스트를 일반 테스트와 똑같이 돌리고 있었다. CI용 DB는 매번 텅 비어있으니 그 값 자체가 의미가 없는데, 실행 시간만 쓸데없이 늘어나는 꼴이었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CI가 멈춘 줄 알았는데 알고 보니</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">CI에는 더미 Anthropic 키를 넣어뒀는데, 이게 인증 실패로 계속 재시도를 타면서 빌드가 멈춘 것처럼 한참 걸리는 일이 생겼다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CI가 멈춘 줄 알았는데, 알고 보니</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">CI에는 더미 Anthropic 키를 넣어뒀는데, 이게 인증 실패로 계속 재시도를 타면서 빌드가 멈춘 것처럼 한참 걸리는 일이 있었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -553,11 +553,11 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">변경마다 검증을 강제하는 규칙이 필요했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변경할 때마다 테스트를 같이 작성하고, 실제로 돌려서 확인한 뒤에만 완료라고 보고하도록 강제하는 개발 하네스가 있어야 했다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">변경할 때마다 테스트를 같이 작성하고, 실제로 돌려서 확인한 뒤에만 완료라고 보고하도록 강제하는 규칙이 필요했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로컬과 CI, 테스트를 나눠야 했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로컬에서는 성능 벤치마크까지 전체를 돌리되, CI에서는 의미 없는 벤치마크는 빼는 이원화가 필요했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로컬과 CI의 테스트 범위를 나눠야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로컬에서는 성능 벤치마크까지 전부 돌리되, CI에서는 의미 없는 벤치마크는 빼는 식으로 나눠야 했다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -576,20 +576,20 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CLAUDE.md에 규칙을 글로 정리해뒀다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">"새 로직에는 반드시 테스트를 같이 작성한다", "코드만 읽고 성공했다고 말하지 말고 실제로 실행해서 확인한다", "테스트를 못 돌렸으면 못 돌렸다고 그대로 말한다" 같은 규칙과 [category-N] 형식의 커밋 컨벤션을 문서로 정리해뒀다. 이걸 118개 커밋 내내 일관되게 지켰다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CLAUDE.md에 규칙을 글로 남겼다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">"새 로직에는 반드시 테스트를 같이 작성한다", "코드만 읽고 성공했다고 말하지 말고 실제로 실행해서 확인한다", "테스트를 못 돌렸으면 못 돌렸다고 그대로 말한다" 같은 규칙과 [category-N] 형식의 커밋 컨벤션을 문서로 정리했다. 118개 커밋 내내 일관되게 지켰다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">@Tag로 CI/로컬 테스트 갈라두기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">EXPLAIN·응답시간 기반 벤치마크(ScheduleIndexPerformanceTest 등)에 @Tag("performance")를 달아 분리했다. GitHub Actions는 `./gradlew test -PciBuild`로 이 태그만 빼고 돌린다. 그래서 로컬에서는 전체 검증, CI에서는 빈 DB에서 의미 없는 벤치마크를 뺀 회귀 테스트만 빠르게 도는 구조가 됐다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">태그로 CI와 로컬 테스트를 갈랐다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">실행계획·응답시간 기반 벤치마크에 별도 태그를 달아 CI에서는 이 태그만 빼고 돌리도록 했다. 로컬에서는 전체 검증, CI에서는 빈 DB에서 의미 없는 벤치마크를 뺀 회귀 테스트만 빠르게 도는 구조가 됐다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">단위 테스트로는 부족해서 실제로 눈으로 봤다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Mockito 기반 단위 테스트만으로는 안심이 안 됐다. SSE 실시간 반영은 curl로 이벤트 스트림을 직접 찍어보고, Playwright로 새로고침 없이 화면이 갱신되는지도 확인했다. 캐시 무효화 버그도 Redis에서 stale 키를 직접 재현한 다음 curl로 수정 전/후를 비교하는 식으로, 매번 눈으로 확인하는 습관을 들였다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">단위 테스트만으로는 안심이 안 돼서 눈으로 직접 봤다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Mockito 기반 단위 테스트만으로는 부족하다고 느꼈다. SSE 실시간 반영은 curl로 이벤트 스트림을 직접 찍어보고, Playwright로 새로고침 없이 화면이 갱신되는지도 확인했다. 캐시 무효화 버그도 Redis에서 stale 키를 직접 재현한 다음 curl로 수정 전후를 비교했다. 매번 눈으로 확인하는 습관을 들였다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CI 멈춘 것처럼 보이던 문제도 정리</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">더미 Anthropic API 키가 반복 재시도를 유발해 CI가 멈춘 것처럼 보이던 부분도 따로 손봤다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CI가 멈춘 것처럼 보이던 문제도 손봤다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">더미 Anthropic API 키가 반복 재시도를 유발해서 CI가 멈춘 것처럼 보이던 부분도 따로 고쳤다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -613,11 +613,11 @@
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">CI는 빠르게, 로컬은 꼼꼼하게</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">CI는 매번 무의미한 벤치마크 없이 빠르게 돌고, 로컬에서는 성능 회귀까지 포함해서 전체 검증이 가능해졌다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">CI는 무의미한 벤치마크 없이 빠르게 돌고, 로컬에서는 성능 회귀까지 포함해서 전체 검증이 가능해졌다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">"통과했다"보다 "확인했다"</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">테스트가 초록불이라고 바로 끝내지 않고 curl이나 Playwright로 실제 동작을 직접 본 다음에 완료로 보고하는 걸 코드 리뷰 전 단계에서 스스로 지키게 됐다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">"통과했다"가 아니라 "확인했다"</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">테스트가 초록불이라고 바로 끝내지 않고, curl이나 Playwright로 실제 동작을 직접 본 다음에 완료로 보고하는 걸 코드 리뷰 전 단계부터 스스로 지키게 됐다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -664,15 +664,15 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">세션 기반은 나중에 서버를 늘릴 때 발목을 잡는다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">나중에 서버를 여러 대로 늘릴 걸 생각하면, 세션 저장소 없이 동작하는 무상태(Stateless) 인증 구조가 맞다고 판단했다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">나중에 서버를 여러 대로 늘릴 걸 생각하면, 세션 저장소 없이 동작하는 무상태(Stateless) 인증 구조가 맞다고 봤다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">토큰 수명, 짧게도 길게도 문제였다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">토큰 수명을 짧게 잡으면 자꾸 재로그인해야 해서 UX가 떨어지고, 길게 잡으면 탈취당했을 때 피해 기간이 늘어난다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">토큰 수명은 짧아도 길어도 문제였다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">토큰 수명을 짧게 잡으면 자꾸 재로그인해야 해서 UX가 떨어진다. 길게 잡으면 반대로 탈취당했을 때 피해 기간이 늘어난다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로그아웃해도 토큰은 살아있다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">JWT는 발급하고 나면 서버가 자체적으로 무효화할 방법이 없다. 그래서 로그아웃을 해도 만료 전까지는 기존 액세스 토큰이 여전히 통했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로그아웃해도 토큰은 살아있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">JWT는 발급하고 나면 서버가 자체적으로 무효화할 방법이 없다. 로그아웃을 해도 만료 전까지는 기존 액세스 토큰이 여전히 통했다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -694,7 +694,7 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">무상태는 유지하면서 갱신 체계 설계</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">무상태는 유지하면서 갱신 체계를 설계했다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">세션 없이도 로그아웃과 탈취에 대응할 수 있는 액세스/리프레시 토큰 체계를 만들어야 했다.</p>
                                         </div>
                                         <div>
@@ -722,19 +722,19 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">토큰 타입부터 구분했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">JwtUtil에 tokenType claim(ACCESS/REFRESH)을 추가했다. JwtAuthenticationFilter가 ACCESS 타입만 인증에 쓰도록 검증하게 해서, 리프레시 토큰이 Authorization 헤더로 몰래 재사용되는 걸 막았다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">토큰에 액세스/리프레시 타입을 명시하고, 인증 필터가 액세스 타입만 인증에 쓰도록 검증하게 해서 리프레시 토큰이 몰래 재사용되는 걸 막았다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Redis로 단일 세션 로테이션 구현</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">리프레시 토큰을 refresh:{email} 키(TTL = 잔여 유효기간)로 저장해두고, 재로그인하면 같은 키를 덮어써서 이전 토큰이 자동으로 폐기되게 했다. POST /api/auth/refresh는 서명·만료 검증과 Redis 저장값 일치를 둘 다 통과해야만 access/refresh를 같이 재발급한다. 그래서 탈취된 토큰이 재사용되면 값이 안 맞아서 바로 걸린다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">Redis로 단일 세션 로테이션을 구현했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">리프레시 토큰을 유저별로 Redis에 저장해두고, 재로그인하면 같은 키를 덮어써서 이전 토큰이 자동으로 폐기되게 했다. 재발급은 서명·만료 검증과 Redis 저장값 일치를 둘 다 통과해야만 되도록 했다. 탈취된 토큰이 재사용되면 값이 안 맞아서 바로 걸리는 구조다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로그아웃할 땐 두 군데를 같이 지운다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">액세스 토큰을 블랙리스트에 올리는 것만으로는 부족해서, refresh:{email} 키까지 같이 지웠다. 이렇게 하면 로그아웃 이후엔 재발급 경로 자체가 막힌다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">액세스 토큰을 블랙리스트에 올리는 것만으로는 부족해서 저장된 리프레시 토큰까지 같이 지웠다. 이러면 로그아웃 이후엔 재발급 경로 자체가 막힌다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">프론트에서 자동 재발급, 중복 호출은 막고</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">401/403이 오면 리프레시 토큰으로 한 번 재발급받고 재요청하도록 했다. 여러 요청이 동시에 만료를 맞으면 재발급 호출도 여러 번 나갈 수 있어서, 진행 중인 refresh Promise를 공유(refreshInFlight)해 중복 호출을 막았다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">프론트에서 자동 재발급, 중복 호출은 막았다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">401/403이 오면 리프레시 토큰으로 한 번 재발급받고 재요청하도록 했다. 여러 요청이 동시에 만료를 맞으면 재발급 호출도 같이 여러 번 나갈 수 있어서, 진행 중인 재발급 요청을 공유해 중복 호출을 막았다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -756,16 +756,16 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">세션 저장소 없이도 확장 가능한 인증</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">세션 저장소 없이도 확장 가능한 인증이 됐다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">서버를 늘려도 별도로 세션을 동기화할 필요가 없는 무상태 인증을 확보했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로그아웃·탈취 둘 다 막혔다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로그아웃하면 그 즉시 재발급이 불가능해졌고, 탈취된 리프레시 토큰이 재사용되면 정상 사용자의 다음 재발급 요청이 값 불일치로 실패하면서 탈취 사실이 드러난다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">로그아웃과 탈취, 둘 다 막혔다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">로그아웃하면 그 즉시 재발급이 불가능해진다. 탈취된 리프레시 토큰이 재사용되면 정상 사용자의 다음 재발급 요청이 값 불일치로 실패하면서 탈취 사실이 드러난다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">사용자는 이 과정을 전혀 못 느낀다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">액세스 토큰이 만료돼도 자동 재발급이 알아서 처리해서, 재로그인 없이 계속 서비스를 쓸 수 있다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">액세스 토큰이 만료돼도 자동 재발급이 알아서 처리해서 재로그인 없이 계속 서비스를 쓸 수 있다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -807,23 +807,23 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] email에 인덱스가 없었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">JwtAuthenticationFilter의 loadUserByUsername부터 각 서비스의 requesterEmail resolve까지, 인증된 요청 하나마다 인덱스 없는 email 컬럼을 최소 두 번씩 조회하고 있었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">email 컬럼에 인덱스가 없었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">인증된 요청 하나마다 인덱스 없는 email 컬럼을 최소 두 번씩 조회하고 있었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] 리포트 하나 뽑는데 전체 이력을 다 긁어왔다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ReportService의 getStats/getInsight를 보니 범위 제한 없이 유저의 모든 일정을 가져온 다음 메모리에서 걸러내고 있었다. 일정이 쌓일수록, 특히 반복 일정을 많이 가진 유저일수록 매 요청이 느려지는 구조였다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">리포트 하나 뽑는 데 전체 이력을 다 긁어왔다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">범위 제한 없이 유저의 모든 일정을 가져온 다음 메모리에서 걸러내고 있었다. 일정이 쌓일수록, 특히 반복 일정을 많이 가진 유저일수록 매 요청이 느려지는 구조였다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] saveAll이라고 써놓고 사실은 건건이 INSERT</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">GenerationType.IDENTITY는 행마다 생성된 키를 바로 읽어야 하기 때문에 JDBC 배치 자체가 안 된다. 그래서 반복 일정이나 만다라트 보드에서 saveAll을 호출해도 실제로는 한 건씩 개별 INSERT를 왕복하고 있었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">일괄 저장이라고 써놓고 사실은 건건이 INSERT하고 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">키 채번 방식 때문에 JDBC 배치 자체가 안 되는 구조였다. 반복 일정이나 만다라트 보드처럼 여러 건을 한 번에 저장해도 실제로는 한 건씩 개별 INSERT를 왕복하고 있었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 유사도 하한선이 없어서 뭐든 다 끼워 넣고 있었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">VectorStore.similaritySearch에 similarityThreshold를 따로 지정하지 않고 있었다. 기본값이 0.0이라 사실상 무제한 허용인 셈이라, 의미상 완전히 무관한 일정도 "그나마 제일 덜 무관한" topK로 뽑혀서 AI 프롬프트에 그대로 섞여 들어가고 있었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">유사도 하한선이 없어서 뭐든 다 끼워 넣고 있었다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">벡터 검색에 유사도 하한선을 따로 지정하지 않고 있었다. 기본값이 사실상 무제한 허용이라, 의미상 완전히 무관한 일정도 "그나마 제일 덜 무관한" 후보로 뽑혀서 AI 프롬프트에 그대로 섞여 들어가고 있었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 나중에 쓸 색인 때문에 지금 응답이 늦어지고 있었다</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">나중에 쓸 색인 때문에 지금 응답이 늦어지고 있었다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일정이나 만다라트를 생성·수정·삭제할 때마다 임베딩 색인이 동기로 호출되고 있었다. 이 색인은 나중에 챗봇한테 질문할 때나 쓰이는 건데, 정작 매 쓰기 요청의 응답이 OpenAI API 호출이 끝날 때까지 붙잡혀 있었다.</p>
                                         </div>
                                     </div>
@@ -843,12 +843,12 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] 감이 아니라 숫자로 병목을 잡아야 했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">캐시/AI 라인은 이미 다뤘으니, 그 바깥에서 실제로 비용이 나는 지점을 코드에서 직접 찾고 As-Is/To-Be를 벤치마크로 재서 개선 근거를 남기고 싶었다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">감이 아니라 숫자로 병목을 잡아야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">캐시/AI 쪽은 이미 다뤘으니, 그 바깥에서 실제로 비용이 나는 지점을 코드에서 직접 찾고 As-Is/To-Be를 벤치마크로 재서 개선 근거를 남기고 싶었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 검색 품질과 응답 지연, 두 축을 같이 잡기</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">리트리벌 정확도(무관한 결과를 걸러내는 것)와 쓰기 경로 지연(비동기화)은 서로 다른 문제인데, 이걸 같이 진단하고 풀어야 했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">검색 품질과 응답 지연, 두 축을 같이 잡아야 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">리트리벌 정확도(무관한 결과를 걸러내는 것)와 쓰기 경로 지연(비동기화)은 서로 다른 문제인데, 둘 다 같이 진단하고 풀어야 했다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -867,24 +867,24 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] email에 유니크 인덱스 추가</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">email은 로그인 식별자니까 어차피 유일해야 한다(이미 애플리케이션 레벨에서 existsByEmail로 검사하고 있었다). 여기 착안해서 DB 레벨 백스톱 겸 유니크 인덱스를 추가했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">email에 유니크 인덱스를 추가했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">email은 로그인 식별자니까 어차피 유일해야 한다(이미 애플리케이션 레벨에서는 검사하고 있었다). 여기 착안해서 DB 레벨 백스톱 겸 유니크 인덱스를 추가했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] ReportService 조회 범위를 확 줄였다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">searchSchedulesInRange로 이번 기간과 직전 기간만 하나의 bounded 쿼리로 좁혔다. RAG 컨텍스트는 매칭된 소수 id만 따로 타겟 조회하도록 분리했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">리포트 조회 범위를 확 줄였다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이번 기간과 직전 기간만 하나의 범위 쿼리로 좁혔다. RAG 컨텍스트는 매칭된 소수 건만 따로 타겟 조회하도록 분리했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] IDENTITY를 SEQUENCE로 바꿔서 진짜 배치 INSERT가 되게</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Schedule/MandalartCell을 SEQUENCE(allocationSize=50)로 바꾸고 hibernate.jdbc.batch_size=50에 order_inserts/updates까지 설정했다. 기존 IDENTITY 시퀀스와 값이 겹치지 않게 별도 시퀀스를 새로 채번해서 안전하게 넘어갔다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">키 채번 방식을 바꿔서 진짜 배치 INSERT가 되게 했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">일괄 저장이 많은 엔티티들을 시퀀스 채번 방식으로 바꾸고 배치 설정도 같이 조정했다. 기존 값과 겹치지 않게 별도 시퀀스를 새로 채번해서 안전하게 넘어갔다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 유사도 하한선 0.35, 숫자로 정했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">적당히 값을 정하고 싶지 않아서 실제 OpenAI 임베딩으로 코사인 유사도를 직접 재보고 임계값을 검증했다. 이 값 미만 결과는 VectorStore 단에서 걸러내도록 SearchRequest에 반영했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">유사도 하한선 0.35를 숫자로 정했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">적당히 값을 정하고 싶지 않아서 실제 임베딩으로 코사인 유사도를 직접 재보고 임계값을 검증했다. 이 값 미만 결과는 검색 단에서 걸러내도록 반영했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 임베딩 색인·삭제를 비동기로</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">전용 embeddingTaskExecutor를 등록하고 색인·삭제 메서드에만 @Async를 붙였다(검색은 결과를 바로 써야 하니 동기로 남겨뒀다). 트랜잭션 롤백 시 고아 문서가 남을 수 있다는 리스크는 있었지만, 동기로 처리하던 때도 똑같이 있던 문제라 새로 생긴 리스크는 아니라고 판단했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">임베딩 색인·삭제를 비동기로 바꿨다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">색인·삭제만 비동기로 돌리고 검색은 결과를 바로 써야 하니 동기로 남겨뒀다. 트랜잭션 롤백 시 고아 문서가 남을 수 있다는 리스크는 있었지만, 동기로 처리하던 때도 똑같이 있던 문제라 새로 생긴 리스크는 아니라고 판단했다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -903,12 +903,12 @@
                                 <div class="inner-accordion-content" style="padding: 0 20px 20px 20px;">
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[성능] 세 지점 다 숫자로 확인했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">email 조회는 3.45ms → 0.05ms로 Seq Scan에서 Index Scan으로 바뀌었고, 리포트 조회는 3.85ms → 0.75ms(1,095건 반환이 21건으로 줄었다), 벌크 INSERT는 1,000건 기준 241ms → 147ms(39% 단축)로 나왔다. 시퀀스 값이 실제로 50 배수로 전진하는 것도 직접 눈으로 확인했다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">세 지점 다 숫자로 확인했다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">email 조회는 3.45ms → 0.05ms로 Seq Scan에서 Index Scan으로 바뀌었다. 리포트 조회는 3.85ms → 0.75ms(1,095건 반환이 21건으로 줄었다), 벌크 INSERT는 1,000건 기준 241ms → 147ms(39% 단축)로 나왔다. 시퀀스 값이 실제로 50 배수로 전진하는 것도 직접 눈으로 확인했다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">[RAG] 무관한 결과는 빠지고, 쓰기는 안 막히게</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">임계값을 적용하고 나니 치과 예약, 회계 보고서 같은 무관한 후보가 실제로 빠지는 걸 확인했다. 임베딩 색인을 비동기로 돌린 덕분에 300ms 지연을 모킹한 기준으로 호출자 블로킹 시간이 310ms → 1ms로 줄었다. 다만 코사인 유사도 순서가 실제 관련도와 어긋나는 구간이 아직 남아있어서, 이 부분은 한계로 남겨뒀다.</p>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">무관한 결과는 빠지고, 쓰기는 안 막히게 됐다</strong>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">임계값을 적용하고 나니 치과 예약, 회계 보고서 같은 무관한 후보가 실제로 빠지는 걸 확인했다. 임베딩 색인을 비동기로 돌린 덕분에 300ms 지연을 모킹한 기준으로 호출자 블로킹 시간이 310ms → 1ms로 줄었다. 다만 코사인 유사도 순서가 실제 관련도와 어긋나는 구간은 아직 남아있어서, 이 부분은 한계로 남겨뒀다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -955,10 +955,10 @@
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">통계와 AI 서술을 한 응답에 묶으면 위험했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율, 카테고리별 분포 같은 결정형 통계까지 Anthropic API 장애나 레이트리밋에 발목 잡히게 만들 수는 없었다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율, 카테고리별 분포 같은 결정형 통계까지 Anthropic API 장애나 레이트리밋에 발목 잡히게 둘 수는 없었다.</p>
                                         </div>
                                         <div>
-                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">완료율 분모부터 정의가 안 되어 있었다</strong>
+                                            <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">완료율 분모부터 정의가 안 돼 있었다</strong>
                                             <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">취소된(CANCELLED) 일정을 완료 대상으로 볼지, 애초에 분모에서 뺄지조차 정해진 게 없었다.</p>
                                         </div>
                                     </div>
@@ -983,11 +983,11 @@
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">기간마다 다른 촘촘함으로 차트를 보여줘야 했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">주/월 단위는 일 단위로, 년 단위는 월 단위로 - 기간에 안 맞는 촘촘함이면 차트가 과밀해지거나 너무 성겨진다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">주/월 단위는 일 단위로, 년 단위는 월 단위로 보여줘야 했다. 기간에 안 맞는 촘촘함이면 차트가 과밀해지거나 너무 성겨진다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">매번 다시 부르지 않으면서도 최신성은 챙겨야 했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">페이지에 재진입할 때마다 Claude를 다시 부르면 과금도, 응답 속도도 손해다. 그렇다고 일정이 바뀌었는데 예전 회고를 계속 보여줄 수도 없었다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">페이지에 재진입할 때마다 Claude를 다시 부르면 과금도 응답 속도도 손해다. 그렇다고 일정이 바뀌었는데 예전 회고를 계속 보여줄 수도 없었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1007,23 +1007,23 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">엔드포인트째 갈랐다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">GET /api/reports/stats(무료·즉시)와 GET /api/reports/insight/cached, POST /api/reports/insight(AI·명시적 요청)를 물리적으로 분리했다. AiRateLimiter는 실제로 AI를 호출하는 POST 쪽에만 걸어서, 통계 조회는 레이트리밋과 완전히 무관하게 뒀다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">통계 조회(무료·즉시)와 AI 인사이트 요청(명시적 호출)을 물리적으로 분리했다. 호출 제한은 실제로 AI를 부르는 쪽에만 걸어서 통계 조회는 레이트리밋과 완전히 무관하게 뒀다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">완료율 정의를 코드로 못박았다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">completed / (total - cancelled)로 취소 건은 분모에서 빼고, 분모가 0이 되는 경우도 방어했다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료 / (전체 - 취소)로 취소 건은 분모에서 뺐고, 분모가 0이 되는 경우도 방어했다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">기간별로 버킷 단위를 다르게 나눴다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">WEEK/MONTH는 일 단위(최대 31개 포인트), YEAR는 월 단위(12개 포인트)로 나눴다. 겹치는 일정도 시작 시각(startAt) 기준 한 구간에만 배정했다 - "언제 걸쳐 있었는지"가 아니라 "언제 발생했는지"를 보여줘야 한다고 판단했다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">주/월 단위는 일 단위로, 년 단위는 월 단위로 나눴다. 겹치는 일정도 시작 시각 기준 한 구간에만 배정했다. "언제 걸쳐 있었는지"가 아니라 "언제 발생했는지"를 보여줘야 한다고 판단했다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">스냅샷 캐시로 재호출을 막았다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">ReportInsightSnapshot에 user×period×rangeStart 유니크로 결과를 저장해두고, 생성 시점의 일정 건수·최근 수정 시각을 함께 남겼다. 다음 조회 때 이 값을 현재 상태와 비교해서 다르면 "새로운 결과를 얻을 수 있습니다"로 재생성을 안내하고, 같으면 캐시를 그대로 보여준다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">생성 시점의 일정 건수·최근 수정 시각을 결과와 함께 저장해뒀다. 다음 조회 때 이 값을 현재 상태와 비교해서 다르면 "새로운 결과를 얻을 수 있습니다"로 재생성을 안내하고, 같으면 캐시를 그대로 보여준다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">RAG로 회고에 연속성을 더했다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이번 기간 일정 제목으로 ScheduleEmbeddingService를 다시 조회해서, 의미상 비슷한 다른 시기의 활동을 top 5로 찾아 "[참고: 의미상 비슷한 다른 시기의 활동]"으로 프롬프트에 끼워 넣었다. 그 결과를 ChatClient.entity(ReportInsightDto.class)로 strengths/improvements/behaviorPattern/personalityNote 구조로 받고, null이거나 과다한 항목은 방어적으로 다듬었다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">이번 기간 일정과 의미상 비슷한 다른 시기의 활동을 찾아 참고 자료로 프롬프트에 끼워 넣었다. 응답은 강점/개선점/행동 패턴 같은 구조로 받고, null이거나 과다한 항목은 방어적으로 다듬었다.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1043,7 +1043,7 @@
                                     <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">AI가 죽어도 통계는 산다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Anthropic API가 장애가 나거나 레이트리밋에 걸려도 완료율·카테고리 분포 같은 통계 카드는 항상 그대로 뜬다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">Anthropic API에 장애가 나거나 레이트리밋에 걸려도 완료율·카테고리 분포 같은 통계 카드는 항상 그대로 뜬다.</p>
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">불필요한 재호출이 사라졌다</strong>
@@ -1051,7 +1051,7 @@
                                         </div>
                                         <div>
                                             <strong style="font-size: 0.95em; color: #333; display: block; margin-bottom: 6px;">테스트 17개로 경계 케이스까지 덮었다</strong>
-                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율 0/0 방어, WEEK/YEAR 버킷팅, RAG 컨텍스트 포함/생략, stale 판정(건수 변경/내용 변경/무변경) 3가지 케이스까지 ReportServiceTest로 검증해뒀다.</p>
+                                            <p style="margin: 0; font-size: 0.9em; color: #555; line-height: 1.5;">완료율 0/0 방어, WEEK/YEAR 버킷팅, RAG 컨텍스트 포함/생략, stale 판정(건수 변경/내용 변경/무변경) 3가지 케이스까지 ReportServiceTest로 검증했다.</p>
                                         </div>
                                     </div>
                                 </div>
