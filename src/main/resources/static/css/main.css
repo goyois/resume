@@ -707,7 +707,7 @@ ul {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    margin: var(--space-5) 0;
+    margin: 0;
     padding: var(--space-5);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -946,6 +946,14 @@ ul {
 
 .impact-header-title i {
     color: var(--ink);
+}
+
+/* showcase-intro 안에서 소제목 블록(프로젝트 소개 / 백엔드 아키텍처 / 실제 화면 등)을
+   나누는 가벼운 구분선. 부모의 flex gap이 이미 위아래 여백을 주므로 margin은 두지 않는다 */
+.intro-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
 }
 
 .impact-list {

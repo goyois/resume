@@ -45,7 +45,47 @@
                 <p>AI 갓생비서는 일정 CRUD, 반복 일정, 만다라트 목표 관리에 Claude 기반 AI 추천 챗봇까지 얹은 개인 스케줄링 백엔드입니다. 인증은 JWT 액세스/리프레시 토큰 로테이션에 Redis 캐싱과 로그아웃 블랙리스트를 더해서 구성했고, 일정이 바뀌면 폴링 없이 SSE로 바로 화면에 반영되게 했습니다. AI 챗봇은 Spring AI(ChatClient)로 Claude를 붙였는데, 텍스트 한 줄 던지고 끝나는 게 아니라 구조화된 형태로 여러 일정을 한 번에 추천하거나 기존 일정 수정까지 제안하고, 대화 맥락도 계속 이어갑니다. 여기에 pgvector 기반 RAG로 사용자의 만다라트 목표나 과거 일정을 참고하도록 해서 조금 더 개인화된 제안이 나오게 했고요. 배포는 AWS(EC2 + RDS + ElastiCache)에 GitHub Actions로 CI/CD까지 직접 구성해서 올렸습니다.</p>
                 <a class="showcase-intro-link" href="https://github.com/goyois/schedule-manager" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub 저장소 보기</a>
 
+                <hr class="intro-divider">
+
+                <div class="impact-header-title">
+                    <i class="fas fa-sitemap"></i> 백엔드 아키텍처
+                </div>
+
                 <div class="arch-diagram">
+                    <div>
+                        <div class="arch-row-label">요청 인증</div>
+                        <div class="arch-row">
+                            <span class="arch-node">브라우저</span>
+                            <span class="arch-arrow">→ Bearer JWT</span>
+                            <span class="arch-node">JwtAuthenticationFilter</span>
+                            <span class="arch-arrow">→ Redis 블랙리스트 확인</span>
+                            <span class="arch-node arch-node--accent">SecurityContext</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="arch-row-label">요청 처리</div>
+                        <div class="arch-row">
+                            <span class="arch-node">Controller (도메인별 7종)</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">Service Layer</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node arch-node--accent">PostgreSQL</span>
+                            <span class="arch-arrow">·</span>
+                            <span class="arch-node arch-node--accent">Redis (캐시 · 세션 · rate limit)</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="arch-row-label">실시간 갱신 (SSE)</div>
+                        <div class="arch-row">
+                            <span class="arch-node">일정 등록 · 수정 · 삭제</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">캐시 무효화 (SCAN)</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node arch-node--accent">ScheduleEventPublisher</span>
+                            <span class="arch-arrow">→</span>
+                            <span class="arch-node">브라우저 (EventSource)</span>
+                        </div>
+                    </div>
                     <div>
                         <div class="arch-row-label">색인 (비동기)</div>
                         <div class="arch-row">
@@ -75,6 +115,8 @@
                         </div>
                     </div>
                 </div>
+
+                <hr class="intro-divider">
 
                 <div class="impact-header-title">
                     <i class="fas fa-play-circle"></i> 실제 화면
