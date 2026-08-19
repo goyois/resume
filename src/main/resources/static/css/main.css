@@ -992,6 +992,7 @@ ul {
 }
 
 .project-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border);
@@ -1004,6 +1005,26 @@ ul {
 .project-card:hover {
     border-color: var(--border-strong);
     transform: translateY(-2px);
+}
+
+/* 카드 전체를 감싸는 히트박스 링크(상세 페이지 이동)와, 그 위에 얹히는 실제 콘텐츠 */
+.project-card-hitbox {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.project-card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    pointer-events: none;
+}
+
+.project-card-content .project-card-live-link {
+    pointer-events: auto;
 }
 
 .project-card-thumb {
@@ -1201,6 +1222,36 @@ ul {
 
 .project-card-cta:hover i {
     transform: translateX(3px);
+}
+
+.project-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.project-card-live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color 160ms ease, opacity 160ms ease;
+}
+
+.project-card-live-link i {
+    font-size: 0.7rem;
+}
+
+.project-card-live-link:hover {
+    border-color: var(--ink);
+    opacity: 0.8;
 }
 
 .placeholder-note {
